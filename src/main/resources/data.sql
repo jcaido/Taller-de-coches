@@ -1,0 +1,32 @@
+insert into codigos_postales (codigo_postal, localidad, provincia) values ('14920', 'Aguilar', 'Cordoba');
+insert into codigos_postales (codigo_postal, localidad, provincia) values ('14500', 'Montilla', 'Cordoba');
+insert into codigos_postales (codigo_postal, localidad, provincia) values ('14800', 'Lucena', 'Cordoba');
+insert into codigos_postales (codigo_postal, localidad, provincia) values ('23567', 'Carmona', 'Sevilla');
+insert into codigos_postales (codigo_postal, localidad, provincia) values ('23561', 'Lora del Rio', 'Sevilla');
+insert into codigos_postales (codigo_postal, localidad, provincia) values ('32123', 'Antequera', 'Malaga');
+insert into codigos_postales (codigo_postal, localidad, provincia) values ('33001', 'Campillos', 'Malaga');
+insert into codigos_postales (codigo_postal, localidad, provincia) values ('32668', 'Teba', 'Malaga');
+insert into codigos_postales (codigo_postal, localidad, provincia) values ('44321', 'Martos', 'Jaen');
+insert into codigos_postales (codigo_postal, localidad, provincia) values ('41222', 'Andujar', 'Jaen');
+
+insert into propietarios (nombre, primer_apellido, segundo_apellido, dni, domicilio,codigo_postal_id) values ('Cristobal', 'Rosa', 'Arjona', '34019852R', 'Pasaje San Vicente, 2', 1);
+insert into propietarios (nombre, primer_apellido, segundo_apellido, dni, domicilio, codigo_postal_id) values ('Antonio', 'Garcia', 'Arjona', '35016852R', 'Membrilla, 23', 2);
+insert into propietarios (nombre, primer_apellido, segundo_apellido, dni, domicilio, codigo_postal_id) values ('Miguel Angel', 'Perez', 'Arjona', '34009952R', 'Saladilla, 5', 1);
+insert into propietarios (nombre, primer_apellido, segundo_apellido, dni, domicilio, codigo_postal_id) values ('Jose Antonio', 'Carrasco', 'Arjona', '34519852Y', 'Empedrada, 76', 3);
+insert into propietarios (nombre, primer_apellido, segundo_apellido, dni, domicilio, codigo_postal_id) values ('Alberto', 'Lopez', 'Arjona', '34519152G', 'Carreras, 8', 2);
+insert into propietarios (nombre, primer_apellido, segundo_apellido, dni, domicilio, codigo_postal_id) values ('Rafael', 'Sanchez', 'Arjona', '34045862F', 'Almirante, 6', 1);
+insert into propietarios (nombre, primer_apellido, segundo_apellido, dni, domicilio, codigo_postal_id) values ('Juan', 'Lucena', 'Arjona', '34219855T', 'Gallos, 34', 7);
+insert into propietarios (nombre, primer_apellido, segundo_apellido, dni, domicilio, codigo_postal_id) values ('Pedro', 'Barranco', 'Arjona', '24039852W', 'Estudiantes, 65', 1);
+insert into propietarios (nombre, primer_apellido, segundo_apellido, dni, domicilio, codigo_postal_id) values ('Pablo', 'Varo', 'Arjona', '31239852O', 'Torito, 7', 1);
+insert into propietarios (nombre, primer_apellido, segundo_apellido, dni, domicilio, codigo_postal_id) values ('Mario', 'Perez', 'Arjona', '12319852P', 'Llano, 89', 1);
+
+insert into vehiculos (matricula, marca, modelo, color, propietario_id) values ('2345DFG', 'RENAULT', 'CLIO', 'Blanco', 1);
+insert into vehiculos (matricula, marca, modelo, color, propietario_id) values ('3214FVC', 'FORD', 'FIESTA', 'Azul', 3);
+insert into vehiculos (matricula, marca, modelo, color, propietario_id) values ('0090VVC', 'CITROEN', 'BERLINGO', 'Negro', 1);
+insert into vehiculos (matricula, marca, modelo, color, propietario_id) values ('8870FZZ', 'SEAT', 'IBIZA', 'Blanco', 5);
+insert into vehiculos (matricula, marca, modelo, color, propietario_id) values ('0011GGA', 'PEUGEOT', '407', 'Rojo', 1);
+insert into vehiculos (matricula, marca, modelo, color, propietario_id) values ('2200VVM', 'RENAULT', 'LAGUNA', 'Negro', 3);
+insert into vehiculos (matricula, marca, modelo, color, propietario_id) values ('7000QQQ', 'PEUGEOT', '508', 'Naranja', 4);
+insert into vehiculos (matricula, marca, modelo, color, propietario_id) values ('5111UUU', 'SEAT', 'TOLEDO', 'Azul', 1);
+insert into vehiculos (matricula, marca, modelo, color, propietario_id) values ('2110YTY', 'RENAULT', 'CMAX', 'Amarillo', 6);
+insert into vehiculos (matricula, marca, modelo, color, propietario_id) values ('0499FCK', 'FORD', 'FOCUS', 'Blanco', 5);
