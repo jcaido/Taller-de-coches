@@ -8,6 +8,8 @@ import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.CodigoPostalRepository;
 import com.Tallerdecoches.repositories.PropietarioRepository;
+import com.Tallerdecoches.services.validacionesUnique.PropietarioModificacionCambiosService;
+import com.Tallerdecoches.services.validacionesUnique.PropietarioValidacionesUniqueService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,13 +28,17 @@ public class PropietarioServiceImpl implements PropietarioService{
     private final VehiculoService vehiculoService;
     private final ModelMapper modelMapper;
     private final EntityManager entityManager;
+    private final PropietarioValidacionesUniqueService propietarioValidacionesUniqueService;
+    private final PropietarioModificacionCambiosService propietarioModificacionCambiosService;
 
-    public PropietarioServiceImpl(PropietarioRepository propietarioRepository, CodigoPostalRepository codigoPostalRepository, VehiculoService vehiculoService, ModelMapper modelMapper, EntityManager entityManager) {
+    public PropietarioServiceImpl(PropietarioRepository propietarioRepository, CodigoPostalRepository codigoPostalRepository, VehiculoService vehiculoService, ModelMapper modelMapper, EntityManager entityManager, PropietarioValidacionesUniqueService propietarioValidacionesUniqueService, PropietarioModificacionCambiosService propietarioModificacionCambiosService) {
         this.propietarioRepository = propietarioRepository;
         this.codigoPostalRepository = codigoPostalRepository;
         this.vehiculoService = vehiculoService;
         this.modelMapper = modelMapper;
         this.entityManager = entityManager;
+        this.propietarioValidacionesUniqueService = propietarioValidacionesUniqueService;
+        this.propietarioModificacionCambiosService = propietarioModificacionCambiosService;
     }
 
     @Override
@@ -44,7 +50,7 @@ public class PropietarioServiceImpl implements PropietarioService{
         if (propietarioRepository.existsByDni(propietarioDTO. getDni()))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El DNI del propietario ya existe");
 
-        if (!validacionCodigoPostal(id_codigoPostal))
+        if (!propietarioModificacionCambiosService.validacionCodigoPostal(id_codigoPostal))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El codigo Postal asociado al propietario no existe");
 
         Propietario propietario = mapearEntidad(propietarioDTO);
@@ -172,10 +178,10 @@ public class PropietarioServiceImpl implements PropietarioService{
         if (!propietarioRepository.existsById(propietarioDTO.getId()))
             throw new ResourceNotFoundException("Propietario", "id", String.valueOf(propietarioDTO.getId()));
 
-        if (!validacionUniqueDni(propietarioDTO))
+        if (!propietarioValidacionesUniqueService.validacionUniqueDni(propietarioDTO))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El DNI ya existe");
 
-        if (!validacionCodigoPostal(id_codigoPostal))
+        if (!propietarioModificacionCambiosService.validacionCodigoPostal(id_codigoPostal))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El codigo postal asociado al propietario no existe");
 
         Propietario propietario = propietarioRepository.findById(propietarioDTO.getId()).get();
@@ -190,39 +196,5 @@ public class PropietarioServiceImpl implements PropietarioService{
         Propietario propietarioModificado = propietarioRepository.save(propietario);
 
         return new ResponseEntity<>(mapearDTO(propietarioModificado), HttpStatus.OK);
-    }
-
-    private boolean validacionUniqueDni(PropietarioDTO propietarioDTO) {
-
-        if (isDniHaCambiado(propietarioDTO) && propietarioRepository.existsByDni(propietarioDTO.getDni()))
-            return false;
-
-        return true;
-    }
-
-    private boolean isDniHaCambiado(PropietarioDTO propietarioDTO) {
-
-        String dni = obtenerPropietario(propietarioDTO).get().getDni();
-
-        if (dni.equals(propietarioDTO.getDni()))
-            return false;
-
-        return true;
-    }
-
-    private Optional<Propietario> obtenerPropietario(PropietarioDTO propietarioDTO) {
-
-        Long propietario_id = propietarioDTO.getId();
-
-        return propietarioRepository.findById(propietario_id);
-    }
-
-    private boolean validacionCodigoPostal(Long id_codigoPostal) {
-        Optional<CodigoPostal> codigoPostal = codigoPostalRepository.findById(id_codigoPostal);
-
-        if (codigoPostal.isPresent())
-            return true;
-
-        return false;
     }
 }

@@ -1,7 +1,6 @@
 package com.Tallerdecoches.DTOs;
 
 import com.Tallerdecoches.entities.CodigoPostal;
-
 import javax.validation.constraints.NotBlank;
 
 public class PropietarioDTO {
@@ -29,6 +28,15 @@ public class PropietarioDTO {
         this.dni = dni;
         this.domicilio = domicilio;
         this.codigoPostal = codigoPostal;
+    }
+
+    public PropietarioDTO(Long id, String nombre, String primerApellido, String segundoApellido, String dni, String domicilio) {
+        this.id = id;
+        this.nombre = nombre;
+        this.primerApellido = primerApellido;
+        this.segundoApellido = segundoApellido;
+        this.dni = dni;
+        this.domicilio = domicilio;
     }
 
     public Long getId() {

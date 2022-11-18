@@ -17,7 +17,7 @@ public class VehiculoController {
     private final VehiculoService vehiculoService;
     private final PropietarioService propietarioService;
 
-    public VehiculoController(VehiculoService vehiculoService, PropietarioService propietarioService, PropietarioRepository propietarioRepository) {
+    public VehiculoController(VehiculoService vehiculoService, PropietarioService propietarioService) {
         this.vehiculoService = vehiculoService;
         this.propietarioService = propietarioService;
     }

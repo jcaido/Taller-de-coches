@@ -1,13 +1,8 @@
 package com.Tallerdecoches.services;
 
-import com.Tallerdecoches.DTOs.PropietarioDTO;
 import com.Tallerdecoches.DTOs.VehiculoDTO;
-import com.Tallerdecoches.entities.Propietario;
-import com.Tallerdecoches.entities.Vehiculo;
 import org.springframework.http.ResponseEntity;
-
 import java.util.List;
-import java.util.Optional;
 
 public interface VehiculoService {
     ResponseEntity<VehiculoDTO> crearVehiculo(VehiculoDTO vehiculoDTO, Long id_propietario);

@@ -1,7 +1,6 @@
 package com.Tallerdecoches.DTOs;
 
 import com.Tallerdecoches.entities.Propietario;
-
 import javax.validation.constraints.NotBlank;
 
 public class VehiculoDTO {

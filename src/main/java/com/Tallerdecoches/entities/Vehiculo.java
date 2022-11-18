@@ -1,7 +1,6 @@
 package com.Tallerdecoches.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Entity
@@ -11,7 +10,6 @@ public class Vehiculo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "debe introducir la matricula")
     @Column(unique = true)
     private String matricula;
     private String marca;

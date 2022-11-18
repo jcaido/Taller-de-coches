@@ -6,6 +6,7 @@ import com.Tallerdecoches.exceptions.BadRequestCreacionException;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.CodigoPostalRepository;
+import com.Tallerdecoches.services.validacionesUnique.CodigoPostalValidacionesUniqueService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,13 @@ public class CodigoPostalServiceImpl implements CodigoPostalService{
 
     private final CodigoPostalRepository codigoPostalRepository;
     private final PropietarioService propietarioService;
+    private final CodigoPostalValidacionesUniqueService codigoPostalValidacionesUniqueService;
     private  final ModelMapper modelMapper;
 
-    public CodigoPostalServiceImpl(CodigoPostalRepository codigoPostalRepository, PropietarioService propietarioService, PropietarioService propietarioService1, ModelMapper modelMapper) {
+    public CodigoPostalServiceImpl(CodigoPostalRepository codigoPostalRepository, PropietarioService propietarioService, PropietarioService propietarioService1, CodigoPostalValidacionesUniqueService codigoPostalValidacionesUniqueService, ModelMapper modelMapper) {
         this.codigoPostalRepository = codigoPostalRepository;
         this.propietarioService = propietarioService1;
+        this.codigoPostalValidacionesUniqueService = codigoPostalValidacionesUniqueService;
         this.modelMapper = modelMapper;
     }
 
@@ -56,7 +59,7 @@ public class CodigoPostalServiceImpl implements CodigoPostalService{
         return codigoPostalRepository.existsByLocalidad(localidad);
     }
 
-    //metodo para convertir una entidad CodigoPostal a codigoPostalDT
+    //metodo para convertir una entidad CodigoPostal a codigoPostalDTO
     private CodigoPostalDTO mapearDTO(CodigoPostal codigoPostal) {
         CodigoPostalDTO codigoPostalDTO = modelMapper.map(codigoPostal, CodigoPostalDTO.class);
 
@@ -137,11 +140,11 @@ public class CodigoPostalServiceImpl implements CodigoPostalService{
         if (!codigoPostalRepository.existsById(codigoPostalDTO.getId()))
             throw new ResourceNotFoundException("Codigo Postal", "id", String.valueOf(codigoPostalDTO.getId()));
 
-        if (!validacionUniqueLocalidad(codigoPostalDTO))
+        if (!codigoPostalValidacionesUniqueService.validacionUniqueLocalidad(codigoPostalDTO))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "La localidad ya existe");
 
-        if (!validacionUniqueCodigo(codigoPostalDTO))
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero del codigo postal ya existe");
+        if (!codigoPostalValidacionesUniqueService.validacionUniqueCodigo(codigoPostalDTO))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El codigo del Codigo Postal ya existe");
 
         CodigoPostal codigoPostal = codigoPostalRepository.findById(codigoPostalDTO.getId()).get();
         codigoPostal.setCodigo(codigoPostalDTO.getCodigo());
@@ -151,50 +154,6 @@ public class CodigoPostalServiceImpl implements CodigoPostalService{
         CodigoPostal codigoPostalModificado = codigoPostalRepository.save(codigoPostal);
 
         return new ResponseEntity<>(mapearDTO(codigoPostalModificado), HttpStatus.OK);
-    }
-    private boolean validacionUniqueLocalidad(CodigoPostalDTO codigoPostalDTO) {
-        if (!isCodigoHaCambiado(codigoPostalDTO)
-                && isLocalidadHaCambiado(codigoPostalDTO)
-                && existsByLocalidad(codigoPostalDTO.getLocalidad()) ||
-                isCodigoHaCambiado(codigoPostalDTO)
-                        && !existsByCodigo(codigoPostalDTO.getCodigo())
-                        && isLocalidadHaCambiado(codigoPostalDTO)
-                        && existsByLocalidad(codigoPostalDTO.getLocalidad()))
-            return false;
-
-        return true;
-    }
-
-    private boolean isCodigoHaCambiado(CodigoPostalDTO codigoPostalDTO) {
-        String codigo = obtenerCodigoPostal(codigoPostalDTO).get().getCodigo();
-
-        if (codigo.equals(codigoPostalDTO.getCodigo()))
-            return false;
-
-        return true;
-    }
-
-    private Optional<CodigoPostal> obtenerCodigoPostal(CodigoPostalDTO codigoPostalDTO) {
-
-        Long codigoPostal_id = codigoPostalDTO.getId();
-
-        return codigoPostalRepository.findById(codigoPostal_id);
-    }
-
-    private boolean isLocalidadHaCambiado(CodigoPostalDTO codigoPostalDTO) {
-
-        String localidad = obtenerCodigoPostal(codigoPostalDTO).get().getLocalidad();
-
-        if (localidad.equals(codigoPostalDTO.getLocalidad()))
-            return false;
-
-        return true;
-    }
-    private boolean validacionUniqueCodigo(CodigoPostalDTO codigoPostalDTO) {
-        if (isCodigoHaCambiado(codigoPostalDTO) && existsByCodigo(codigoPostalDTO.getCodigo()))
-            return false;
-
-        return true;
     }
 }
 
