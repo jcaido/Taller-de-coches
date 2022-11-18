@@ -8,12 +8,13 @@ import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.PropietarioRepository;
 import com.Tallerdecoches.repositories.VehiculoRepository;
+import com.Tallerdecoches.services.validacionesUnique.VehiculoModificacionCambiosService;
+import com.Tallerdecoches.services.validacionesUnique.VehiculoValidacionesUniqueService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
@@ -25,12 +26,18 @@ public class VehiculoServiceImpl implements VehiculoService{
     private final VehiculoRepository vehiculoRepository;
     private final PropietarioRepository propietarioRepository;
     private final EntityManager entityManager;
+
+    private final VehiculoValidacionesUniqueService vehiculoValidacionesUniqueService;
+
+    private final VehiculoModificacionCambiosService vehiculoModificacionCambiosService;
     private final ModelMapper modelMapper;
 
-    public VehiculoServiceImpl(VehiculoRepository vehiculoRepository, PropietarioRepository propietarioRepository, EntityManager entityManager, ModelMapper modelMapper) {
+    public VehiculoServiceImpl(VehiculoRepository vehiculoRepository, PropietarioRepository propietarioRepository, EntityManager entityManager, VehiculoValidacionesUniqueService vehiculoValidacionesUniqueService, VehiculoModificacionCambiosService vehiculoModificacionCambiosService, ModelMapper modelMapper) {
         this.vehiculoRepository = vehiculoRepository;
         this.propietarioRepository = propietarioRepository;
         this.entityManager = entityManager;
+        this.vehiculoValidacionesUniqueService = vehiculoValidacionesUniqueService;
+        this.vehiculoModificacionCambiosService = vehiculoModificacionCambiosService;
         this.modelMapper = modelMapper;
     }
 
@@ -43,7 +50,7 @@ public class VehiculoServiceImpl implements VehiculoService{
         if (vehiculoRepository.existsByMatricula(vehiculoDTO.getMatricula()))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "la matricula ya existe");
 
-        if (!validacionPropietario(id_propietario))
+        if (!vehiculoModificacionCambiosService.validacionPropietario(id_propietario))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El propietario asociado al vehiculo no existe");
 
         Vehiculo vehiculo = mapearEntidad(vehiculoDTO);
@@ -143,10 +150,10 @@ public class VehiculoServiceImpl implements VehiculoService{
         if (!vehiculoRepository.existsById(vehiculoDTO.getId()))
             throw new ResourceNotFoundException("Vehiculo", "id", String.valueOf(vehiculoDTO.getId()));
 
-        if (!validacionUniqueMatricula(vehiculoDTO))
+        if (!vehiculoValidacionesUniqueService.validacionUniqueMatricula(vehiculoDTO))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "la matricula ya existe");
 
-        if (!validacionPropietario(id_propietario))
+        if (!vehiculoModificacionCambiosService.validacionPropietario(id_propietario))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El propietario asociado al vehiculo no existe");
 
         Vehiculo vehiculo = vehiculoRepository.findById(vehiculoDTO.getId()).get();
@@ -160,40 +167,5 @@ public class VehiculoServiceImpl implements VehiculoService{
         Vehiculo vehiculoModificado = vehiculoRepository.save(vehiculo);
 
         return new ResponseEntity<>(mapearDTO(vehiculoModificado), HttpStatus.OK);
-    }
-
-    private boolean validacionUniqueMatricula(VehiculoDTO vehiculoDTO) {
-
-        if (isMatriculaHaCambiado(vehiculoDTO) && vehiculoRepository.existsByMatricula(vehiculoDTO.getMatricula()))
-            return false;
-
-        return true;
-    }
-
-    private boolean isMatriculaHaCambiado(VehiculoDTO vehiculoDTO) {
-
-        String matricula = obtenerVehiculo(vehiculoDTO).get().getMatricula();
-
-        if (matricula.equals(vehiculoDTO.getMatricula()))
-            return false;
-
-        return true;
-    }
-
-    private Optional<Vehiculo> obtenerVehiculo(VehiculoDTO vehiculoDTO) {
-
-        Long vehiculo_id = vehiculoDTO.getId();
-
-        return vehiculoRepository.findById(vehiculo_id);
-    }
-
-    private boolean validacionPropietario(Long id_propietario) {
-
-        Optional<Propietario> propietario = propietarioRepository.findById(id_propietario);
-
-        if (propietario.isPresent())
-            return true;
-
-        return false;
     }
 }

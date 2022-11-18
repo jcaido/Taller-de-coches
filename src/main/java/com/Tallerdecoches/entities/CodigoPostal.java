@@ -1,13 +1,7 @@
 package com.Tallerdecoches.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +13,10 @@ public class CodigoPostal implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //@NotBlank(message =  "debe introducir el codigo")
-    //@Length(min=5, max=5, message = "el codigo postal debe tener 5 digitos")
     @Column(name = "codigo_postal", unique = true)
     private String codigo;
-    //@NotBlank(message = "debe introducir una localidad")
     @Column(unique = true)
     private String localidad;
-    //@NotBlank(message = "debe introducit una provincia")
     private String provincia;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "codigoPostal")

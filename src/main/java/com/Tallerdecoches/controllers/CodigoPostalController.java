@@ -17,7 +17,7 @@ public class CodigoPostalController {
     private final CodigoPostalService codigoPostalService;
     private final PropietarioService propietarioService;
 
-    public CodigoPostalController(CodigoPostalService codigoPostalService, PropietarioService propietarioService, CodigoPostalRepository codigoPostalRepository) {
+    public CodigoPostalController(CodigoPostalService codigoPostalService, PropietarioService propietarioService) {
         this.codigoPostalService = codigoPostalService;
         this.propietarioService = propietarioService;
     }
