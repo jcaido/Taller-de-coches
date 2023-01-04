@@ -1,14 +1,15 @@
 package com.Tallerdecoches.services;
 
-import com.Tallerdecoches.DTOs.CodigoPostalDTO;
-import com.Tallerdecoches.DTOs.PropietarioDTO;
+import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalDTO;
 import com.Tallerdecoches.entities.CodigoPostal;
 import com.Tallerdecoches.entities.Propietario;
 import com.Tallerdecoches.exceptions.BadRequestCreacionException;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.CodigoPostalRepository;
-import com.Tallerdecoches.services.validacionesUnique.CodigoPostalValidacionesUniqueService;
+import com.Tallerdecoches.services.codigoPostal.CodigoPostalServiceImpl;
+import com.Tallerdecoches.services.codigoPostal.CodigoPostalValidacionesUniqueService;
+import com.Tallerdecoches.services.propietario.PropietarioService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -112,33 +113,7 @@ class CodigoPostalServiceImplTest {
         verify(codigoPostalRepository, never()).save(any(CodigoPostal.class));
     }
 
-    @Test
-    @DisplayName("Test para comprobar si el codigo de un Codigo Postal ya existe")
-    void existsByCodigoTest() {
-        //given
-        codigoPostalDTO = new CodigoPostalDTO(null, "99100", "Chipiona", "Cadiz");
-        given(codigoPostalRepository.existsByCodigo(codigoPostalDTO.getCodigo())).willReturn(true);
 
-        //when
-        boolean isExist = codigoPostalService.existsByCodigo(codigoPostalDTO.getCodigo());
-
-        //then
-        assertEquals(isExist, true);
-    }
-
-    @Test
-    @DisplayName("Test para comprobar si la localidad de un Codigo Postal ya existe")
-    void existsByLocalidadTest() {
-        //given
-        codigoPostalDTO = new CodigoPostalDTO(null, "99100", "Chipiona", "Cadiz");
-        given(codigoPostalRepository.existsByLocalidad(codigoPostalDTO.getLocalidad())).willReturn(true);
-
-        //when
-        boolean isExist = codigoPostalService.existsByLocalidad(codigoPostalDTO.getLocalidad());
-
-        //then
-        assertEquals(isExist, true);
-    }
 
     @Test
     @DisplayName("Test para obtener una lista con todos los Codigos Postales")
@@ -296,24 +271,6 @@ class CodigoPostalServiceImplTest {
 
         //then
         verify(codigoPostalRepository, never()).deleteById(codigoPostalId);
-    }
-
-    @Test
-    @DisplayName("Test para eliminar un Codigo Postal por su id, exception existen  propietarios relacionados")
-    void deleteByIdResponseStatusExceptionTest() {
-        //given
-        codigoPostal = new CodigoPostal(1L, "99100", "Chipiona", "Cadiz");
-        PropietarioDTO propietario = new PropietarioDTO(1L, "Cristobal", "Rosa", "Arjona", "34019853R", "Pasaje San Vicente 2");
-        given(codigoPostalRepository.existsById(codigoPostal.getId())).willReturn(true);
-        given(propietarioService.obtenerPropietariosPorCodigoPostalHQL(codigoPostal.getId())).willReturn(List.of(propietario));
-
-        //when
-        assertThrows(ResponseStatusException.class, () -> {
-            codigoPostalService.deleteById(codigoPostal.getId());
-        });
-
-        //then
-        verify(codigoPostalRepository, never()).deleteById(codigoPostal.getId());
     }
 
     @Test

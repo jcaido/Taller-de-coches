@@ -1,15 +1,18 @@
 package com.Tallerdecoches.controllers;
 
-import com.Tallerdecoches.DTOs.PropietarioDTO;
-import com.Tallerdecoches.services.PropietarioService;
-import com.Tallerdecoches.services.VehiculoService;
+import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
+import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasParcialDTO;
+import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
+import com.Tallerdecoches.services.propietario.PropietarioService;
+import com.Tallerdecoches.services.vehiculo.VehiculoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/propietarios")
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+@RequestMapping("/api/propietarios")
 public class PropietarioController {
 
     private final PropietarioService propietarioService;
@@ -30,42 +33,56 @@ public class PropietarioController {
 
     //Obtener una lista con todos los propietarios
     @GetMapping
-    public List<PropietarioDTO> obtenerTodosLosPropietarios() {
+    public List<PropietarioBusquedasDTO> obtenerTodosLosPropietarios() {
 
         return propietarioService.findAll();
     }
 
+    //Obtener una lista con todos los propietarios (campos id, nombre, 1apellido, 2apellido, dni)
+    @GetMapping("/parcial")
+    public List<PropietarioBusquedasParcialDTO> obtenerTodosLosPropietariosParcial() {
+
+        return propietarioService.findAllPartial();
+    }
+
     //Obtener un propietario por su id
     @GetMapping("/{id}")
-    public ResponseEntity<PropietarioDTO> obtenerPropietarioPorId(@PathVariable Long id) {
+    public ResponseEntity<PropietarioBusquedasDTO> obtenerPropietarioPorId(@PathVariable Long id) {
 
         return propietarioService.findById(id);
     }
 
     //Obtener un propietario por dni
     @GetMapping("/dni/{dni}")
-    public ResponseEntity<PropietarioDTO> obtenerPropietarioPorDni(@PathVariable String dni) {
+    public ResponseEntity<PropietarioBusquedasDTO> obtenerPropietarioPorDni(@PathVariable String dni) {
 
         return propietarioService.findByDni(dni);
     }
 
     //Obtener propietarios por nombre
     @GetMapping("/nombre/{nombre}")
-    public List<PropietarioDTO> obtenerPropietarioPorNombre(@PathVariable String nombre) {
+    public List<PropietarioBusquedasDTO> obtenerPropietarioPorNombre(@PathVariable String nombre) {
 
         return propietarioService.findByNombre(nombre);
     }
 
     //Obtener propietarios por primer apellido
     @GetMapping("/primer-apellido/{primerApellido}")
-    public List<PropietarioDTO> obtenerPropietarioPorPrimerApellido(@PathVariable String primerApellido) {
+    public List<PropietarioBusquedasDTO> obtenerPropietarioPorPrimerApellido(@PathVariable String primerApellido) {
 
         return propietarioService.findByPrimerApellido(primerApellido);
     }
 
+    //Obtener una lista con todos los propietarios por primer apellido (campos id, nombre, 1apellido, 2apellido, dni)
+    @GetMapping("/primer-apellido/parcial/{primerApellido}")
+    public List<PropietarioBusquedasParcialDTO> obtenerTodosLosPropietariosPorPrimrApellidoParcial(@PathVariable String primerApellido) {
+
+        return propietarioService.findByPrimerApellidoPartial(primerApellido);
+    }
+
     //Obtener propietarios por nombre mas apellidos
     @GetMapping("/nombre-apellidos/{nombre}-{primerApellido}-{segundoApellido}")
-    public List<PropietarioDTO> obtenerPropietarioPorNombreMasApellidos(
+    public List<PropietarioBusquedasDTO> obtenerPropietarioPorNombreMasApellidos(
             @PathVariable String nombre,
             @PathVariable String primerApellido,
             @PathVariable String segundoApellido)
@@ -76,9 +93,18 @@ public class PropietarioController {
 
     //Obtener propietarios por codigo postal
     @GetMapping("/codigo_postal/{id}")
-    public List<PropietarioDTO> obtenerPropietariosPorCodigoPostal(@PathVariable Long id) {
-        //return propietarioService.obtenerPropietariosPorCodigoPostalSQL(id);
-        return propietarioService.obtenerPropietariosPorCodigoPostalHQL(id);
+    public List<PropietarioBusquedasDTO> obtenerPropietariosPorCodigoPostal(@PathVariable Long id) {
+
+        return propietarioService.ObtenerPropietariosPorCodigoPostal(id);
+
+    }
+
+    //Obtener propietarios por codigo postal (campos id, nombre, 1apellido, 2apellido, dni)
+    @GetMapping("/codigo_postal/parcial/{id}")
+    public List<PropietarioBusquedasParcialDTO> obtenerPropietariosPorCodigoPostalParcial(@PathVariable Long id) {
+
+        return propietarioService.obtenerPropietariosPorCodigoPostalParcial(id);
+
     }
 
     //Modificar un propietario existente

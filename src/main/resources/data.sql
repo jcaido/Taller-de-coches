@@ -30,3 +30,36 @@ insert into vehiculos (matricula, marca, modelo, color, propietario_id) values (
 insert into vehiculos (matricula, marca, modelo, color, propietario_id) values ('5111UUU', 'SEAT', 'TOLEDO', 'Azul', 1);
 insert into vehiculos (matricula, marca, modelo, color, propietario_id) values ('2110YTY', 'RENAULT', 'CMAX', 'Amarillo', 6);
 insert into vehiculos (matricula, marca, modelo, color, propietario_id) values ('0499FCK', 'FORD', 'FOCUS', 'Blanco', 5);
+
+insert into piezas (referencia, nombre_pieza, precio_venta) values ('VA23356', 'Arandela de cobre', 0.50);
+insert into piezas (referencia, nombre_pieza, precio_venta) values ('VA40001', 'polea distribucion', 25.30);
+insert into piezas (referencia, nombre_pieza, precio_venta) values ('TE23126', 'filtro aceite', 4.20);
+insert into piezas (referencia, nombre_pieza, precio_venta) values ('TE11111', 'filtro de combustible', 10.78);
+insert into piezas (referencia, nombre_pieza, precio_venta) values ('TE34000', 'filtro de aire', 9.76);
+insert into piezas (referencia, nombre_pieza, precio_venta) values ('TE32111', 'filtro de polen', 12.60);
+insert into piezas (referencia, nombre_pieza, precio_venta) values ('VA00000', 'volante motor', 119.25);
+insert into piezas (referencia, nombre_pieza, precio_venta) values ('R333300', 'radiador', 150.87);
+insert into piezas (referencia, nombre_pieza, precio_venta) values ('VA55555', 'culata', 300.45);
+insert into piezas (referencia, nombre_pieza, precio_venta) values ('VA44099', 'caja de cambios', 300.34);
+
+insert into orden_reparacion (vehiculo_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada) values (1, '2022/11/19', null, 'REVISAR ARRANQUE', 120000, null, false);
+insert into orden_reparacion (vehiculo_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada) values (2, '2022/11/20', null, 'REVISAR RUIDO MOTOR', 23987, null, false);
+insert into orden_reparacion (vehiculo_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada) values (3, '2022/11/19', null, 'RUIDO EMBRAGUE', 165776, null, false);
+insert into orden_reparacion (vehiculo_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada) values (1, '2022/11/22', null, 'CAMBIO ACEITE', 13455, null, false);
+insert into orden_reparacion (vehiculo_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada) values (4, '2022/11/23', null, 'REVISAR GASES', 23987, null, false);
+insert into orden_reparacion (vehiculo_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada) values (2, '2022/11/22', null, 'FUGA DE ACEITE', 32443, null, false);
+insert into orden_reparacion (vehiculo_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada) values (5, '2022/11/25', null, 'REVISAR TERMOSTATO', 2332, null, false);
+insert into orden_reparacion (vehiculo_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada) values (2, '2022/11/19', null, 'COMPROBAR ARRANQUE', 123321, null, false);
+insert into orden_reparacion (vehiculo_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada) values (1, '2022/11/20', null, 'CAMBIAR FILTRO POLEN', 54345, null, false);
+insert into orden_reparacion (vehiculo_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada) values (1, '2022/11/21', null, 'REVISAR BUJIAS', 22345, null, false);
+
+insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (1, 1, 1);
+insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (1, 1, 2);
+insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (2, 1, 3);
+insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (1, 2, 4);
+insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (1, 2, 1);
+insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (1, 4, 4);
+insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (1, 4, 6);
+insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (1, 6, 1);
+insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (1, 6, 2);
+insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (2, 6, 4);
