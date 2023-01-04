@@ -1,9 +1,11 @@
 package com.Tallerdecoches;
 
-import com.Tallerdecoches.DTOs.CodigoPostalDTO;
-import com.Tallerdecoches.DTOs.PropietarioDTO;
-import com.Tallerdecoches.DTOs.VehiculoDTO;
-import com.Tallerdecoches.repositories.CodigoPostalRepository;
+import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalDTO;
+import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
+import com.Tallerdecoches.DTOs.pieza.PiezaDTO;
+import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionDTO;
+import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
+import com.Tallerdecoches.DTOs.vehiculo.VehiculoDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,26 +19,34 @@ public class TallerDeCochesApplication {
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
-
 	@Bean
 	public CodigoPostalDTO codigoPostalDTO() {
 		return new CodigoPostalDTO();
 	}
-
 	@Bean
 	public PropietarioDTO propietarioDTO() {
 		return new PropietarioDTO();
 	}
-
 	@Bean
 	public VehiculoDTO vehiculoDTO() {
 		return new VehiculoDTO();
+	}
+	@Bean
+	public PiezaDTO piezaDTO() {
+		return new PiezaDTO();
+	}
+	@Bean
+	public OrdenReparacionDTO ordenReparacionDTO() {
+		return new OrdenReparacionDTO();
+	}
+	@Bean
+	public PiezasReparacionDTO piezasReparacionDTO() {
+		return new PiezasReparacionDTO();
 	}
 
 	public static void main(String[] args) {
 
 		ApplicationContext context = SpringApplication.run(TallerDeCochesApplication.class, args);
-		CodigoPostalRepository repository = context.getBean(CodigoPostalRepository.class);
 
 	}
 }

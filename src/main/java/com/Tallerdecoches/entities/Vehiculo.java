@@ -1,12 +1,14 @@
 package com.Tallerdecoches.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "vehiculos")
 public class Vehiculo implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,6 +19,9 @@ public class Vehiculo implements Serializable {
     private String color;
     @OneToOne()
     private Propietario propietario;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "vehiculo")
+    private List<OrdenReparacion> ordenesReparacion = new ArrayList<>();
 
     public Vehiculo() {
     }
@@ -75,6 +80,14 @@ public class Vehiculo implements Serializable {
 
     public void setPropietario(Propietario propietario) {
         this.propietario = propietario;
+    }
+
+    public List<OrdenReparacion> getOrdenesReparacion() {
+        return ordenesReparacion;
+    }
+
+    public void setOrdenesReparacion(List<OrdenReparacion> ordenesReparacion) {
+        this.ordenesReparacion = ordenesReparacion;
     }
 
     @Override

@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class BadRequestCreacionException extends RuntimeException{
-
     private String nombreDelRecurso;
     private String nombreDelCampo;
 

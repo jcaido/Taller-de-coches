@@ -1,16 +1,16 @@
 package com.Tallerdecoches.controllers;
 
-import com.Tallerdecoches.DTOs.CodigoPostalDTO;
-import com.Tallerdecoches.DTOs.PropietarioDTO;
-import com.Tallerdecoches.repositories.CodigoPostalRepository;
-import com.Tallerdecoches.services.CodigoPostalService;
-import com.Tallerdecoches.services.PropietarioService;
+import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalDTO;
+import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
+import com.Tallerdecoches.services.codigoPostal.CodigoPostalService;
+import com.Tallerdecoches.services.propietario.PropietarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RequestMapping("/api/codigosPostales")
 public class CodigoPostalController {
 
@@ -45,7 +45,7 @@ public class CodigoPostalController {
     }
 
     @GetMapping("/{id}/propietarios")
-    public List<PropietarioDTO> obtenerPropietariosPorCodigoPostal(@PathVariable Long id) {
+    public List<PropietarioBusquedasDTO> obtenerPropietariosPorCodigoPostal(@PathVariable Long id) {
 
         return propietarioService.ObtenerPropietariosPorCodigoPostal(id);
     }
