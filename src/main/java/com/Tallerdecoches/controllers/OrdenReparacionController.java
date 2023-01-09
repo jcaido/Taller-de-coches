@@ -1,6 +1,7 @@
 package com.Tallerdecoches.controllers;
 
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
+import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
 import com.Tallerdecoches.services.ordenReparacion.OrdenReparacionService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -71,6 +72,30 @@ public class OrdenReparacionController {
         return ordenReparacionService.findByCerrada(cerrada);
     }
 
+    //Obtener ordenes de reparacion por estado (abiertas o cerradas), campos(id, fechaApertura, descripcion, kilometros, matricula)
+    @GetMapping("/cerrada-parcial/{cerrada}")
+    public List<OrdenReparacionBusquedasParcialDTO> obtenerOrdenesReparacionPorIsCerradaParcial(@PathVariable Boolean cerrada) {
+
+        return ordenReparacionService.findByCerradaParcial(cerrada);
+    }
+
+    //Obtener ordenes de reparacion por estado (abiertas o cerradas) parcial y por fecha de apertura
+    @GetMapping("/cerrada-parcial/{cerrada}/{fechaApertura}")
+    public List<OrdenReparacionBusquedasParcialDTO> obtenerOrdenesReparacionPorIsCerradaParcialFechaApertura(
+            @PathVariable Boolean cerrada,
+            @PathVariable(name="fechaApertura")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaApertura) {
+
+        return ordenReparacionService.findByCerradaParcialPorFechaApertura(cerrada, fechaApertura);
+    }
+
+    //Obtener ordenes de reparacion por estado (abiertas o cerradas) parcial y por vehiculo
+    @GetMapping("/cerrada-parcial-vehiculo/{cerrada}/{id_vehiculo}")
+    public List<OrdenReparacionBusquedasParcialDTO> obtenerOrdenesReparacionPorIsCerradaParcialVehiculo(
+            @PathVariable Boolean cerrada,
+            @PathVariable Long id_vehiculo) {
+
+        return ordenReparacionService.findByCerradaParcialPorVehiculo(cerrada, id_vehiculo);
+    }
     //Obtener ordenes de reparacion por vehiculo
     @GetMapping("/vehiculo/{id_vehiculo}")
     public List<OrdenReparacionBusquedasDTO> obtenerOrdenesReparacionPorVehiculo(@PathVariable Long id_vehiculo) {
