@@ -1,6 +1,7 @@
 package com.Tallerdecoches.services.ordenReparacion;
 
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
+import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.entities.OrdenReparacion;
@@ -97,6 +98,33 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
         List<OrdenReparacion> ordenesReparacion = ordenReparacionRepository.findByCerrada(cerrada);
 
         return ordenesReparacion.stream().map(ordenReparacion-> modelMapper.map(ordenReparacion, OrdenReparacionBusquedasDTO.class)).toList();
+    }
+
+    @Override
+    public List<OrdenReparacionBusquedasParcialDTO> findByCerradaParcial(Boolean cerrada) {
+        List<OrdenReparacion> ordenesReparacion = ordenReparacionRepository.findByCerrada(cerrada);
+
+        return ordenesReparacion.stream().map(ordenReparacion-> modelMapper.map(ordenReparacion, OrdenReparacionBusquedasParcialDTO.class)).toList();
+    }
+
+    @Override
+    public List<OrdenReparacionBusquedasParcialDTO> findByCerradaParcialPorFechaApertura(Boolean cerrada, LocalDate fechaApertura) {
+        Query query = entityManager.createQuery("FROM OrdenReparacion o WHERE o.cerrada = :cerrada AND o.fechaApertura = :fechaApertura");
+        query.setParameter("cerrada", cerrada);
+        query.setParameter("fechaApertura", fechaApertura);
+        List<OrdenReparacion> ordenesReparacion = query.getResultList();
+
+        return ordenesReparacion.stream().map(ordenReparacion-> modelMapper.map(ordenReparacion, OrdenReparacionBusquedasParcialDTO.class)).toList();
+    }
+
+    @Override
+    public List<OrdenReparacionBusquedasParcialDTO> findByCerradaParcialPorVehiculo(Boolean cerrada, Long id_vehiculo) {
+        Query query = entityManager.createQuery("FROM OrdenReparacion o WHERE o.cerrada = :cerrada AND o.vehiculo.id = :id");
+        query.setParameter("cerrada", cerrada);
+        query.setParameter("id", id_vehiculo);
+        List<OrdenReparacion> ordenesReparacion = query.getResultList();
+
+        return ordenesReparacion.stream().map(ordenReparacion-> modelMapper.map(ordenReparacion, OrdenReparacionBusquedasParcialDTO.class)).toList();
     }
 
     @Override

@@ -2,11 +2,13 @@ package com.Tallerdecoches.DTOs.ordenReparacion;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class OrdenReparacionDTO {
     private Long id;
     @JsonFormat(pattern = "dd-MM-yyyy")
+    @NotNull(message = "la fecha de apertura no puede ser nula")
     private LocalDate fechaApertura;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate fechaCierre;
