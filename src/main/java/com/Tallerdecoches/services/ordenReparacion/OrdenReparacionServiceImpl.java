@@ -4,9 +4,12 @@ import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
+import com.Tallerdecoches.DTOs.vehiculo.VehiculoDTO;
 import com.Tallerdecoches.entities.OrdenReparacion;
+import com.Tallerdecoches.entities.Propietario;
 import com.Tallerdecoches.entities.Vehiculo;
 import com.Tallerdecoches.exceptions.BadRequestCreacionException;
+import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.OrdenReparacionRepository;
 import com.Tallerdecoches.repositories.PiezaRepository;
@@ -80,6 +83,16 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
     }
 
     @Override
+    public ResponseEntity<OrdenReparacionBusquedasParcialDTO> findByIdParcial(Long id) {
+        Optional<OrdenReparacion> ordenReparacion = ordenReparacionRepository.findById(id);
+
+        if (!ordenReparacion.isPresent())
+            throw new ResourceNotFoundException("Orden de reparacion", "id", String.valueOf(id));
+
+        return new ResponseEntity<>(modelMapper.map(ordenReparacion, OrdenReparacionBusquedasParcialDTO.class), HttpStatus.OK);
+    }
+
+    @Override
     public List<OrdenReparacionBusquedasDTO> findByFechaApertura(LocalDate fechaApertura) {
         List<OrdenReparacion> ordenesReparacion = ordenReparacionRepository.findByFechaApertura(fechaApertura);
 
@@ -134,6 +147,31 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
         List<OrdenReparacion> ordenesReparacion = query.getResultList();
 
         return ordenesReparacion.stream().map(ordenReparacion-> modelMapper.map(ordenReparacion, OrdenReparacionBusquedasDTO.class)).toList();
+    }
+
+    @Override
+    public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacion(OrdenReparacionDTO ordenReparacionDTO, Long id_vehiculo) {
+
+        if (ordenReparacionDTO.getId() == null)
+            throw new BadRequestModificacionException("Orden de reparacion", "id");
+
+        if (!ordenReparacionRepository.existsById(ordenReparacionDTO.getId()))
+            throw new ResourceNotFoundException("Orden de reparacion", "id", String.valueOf(ordenReparacionDTO.getId()));
+
+        if (!ordenReparacionModificacionCambiosService.validacionVehiculo(id_vehiculo))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El vehiculo asociado a la orden de reparacion no existe");
+
+        OrdenReparacion ordenReparacion = ordenReparacionRepository.findById(ordenReparacionDTO.getId()).get();
+        Vehiculo vehiculo = vehiculoRepository.findById(id_vehiculo).get();
+
+        ordenReparacion.setFechaApertura(ordenReparacionDTO.getFechaApertura());
+        ordenReparacion.setDescripcion(ordenReparacionDTO.getDescripcion());
+        ordenReparacion.setKilometros(ordenReparacionDTO.getKilometros());
+        ordenReparacion.setVehiculo(vehiculo);
+
+        OrdenReparacion ordenReparacionModificada = ordenReparacionRepository.save(ordenReparacion);
+
+        return new ResponseEntity<>(modelMapper.map(ordenReparacion, OrdenReparacionDTO.class), HttpStatus.OK);
     }
 
 }
