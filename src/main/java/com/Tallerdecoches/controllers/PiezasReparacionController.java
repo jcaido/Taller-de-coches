@@ -4,6 +4,7 @@ import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionBusquedasDTO;
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
+import com.Tallerdecoches.DTOs.vehiculo.VehiculoDTO;
 import com.Tallerdecoches.services.piezasReparacion.PiezasReparacionService;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
@@ -54,6 +55,5 @@ public class PiezasReparacionController {
     public List<PiezasReparacionBusquedasParcialDTO> obtenerPiezasReparacionPorOrdenReparacion(@PathVariable Long id) {
 
         return piezasReparacionService.obtenerPiezasReparacionPorOrdenReparacion(id);
-
     }
 }

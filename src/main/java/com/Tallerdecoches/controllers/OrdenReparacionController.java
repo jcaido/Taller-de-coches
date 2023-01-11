@@ -3,6 +3,7 @@ package com.Tallerdecoches.controllers;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
+import com.Tallerdecoches.DTOs.vehiculo.VehiculoDTO;
 import com.Tallerdecoches.services.ordenReparacion.OrdenReparacionService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,13 @@ public class OrdenReparacionController {
     public ResponseEntity<OrdenReparacionBusquedasDTO> obtenerOrdenReparacionPorId(@PathVariable Long id) {
 
         return ordenReparacionService.findById(id);
+    }
+
+    //Obtener una orden de reparacion por su id parcial
+    @GetMapping("/parcial/{id}")
+    public ResponseEntity<OrdenReparacionBusquedasParcialDTO> obtenerOrdenReparacionPorIdParcial(@PathVariable Long id) {
+
+        return ordenReparacionService.findByIdParcial(id);
     }
 
     //Obtener una lista con todas las ordenes de reparacion
@@ -101,5 +109,12 @@ public class OrdenReparacionController {
     public List<OrdenReparacionBusquedasDTO> obtenerOrdenesReparacionPorVehiculo(@PathVariable Long id_vehiculo) {
 
         return ordenReparacionService.obtenerOrdenesReparacionPorVehiculo(id_vehiculo);
+    }
+
+    //Modificar una orden de reparacion
+    @PutMapping("/{id_vehiculo}")
+    public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacion(@Valid @RequestBody OrdenReparacionDTO ordenReparacionDTO, @PathVariable Long id_vehiculo) {
+
+        return ordenReparacionService.modificarOrdenReparacion(ordenReparacionDTO, id_vehiculo);
     }
 }
