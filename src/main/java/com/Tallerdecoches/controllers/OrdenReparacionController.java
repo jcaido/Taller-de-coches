@@ -117,4 +117,11 @@ public class OrdenReparacionController {
 
         return ordenReparacionService.modificarOrdenReparacion(ordenReparacionDTO, id_vehiculo);
     }
+
+    //Eliminar una orden de reparacion existente (no cerrada)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarPropietario(@PathVariable Long id) {
+
+        return ordenReparacionService.deleteById(id);
+    }
 }

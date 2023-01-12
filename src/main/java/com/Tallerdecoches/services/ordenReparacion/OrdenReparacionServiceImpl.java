@@ -3,18 +3,15 @@ package com.Tallerdecoches.services.ordenReparacion;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
-import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
-import com.Tallerdecoches.DTOs.vehiculo.VehiculoDTO;
 import com.Tallerdecoches.entities.OrdenReparacion;
-import com.Tallerdecoches.entities.Propietario;
 import com.Tallerdecoches.entities.Vehiculo;
 import com.Tallerdecoches.exceptions.BadRequestCreacionException;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.OrdenReparacionRepository;
 import com.Tallerdecoches.repositories.PiezaRepository;
-import com.Tallerdecoches.repositories.PiezasReparacionRepository;
 import com.Tallerdecoches.repositories.VehiculoRepository;
+import com.Tallerdecoches.services.piezasReparacion.PiezasReparacionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,19 +29,20 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
     private final OrdenReparacionRepository ordenReparacionRepository;
     private final VehiculoRepository vehiculoRepository;
     private final PiezaRepository piezaRepository;
-    private final PiezasReparacionRepository piezasReparacionRepository;
+    //private final PiezasReparacionRepository piezasReparacionRepository;
     private final EntityManager entityManager;
     private final ModelMapper modelMapper;
     private final OrdenReparacionModificacionCambiosService ordenReparacionModificacionCambiosService;
+    private final PiezasReparacionService piezasReparacionService;
 
-    public OrdenReparacionServiceImpl(OrdenReparacionRepository ordenReparacionRepository, VehiculoRepository vehiculoRepository, PiezaRepository piezaRepository, PiezasReparacionRepository piezasReparacionRepository, EntityManager entityManager, ModelMapper modelMapper, OrdenReparacionModificacionCambiosService ordenReparacionModificacionCambiosService) {
+    public OrdenReparacionServiceImpl(OrdenReparacionRepository ordenReparacionRepository, VehiculoRepository vehiculoRepository, PiezaRepository piezaRepository, EntityManager entityManager, ModelMapper modelMapper, OrdenReparacionModificacionCambiosService ordenReparacionModificacionCambiosService, PiezasReparacionService piezasReparacionService) {
         this.ordenReparacionRepository = ordenReparacionRepository;
         this.vehiculoRepository = vehiculoRepository;
         this.piezaRepository = piezaRepository;
-        this.piezasReparacionRepository = piezasReparacionRepository;
         this.entityManager = entityManager;
         this.modelMapper = modelMapper;
         this.ordenReparacionModificacionCambiosService = ordenReparacionModificacionCambiosService;
+        this.piezasReparacionService = piezasReparacionService;
     }
 
 
@@ -172,6 +170,22 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
         OrdenReparacion ordenReparacionModificada = ordenReparacionRepository.save(ordenReparacion);
 
         return new ResponseEntity<>(modelMapper.map(ordenReparacion, OrdenReparacionDTO.class), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<String> deleteById(Long id) {
+
+        Optional<OrdenReparacion> ordenReparacion = ordenReparacionRepository.findById(id);
+
+        if (ordenReparacion.get().isCerrada())
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La orden de reparacion esta cerrada");
+
+        if (piezasReparacionService.obtenerPiezasReparacionPorOrdenReparacion(id).size() > 0)
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Existen piezas relacionadas con esa orden de reparacion");
+
+        ordenReparacionRepository.deleteById(id);
+
+        return new ResponseEntity<>("Orden de reparacion eliminada con exito", HttpStatus.OK);
     }
 
 }

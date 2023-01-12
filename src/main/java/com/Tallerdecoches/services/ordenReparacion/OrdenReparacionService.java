@@ -22,4 +22,5 @@ public interface OrdenReparacionService {
     List<OrdenReparacionBusquedasParcialDTO> findByCerradaParcialPorVehiculo(Boolean cerrada, Long id_vehiculo);
     List<OrdenReparacionBusquedasDTO> obtenerOrdenesReparacionPorVehiculo(Long id_vehiculo);
     ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacion(OrdenReparacionDTO ordenReparacionDTO, Long id_vehiculo);
+    ResponseEntity<String> deleteById(Long  id);
 }
