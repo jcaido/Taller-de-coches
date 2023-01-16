@@ -1,30 +1,14 @@
 package com.Tallerdecoches.DTOs.piezasReparacion;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class PiezasReparacionDTO {
     private Long id;
     private Integer cantidad;
-
-    public PiezasReparacionDTO() {
-    }
-
-    public PiezasReparacionDTO(Long id, Integer cantidad) {
-        this.id = id;
-        this.cantidad = cantidad;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
-    }
 }

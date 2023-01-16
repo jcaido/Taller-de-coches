@@ -1,7 +1,14 @@
 package com.Tallerdecoches.DTOs.pieza;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import javax.validation.constraints.NotBlank;
-
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class PiezaDTO {
     private Long id;
     @NotBlank(message =  "debe introducir la refenciare")
@@ -9,46 +16,4 @@ public class PiezaDTO {
     @NotBlank(message =  "debe introducir el nombre")
     private String nombre;
     private Double precio;
-
-    public PiezaDTO() {
-    }
-
-    public PiezaDTO(Long id, String referencia, String nombre, Double precio) {
-        this.id = id;
-        this.referencia = referencia;
-        this.nombre = nombre;
-        this.precio = precio;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getReferencia() {
-        return referencia;
-    }
-
-    public void setReferencia(String referencia) {
-        this.referencia = referencia;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(Double precio) {
-        this.precio = precio;
-    }
 }

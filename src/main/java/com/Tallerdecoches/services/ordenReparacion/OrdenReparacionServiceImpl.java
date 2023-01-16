@@ -177,7 +177,7 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
 
         Optional<OrdenReparacion> ordenReparacion = ordenReparacionRepository.findById(id);
 
-        if (ordenReparacion.get().isCerrada())
+        if (ordenReparacion.get().getCerrada())
             throw new ResponseStatusException(HttpStatus.CONFLICT, "La orden de reparacion esta cerrada");
 
         if (piezasReparacionService.obtenerPiezasReparacionPorOrdenReparacion(id).size() > 0)
