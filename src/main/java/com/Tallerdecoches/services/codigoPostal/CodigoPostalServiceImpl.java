@@ -1,8 +1,8 @@
 package com.Tallerdecoches.services.codigoPostal;
 
+import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalCrearDTO;
 import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalDTO;
 import com.Tallerdecoches.entities.CodigoPostal;
-import com.Tallerdecoches.exceptions.BadRequestCreacionException;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.CodigoPostalRepository;
@@ -31,18 +31,15 @@ public class CodigoPostalServiceImpl implements CodigoPostalService {
     }
 
     @Override
-    public ResponseEntity<CodigoPostalDTO> crearCodigoPostal(CodigoPostalDTO codigoPostalDTO) {
+    public ResponseEntity<CodigoPostalDTO> crearCodigoPostal(CodigoPostalCrearDTO codigoPostalCrearDTO) {
 
-        if (codigoPostalDTO.getId() != null)
-            throw new BadRequestCreacionException("Codigo Postal", "id");
-
-        if (codigoPostalRepository.existsByCodigo(codigoPostalDTO.getCodigo()))
+        if (codigoPostalRepository.existsByCodigo(codigoPostalCrearDTO.getCodigo()))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero del codigo postal ya existe");
 
-        if (codigoPostalRepository.existsByLocalidad(codigoPostalDTO.getLocalidad()))
+        if (codigoPostalRepository.existsByLocalidad(codigoPostalCrearDTO.getLocalidad()))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "la localidad del codigo postal ya existe");
 
-        CodigoPostal codigoPostal = modelMapper.map(codigoPostalDTO, CodigoPostal.class);
+        CodigoPostal codigoPostal = modelMapper.map(codigoPostalCrearDTO, CodigoPostal.class);
         CodigoPostal nuevoCodigoPostal = codigoPostalRepository.save(codigoPostal);
         CodigoPostalDTO codigoPostalRespuesta = modelMapper.map(nuevoCodigoPostal, CodigoPostalDTO.class);
         return new ResponseEntity<>(codigoPostalRespuesta, HttpStatus.CREATED);

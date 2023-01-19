@@ -5,15 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.NotBlank;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class CodigoPostalDTO {
+public class CodigoPostalCrearDTO {
 
-    private Long id;
     @NotBlank(message =  "debe introducir el codigo")
     @Length(min=5, max=5, message = "el codigo postal debe tener 5 digitos")
     private String codigo;

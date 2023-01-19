@@ -1,9 +1,16 @@
 package com.Tallerdecoches.controllers;
 
+import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalCrearDTO;
 import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.services.codigoPostal.CodigoPostalService;
 import com.Tallerdecoches.services.propietario.PropietarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -22,68 +29,143 @@ public class CodigoPostalController {
         this.propietarioService = propietarioService;
     }
 
-    //crear un nuevo Codigo Postal
-    @PostMapping
-    public ResponseEntity<CodigoPostalDTO> crearCodigoPostal(@Valid @RequestBody CodigoPostalDTO codigoPostalDTO) {
+    @Operation(summary = "Crear un nuevo Código Postal", description = "Crear un nuevo Código Postal")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "código postal creado",
+                    content = {
+                        @Content(mediaType = "application/json",
+                                schema = @Schema(implementation = CodigoPostalDTO.class))
+                    }),
+            @ApiResponse(responseCode = "400",
+                    description = "Bad Request",
+                    content = @Content),
+            @ApiResponse(responseCode = "409",
+                    description = "Dato/s invalidos",
+                    content = @Content),
+    })
+    @PostMapping()
+    public ResponseEntity<CodigoPostalDTO> crearCodigoPostal(@Valid @RequestBody CodigoPostalCrearDTO codigoPostalCrearDTO) {
 
-        return codigoPostalService.crearCodigoPostal(codigoPostalDTO);
+        return codigoPostalService.crearCodigoPostal(codigoPostalCrearDTO);
     }
 
-    //Obtener una lista con todos los codigos postales
-    @GetMapping
+    @Operation(summary = "Obtener todos los Códigos Postales", description = "Obtener todos los Códigos Postales")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Codigos Postales obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = CodigoPostalDTO.class))
+                    })
+    })
+    @GetMapping()
     public List<CodigoPostalDTO> obtenerTodosLosCodigosPostales() {
 
         return codigoPostalService.findAll();
     }
 
-
-    //Obtener un codigo postal por su id
+    @Operation(summary = "Obtener Código Postal por id", description = "Obtener Código Postal por id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Codigo Postal obtenido correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = CodigoPostalDTO.class))
+                    }),
+            @ApiResponse(responseCode = "404", description = "codigo postal no encontrado",
+                    content = @Content)
+    })
     @GetMapping("/{id}")
-    public ResponseEntity<CodigoPostalDTO> obtenerCodigoPostalPorId(@PathVariable Long id) {
+    public ResponseEntity<CodigoPostalDTO> obtenerCodigoPostalPorId( @Parameter(description = "id del código postal a buscar",
+            required = true) @PathVariable Long id) {
 
         return codigoPostalService.findById(id);
     }
 
+    //TODO: pasar esto al controlador PropietarioController
     @GetMapping("/{id}/propietarios")
     public List<PropietarioBusquedasDTO> obtenerPropietariosPorCodigoPostal(@PathVariable Long id) {
 
         return propietarioService.ObtenerPropietariosPorCodigoPostal(id);
     }
 
-
-    //Obtener un codigo postal por codigo
+    @Operation(summary = "Obtener Código Postal por código", description = "Obtener Código Postal por código")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Codigo Postal obtenido correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = CodigoPostalDTO.class))
+                    }),
+            @ApiResponse(responseCode = "404", description = "codigo postal no encontrado",
+                    content = @Content)
+    })
     @GetMapping("/codigo/{codigo}")
-    public ResponseEntity<CodigoPostalDTO> obtenerCodigoPostalPorCodigo(@PathVariable String codigo) {
+    public ResponseEntity<CodigoPostalDTO> obtenerCodigoPostalPorCodigo(@Parameter(description = "número del código postal a buscar",
+            required = true) @PathVariable String codigo) {
 
         return codigoPostalService.findByCodigo(codigo);
     }
 
-
-    //Obtener lista de codigos postales filtrada por provincia
+    @Operation(summary = "Obtener Códigos Postales por provincia", description = "Obtener Códigos Postales por provincia")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Codigo Postal obtenido correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = CodigoPostalDTO.class))
+                    })
+    })
     @GetMapping("/provincia/{provincia}")
-    public List<CodigoPostalDTO> obtenerCodigosPostalesPorProvincia(@PathVariable String provincia) {
+    public List<CodigoPostalDTO> obtenerCodigosPostalesPorProvincia(@Parameter(description = "provincia del código postal a buscar",
+            required = true) @PathVariable String provincia) {
 
         return codigoPostalService.findByProvincia(provincia);
     }
 
-    //Obtener un codigo postal por localidad
+    @Operation(summary = "Obtener Código Postal por localidad", description = "Obtener Código Postal por localidad")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Codigo Postal obtenido correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = CodigoPostalDTO.class))
+                    }),
+            @ApiResponse(responseCode = "404", description = "codigo postal no encontrado",
+                    content = @Content)
+    })
     @GetMapping("/localidad/{localidad}")
-    public ResponseEntity<CodigoPostalDTO> obtenerCodigoPostalPorLocalidad(@PathVariable String localidad) {
+    public ResponseEntity<CodigoPostalDTO> obtenerCodigoPostalPorLocalidad(@Parameter(description = "localidad del código postal a buscar",
+            required = true) @PathVariable String localidad) {
 
         return codigoPostalService.findByLocalidad(localidad);
     }
 
-
-    //Modificar un codigo postal existente
-    @PutMapping
+    @Operation(summary = "Modificar un Código Postal", description = "Modificar un Código Postal")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Codigo Postal modificado correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = CodigoPostalDTO.class))
+                    }),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "Dato/s invalidos",
+                    content = @Content)
+    })
+    @PutMapping()
     public ResponseEntity<CodigoPostalDTO> modificarCodigoPostal(@Valid @RequestBody CodigoPostalDTO codigoPostalDTO) {
 
         return codigoPostalService.modificarCodigoPostal(codigoPostalDTO);
     }
 
-    //Eliminar un codigo postal existente
+    @Operation(summary = "Eliminar un Código Postal", description = "Eliminar un Código Postal")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Código Postal eliminado correctamente",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Código Postal no encontrado",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "Dato/s invalidos",
+                    content = @Content),
+    })
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarCodigoPostal(@PathVariable Long id) {
+    public ResponseEntity<String> eliminarCodigoPostal(@Parameter(description = "id del código postal a eliminar",
+            required = true) @PathVariable Long id) {
 
         return codigoPostalService.deleteById(id);
     }
