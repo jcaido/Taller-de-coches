@@ -1,10 +1,18 @@
 package com.Tallerdecoches.controllers;
 
+import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasParcialDTO;
+import com.Tallerdecoches.DTOs.propietario.PropietarioCrearDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
 import com.Tallerdecoches.services.propietario.PropietarioService;
 import com.Tallerdecoches.services.vehiculo.VehiculoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -23,101 +31,221 @@ public class PropietarioController {
         this.vehiculoService = vehiculoService;
     }
 
-    //crear un nuevo Propietario
+    @Operation(summary = "Crear un nuevo Propietario", description = "Crear un nuevo Propietario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "propietario creado correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = PropietarioDTO.class))
+                    }),
+            @ApiResponse(responseCode = "400",
+                    description = "Bad Request",
+                    content = @Content),
+            @ApiResponse(responseCode = "409",
+                    description = "Dato/s invalidos",
+                    content = @Content),
+    })
     @PostMapping("/{id_codigoPostal}")
-    public ResponseEntity<PropietarioDTO> crearPropietario(@Valid @RequestBody PropietarioDTO propietarioDTO
-            , @PathVariable Long id_codigoPostal) {
+    public ResponseEntity<PropietarioDTO> crearPropietario(@Valid @RequestBody PropietarioCrearDTO propietarioCrearDTO
+            , @Valid @Parameter(description = "id del código postal del propietario", required = true) @PathVariable Long id_codigoPostal) {
 
-        return propietarioService.crearPropietario(propietarioDTO, id_codigoPostal);
+        return propietarioService.crearPropietario(propietarioCrearDTO, id_codigoPostal);
     }
 
-    //Obtener una lista con todos los propietarios
-    @GetMapping
+    @Operation(summary = "Obtener todos los Propietarios", description = "Obtener todos los Propietarios")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Propietarios obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = PropietarioBusquedasDTO.class))
+                    })
+    })
+    @GetMapping()
     public List<PropietarioBusquedasDTO> obtenerTodosLosPropietarios() {
 
         return propietarioService.findAll();
     }
 
-    //Obtener una lista con todos los propietarios (campos id, nombre, 1apellido, 2apellido, dni)
+    @Operation(summary = "Obtener todos los Propietarios", description = "Obtener todos los Propietarios sin incluir todos los campos" +
+            "solo incluimos los campos id, nombre, primer apellido, segundo apellido y dni")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Propietarios obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = PropietarioBusquedasParcialDTO.class))
+                    })
+    })
     @GetMapping("/parcial")
     public List<PropietarioBusquedasParcialDTO> obtenerTodosLosPropietariosParcial() {
 
         return propietarioService.findAllPartial();
     }
 
-    //Obtener un propietario por su id
+    @Operation(summary = "Obtener Propietario por id", description = "Obtener Propietario por id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Propietario obtenido correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = PropietarioBusquedasDTO.class))
+                    }),
+            @ApiResponse(responseCode = "404", description = "propietario no encontrado",
+                    content = @Content)
+    })
     @GetMapping("/{id}")
-    public ResponseEntity<PropietarioBusquedasDTO> obtenerPropietarioPorId(@PathVariable Long id) {
+    public ResponseEntity<PropietarioBusquedasDTO> obtenerPropietarioPorId(@Parameter(description = "id del propietario a buscar",
+            required = true) @PathVariable Long id) {
 
         return propietarioService.findById(id);
     }
 
-    //Obtener un propietario por dni
+    @Operation(summary = "Obtener Propietario por dni", description = "Obtener Propietario por dni")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Propietario obtenido correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = PropietarioBusquedasDTO.class))
+                    }),
+            @ApiResponse(responseCode = "404", description = "propietario no encontrado",
+                    content = @Content)
+    })
     @GetMapping("/dni/{dni}")
-    public ResponseEntity<PropietarioBusquedasDTO> obtenerPropietarioPorDni(@PathVariable String dni) {
+    public ResponseEntity<PropietarioBusquedasDTO> obtenerPropietarioPorDni(@Parameter(description = "dni del propietario a buscar",
+            required = true) @PathVariable String dni) {
 
         return propietarioService.findByDni(dni);
     }
 
-    //Obtener propietarios por nombre
+    @Operation(summary = "Obtener Propietarios por nombre", description = "Obtener Propietarios por nombre")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Propietarios obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = PropietarioBusquedasDTO.class))
+                    })
+    })
     @GetMapping("/nombre/{nombre}")
-    public List<PropietarioBusquedasDTO> obtenerPropietarioPorNombre(@PathVariable String nombre) {
+    public List<PropietarioBusquedasDTO> obtenerPropietarioPorNombre(@Parameter(description = "nombre del propietario a buscar",
+            required = true) @PathVariable String nombre) {
 
         return propietarioService.findByNombre(nombre);
     }
 
-    //Obtener propietarios por primer apellido
+    @Operation(summary = "Obtener Propietarios por primer apellido", description = "Obtener Propietarios por primer apellido")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Propietarios obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = PropietarioBusquedasDTO.class))
+                    })
+    })
     @GetMapping("/primer-apellido/{primerApellido}")
-    public List<PropietarioBusquedasDTO> obtenerPropietarioPorPrimerApellido(@PathVariable String primerApellido) {
+    public List<PropietarioBusquedasDTO> obtenerPropietarioPorPrimerApellido(@Parameter(description = "primer apellido del propietario a buscar",
+            required = true) @PathVariable String primerApellido) {
 
         return propietarioService.findByPrimerApellido(primerApellido);
     }
 
-    //Obtener una lista con todos los propietarios por primer apellido (campos id, nombre, 1apellido, 2apellido, dni)
+    @Operation(summary = "Obtener Propietarios por primer apellido", description = "Obtener Propietarios por primer apellido" +
+            "sin incluir todos lo campos, solo id, nombre, primer apellido, segundo apellido y dni")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Propietarios obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = PropietarioBusquedasParcialDTO.class))
+                    })
+    })
     @GetMapping("/primer-apellido/parcial/{primerApellido}")
-    public List<PropietarioBusquedasParcialDTO> obtenerTodosLosPropietariosPorPrimrApellidoParcial(@PathVariable String primerApellido) {
+    public List<PropietarioBusquedasParcialDTO> obtenerTodosLosPropietariosPorPrimrApellidoParcial(@Parameter(description = "primer apellido del propietario a buscar",
+            required = true) @PathVariable String primerApellido) {
 
         return propietarioService.findByPrimerApellidoPartial(primerApellido);
     }
 
-    //Obtener propietarios por nombre mas apellidos
+    @Operation(summary = "Obtener Propietarios por nombre mas apellidos", description = "Obtener Propietarios por nombre mas apellidos")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Propietarios obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = PropietarioBusquedasDTO.class))
+                    })
+    })
     @GetMapping("/nombre-apellidos/{nombre}-{primerApellido}-{segundoApellido}")
     public List<PropietarioBusquedasDTO> obtenerPropietarioPorNombreMasApellidos(
+            @Parameter(description = "nombre del propietario a buscar", required = true)
             @PathVariable String nombre,
+            @Parameter(description = "primer apellido del propietario a buscar", required = true)
             @PathVariable String primerApellido,
+            @Parameter(description = "segundo apellido del propietario a buscar", required = true)
             @PathVariable String segundoApellido)
     {
 
         return propietarioService.findByNombreAndPrimerApellidoAndSegundoApellido(nombre, primerApellido, segundoApellido);
     }
 
-    //Obtener propietarios por codigo postal
+    @Operation(summary = "Obtener Propietarios por codigo postal", description = "Obtener Propietarios por codigo postal")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Propietarios obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = PropietarioBusquedasDTO.class))
+                    })
+    })
     @GetMapping("/codigo_postal/{id}")
-    public List<PropietarioBusquedasDTO> obtenerPropietariosPorCodigoPostal(@PathVariable Long id) {
+    public List<PropietarioBusquedasDTO> obtenerPropietariosPorCodigoPostal(@Parameter(description = "id del codigo postal",
+            required = true) @PathVariable Long id) {
 
         return propietarioService.ObtenerPropietariosPorCodigoPostal(id);
 
     }
 
-    //Obtener propietarios por codigo postal (campos id, nombre, 1apellido, 2apellido, dni)
+    @Operation(summary = "Obtener Propietarios por codigo postal", description = "Obtener Propietarios por codigo postal sin incluir" +
+            "todos los campos, solo incluimos el id, nombre, primer apellido, segundo apellido y el dni")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Propietarios obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = PropietarioBusquedasParcialDTO.class))
+                    })
+    })
     @GetMapping("/codigo_postal/parcial/{id}")
-    public List<PropietarioBusquedasParcialDTO> obtenerPropietariosPorCodigoPostalParcial(@PathVariable Long id) {
+    public List<PropietarioBusquedasParcialDTO> obtenerPropietariosPorCodigoPostalParcial(@Parameter(description = "id del codigo postal",
+            required = true) @PathVariable Long id) {
 
         return propietarioService.obtenerPropietariosPorCodigoPostalParcial(id);
 
     }
 
-    //Modificar un propietario existente
+    @Operation(summary = "Modificar un Propietario", description = "Modificar un Propietario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Propietario modificado correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = PropietarioDTO.class))
+                    }),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "Dato/s invalidos",
+                    content = @Content)
+    })
     @PutMapping("/{id_codigoPostal}")
     public ResponseEntity<PropietarioDTO> modificarPropietario(@Valid @RequestBody PropietarioDTO propietarioDTO
-            , @PathVariable Long id_codigoPostal) {
+            , @Parameter(description = "id del codigo postal", required = true) @PathVariable Long id_codigoPostal) {
 
         return propietarioService.modificarPropietario(propietarioDTO, id_codigoPostal);
     }
 
     //Eliminar un propietario existente
+    @Operation(summary = "Eliminar un Propietario", description = "Eliminar un Propietario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Propietario eliminado correctamente",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Propietario no encontrado",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "Dato/s invalidos",
+                    content = @Content),
+    })
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarPropietario(@PathVariable Long id) {
+    public ResponseEntity<String> eliminarPropietario(@Parameter(description = "id del propietario", required = true) @PathVariable Long id) {
 
         return propietarioService.deleteById(id);
     }

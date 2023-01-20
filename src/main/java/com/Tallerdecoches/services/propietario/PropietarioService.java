@@ -2,12 +2,13 @@ package com.Tallerdecoches.services.propietario;
 
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasParcialDTO;
+import com.Tallerdecoches.DTOs.propietario.PropietarioCrearDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface PropietarioService {
-    ResponseEntity<PropietarioDTO> crearPropietario(PropietarioDTO propietarioDTO, Long id_codigoPostal);
+    ResponseEntity<PropietarioDTO> crearPropietario(PropietarioCrearDTO propietarioCrearDTO, Long id_codigoPostal);
     List<PropietarioBusquedasDTO> findAll();
     List<PropietarioBusquedasParcialDTO> findAllPartial();
     ResponseEntity<PropietarioBusquedasDTO> findById(Long id);

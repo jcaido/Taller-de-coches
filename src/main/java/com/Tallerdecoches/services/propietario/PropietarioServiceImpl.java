@@ -2,6 +2,7 @@ package com.Tallerdecoches.services.propietario;
 
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasParcialDTO;
+import com.Tallerdecoches.DTOs.propietario.PropietarioCrearDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
 import com.Tallerdecoches.entities.CodigoPostal;
 import com.Tallerdecoches.entities.Propietario;
@@ -43,18 +44,15 @@ public class PropietarioServiceImpl implements PropietarioService {
     }
 
     @Override
-    public ResponseEntity<PropietarioDTO> crearPropietario(PropietarioDTO propietarioDTO, Long id_codigoPostal) {
+    public ResponseEntity<PropietarioDTO> crearPropietario(PropietarioCrearDTO propietarioCrearDTO, Long id_codigoPostal) {
 
-        if (propietarioDTO.getId() != null)
-            throw new BadRequestCreacionException("Propietario", "id");
-
-        if (propietarioRepository.existsByDni(propietarioDTO. getDni()))
+        if (propietarioRepository.existsByDni(propietarioCrearDTO. getDni()))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El DNI del propietario ya existe");
 
         if (!propietarioModificacionCambiosService.validacionCodigoPostal(id_codigoPostal))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El codigo Postal asociado al propietario no existe");
 
-        Propietario propietario = modelMapper.map(propietarioDTO, Propietario.class);
+        Propietario propietario = modelMapper.map(propietarioCrearDTO, Propietario.class);
         CodigoPostal codigoPostal = codigoPostalRepository.findById(id_codigoPostal).get();
         propietario.setCodigoPostal(codigoPostal);
         propietarioRepository.save(propietario);

@@ -31,7 +31,7 @@ public class CodigoPostalController {
 
     @Operation(summary = "Crear un nuevo Código Postal", description = "Crear un nuevo Código Postal")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "código postal creado",
+            @ApiResponse(responseCode = "201", description = "código postal creado correctamente",
                     content = {
                         @Content(mediaType = "application/json",
                                 schema = @Schema(implementation = CodigoPostalDTO.class))
