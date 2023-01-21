@@ -2,6 +2,7 @@ package com.Tallerdecoches.services.vehiculo;
 
 import com.Tallerdecoches.DTOs.vehiculo.VehiculoBusquedasDTO;
 import com.Tallerdecoches.DTOs.vehiculo.VehiculoBusquedasParcialDTO;
+import com.Tallerdecoches.DTOs.vehiculo.VehiculoCrearDTO;
 import com.Tallerdecoches.DTOs.vehiculo.VehiculoDTO;
 import com.Tallerdecoches.entities.Propietario;
 import com.Tallerdecoches.entities.Vehiculo;
@@ -43,18 +44,15 @@ public class VehiculoServiceImpl implements VehiculoService {
     }
 
     @Override
-    public ResponseEntity<VehiculoDTO> crearVehiculo(VehiculoDTO vehiculoDTO, Long id_propietario) {
+    public ResponseEntity<VehiculoDTO> crearVehiculo(VehiculoCrearDTO vehiculoCrearDTO, Long id_propietario) {
 
-        if (vehiculoDTO.getId() != null)
-            throw new BadRequestCreacionException("Vehiculo", "id");
-
-        if (vehiculoRepository.existsByMatricula(vehiculoDTO.getMatricula()))
+        if (vehiculoRepository.existsByMatricula(vehiculoCrearDTO.getMatricula()))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "la matricula ya existe");
 
         if (!vehiculoModificacionCambiosService.validacionPropietario(id_propietario))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El propietario asociado al vehiculo no existe");
 
-        Vehiculo vehiculo = modelMapper.map(vehiculoDTO, Vehiculo.class);
+        Vehiculo vehiculo = modelMapper.map(vehiculoCrearDTO, Vehiculo.class);
         Propietario propietario = propietarioRepository.findById(id_propietario).get();
         vehiculo.setPropietario(propietario);
         vehiculoRepository.save(vehiculo);

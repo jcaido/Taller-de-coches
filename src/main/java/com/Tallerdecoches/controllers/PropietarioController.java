@@ -1,6 +1,5 @@
 package com.Tallerdecoches.controllers;
 
-import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioCrearDTO;
@@ -47,7 +46,7 @@ public class PropietarioController {
     })
     @PostMapping("/{id_codigoPostal}")
     public ResponseEntity<PropietarioDTO> crearPropietario(@Valid @RequestBody PropietarioCrearDTO propietarioCrearDTO
-            , @Valid @Parameter(description = "id del código postal del propietario", required = true) @PathVariable Long id_codigoPostal) {
+            , @Parameter(description = "id del código postal del propietario", required = true) @PathVariable Long id_codigoPostal) {
 
         return propietarioService.crearPropietario(propietarioCrearDTO, id_codigoPostal);
     }

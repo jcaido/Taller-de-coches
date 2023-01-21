@@ -2,12 +2,13 @@ package com.Tallerdecoches.services.vehiculo;
 
 import com.Tallerdecoches.DTOs.vehiculo.VehiculoBusquedasDTO;
 import com.Tallerdecoches.DTOs.vehiculo.VehiculoBusquedasParcialDTO;
+import com.Tallerdecoches.DTOs.vehiculo.VehiculoCrearDTO;
 import com.Tallerdecoches.DTOs.vehiculo.VehiculoDTO;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface VehiculoService {
-    ResponseEntity<VehiculoDTO> crearVehiculo(VehiculoDTO vehiculoDTO, Long id_propietario);
+    ResponseEntity<VehiculoDTO> crearVehiculo(VehiculoCrearDTO vehiculoCrearDTO, Long id_propietario);
     List<VehiculoBusquedasDTO> findAll();
     List<VehiculoBusquedasParcialDTO> findAllPartial();
     ResponseEntity<VehiculoBusquedasDTO> findById(Long id);
