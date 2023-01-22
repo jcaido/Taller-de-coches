@@ -1,5 +1,6 @@
 package com.Tallerdecoches.services.pieza;
 
+import com.Tallerdecoches.DTOs.pieza.PiezaCrearDTO;
 import com.Tallerdecoches.DTOs.pieza.PiezaDTO;
 import com.Tallerdecoches.entities.Pieza;
 import com.Tallerdecoches.exceptions.BadRequestCreacionException;
@@ -30,15 +31,12 @@ public class PiezaServiceImpl implements PiezaService {
     }
 
     @Override
-    public ResponseEntity<PiezaDTO> crearPieza(PiezaDTO piezaDTO) {
+    public ResponseEntity<PiezaDTO> crearPieza(PiezaCrearDTO piezaCrearDTO) {
 
-        if (piezaDTO.getId() != null)
-            throw new BadRequestCreacionException("Pieza", "id");
-
-        if (piezaRepository.existsByReferencia(piezaDTO.getReferencia()))
+        if (piezaRepository.existsByReferencia(piezaCrearDTO.getReferencia()))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "La referencia ya existe");
 
-        Pieza pieza = modelMapper.map(piezaDTO, Pieza.class);
+        Pieza pieza = modelMapper.map(piezaCrearDTO, Pieza.class);
         Pieza nuevaPieza = piezaRepository.save(pieza);
         PiezaDTO piezaRespuesta = modelMapper.map(pieza, PiezaDTO.class);
 

@@ -1,12 +1,13 @@
 package com.Tallerdecoches.services.pieza;
 
+import com.Tallerdecoches.DTOs.pieza.PiezaCrearDTO;
 import com.Tallerdecoches.DTOs.pieza.PiezaDTO;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface PiezaService {
 
-    ResponseEntity<PiezaDTO> crearPieza(PiezaDTO piezaDTO);
+    ResponseEntity<PiezaDTO> crearPieza(PiezaCrearDTO piezaCrearDTO);
     List<PiezaDTO> findAll();
     ResponseEntity<PiezaDTO> findById(Long id);
     ResponseEntity<PiezaDTO> findByReferencia(String referencia);

@@ -74,7 +74,7 @@ public class CodigoPostalController {
                     content = @Content)
     })
     @GetMapping("/{id}")
-    public ResponseEntity<CodigoPostalDTO> obtenerCodigoPostalPorId( @Parameter(description = "id del código postal a buscar",
+    public ResponseEntity<CodigoPostalDTO> obtenerCodigoPostalPorId(@Parameter(description = "id del código postal a buscar",
             required = true) @PathVariable Long id) {
 
         return codigoPostalService.findById(id);
