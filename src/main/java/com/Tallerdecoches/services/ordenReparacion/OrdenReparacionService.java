@@ -3,6 +3,7 @@ package com.Tallerdecoches.services.ordenReparacion;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
+import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionHorasDTO;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
@@ -22,5 +23,6 @@ public interface OrdenReparacionService {
     List<OrdenReparacionBusquedasParcialDTO> findByCerradaParcialPorVehiculo(Boolean cerrada, Long id_vehiculo);
     List<OrdenReparacionBusquedasDTO> obtenerOrdenesReparacionPorVehiculo(Long id_vehiculo);
     ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacion(OrdenReparacionDTO ordenReparacionDTO, Long id_vehiculo);
+    ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionHoras(OrdenReparacionHorasDTO ordenReparacionHorasDTO);
     ResponseEntity<String> deleteById(Long  id);
 }

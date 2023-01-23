@@ -65,7 +65,7 @@ public class PiezaServiceImpl implements PiezaService {
         Optional<Pieza> pieza = piezaRepository.findByReferencia(referencia);
 
         if (!pieza.isPresent())
-            throw new ResourceNotFoundException("Pieza", "id", referencia);
+            throw new ResourceNotFoundException("Pieza", "referencia", referencia);
 
         return new ResponseEntity<>(modelMapper.map(pieza, PiezaDTO.class), HttpStatus.OK);
     }

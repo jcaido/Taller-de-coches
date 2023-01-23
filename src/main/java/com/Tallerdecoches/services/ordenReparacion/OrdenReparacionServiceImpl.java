@@ -3,6 +3,7 @@ package com.Tallerdecoches.services.ordenReparacion;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
+import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionHorasDTO;
 import com.Tallerdecoches.entities.OrdenReparacion;
 import com.Tallerdecoches.entities.Vehiculo;
 import com.Tallerdecoches.exceptions.BadRequestCreacionException;
@@ -170,6 +171,25 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
         OrdenReparacion ordenReparacionModificada = ordenReparacionRepository.save(ordenReparacion);
 
         return new ResponseEntity<>(modelMapper.map(ordenReparacion, OrdenReparacionDTO.class), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionHoras(OrdenReparacionHorasDTO ordenReparacionHorasDTO) {
+
+        if (ordenReparacionHorasDTO.getId() == null)
+            throw new BadRequestModificacionException("Orden de reparacion", "id");
+
+        if (!ordenReparacionRepository.existsById(ordenReparacionHorasDTO.getId()))
+            throw new ResourceNotFoundException("Orden de reparacion", "id", String.valueOf(ordenReparacionHorasDTO.getId()));
+
+        OrdenReparacion ordenReparacion = ordenReparacionRepository.findById(ordenReparacionHorasDTO.getId()).get();
+
+        ordenReparacion.setHoras(ordenReparacionHorasDTO.getHoras());
+
+        OrdenReparacion ordenReparacionModificada = ordenReparacionRepository.save(ordenReparacion);
+
+        return new ResponseEntity<>(modelMapper.map(ordenReparacion, OrdenReparacionDTO.class), HttpStatus.OK);
+
     }
 
     @Override
