@@ -209,6 +209,25 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
     }
 
     @Override
+    public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionAbrir(OrdenReparacionCierreDTO ordenReparacionCierreDTO) {
+
+        if (ordenReparacionCierreDTO.getId() == null)
+            throw new BadRequestModificacionException("Orden de reparacion", "id");
+
+        if (!ordenReparacionRepository.existsById(ordenReparacionCierreDTO.getId()))
+            throw new ResourceNotFoundException("Orden de reparacion", "id", String.valueOf(ordenReparacionCierreDTO.getId()));
+
+        OrdenReparacion ordenReparacion = ordenReparacionRepository.findById(ordenReparacionCierreDTO.getId()).get();
+
+        ordenReparacion.setFechaCierre(ordenReparacionCierreDTO.getFechaCierre());
+        ordenReparacion.setCerrada(false);
+
+        OrdenReparacion ordenReparacionModificada = ordenReparacionRepository.save(ordenReparacion);
+
+        return new ResponseEntity<>(modelMapper.map(ordenReparacion, OrdenReparacionDTO.class), HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<String> deleteById(Long id) {
 
         Optional<OrdenReparacion> ordenReparacion = ordenReparacionRepository.findById(id);

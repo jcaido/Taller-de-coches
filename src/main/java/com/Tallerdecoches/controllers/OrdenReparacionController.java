@@ -130,6 +130,13 @@ public class OrdenReparacionController {
         return ordenReparacionService.modificarOrdenReparacionCierre(ordenReparacionCierreDTO);
     }
 
+    //Modificar una orden de reparacion, abrir orden
+    @PutMapping("/abrir")
+    public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionAbrir(@RequestBody OrdenReparacionCierreDTO ordenReparacionCierreDTO) {
+
+        return ordenReparacionService.modificarOrdenReparacionAbrir(ordenReparacionCierreDTO);
+    }
+
     //Eliminar una orden de reparacion existente (no cerrada)
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarPropietario(@PathVariable Long id) {
