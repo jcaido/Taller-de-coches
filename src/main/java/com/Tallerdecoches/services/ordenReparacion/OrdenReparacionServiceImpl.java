@@ -1,9 +1,6 @@
 package com.Tallerdecoches.services.ordenReparacion;
 
-import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
-import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasParcialDTO;
-import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
-import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionHorasDTO;
+import com.Tallerdecoches.DTOs.ordenReparacion.*;
 import com.Tallerdecoches.entities.OrdenReparacion;
 import com.Tallerdecoches.entities.Vehiculo;
 import com.Tallerdecoches.exceptions.BadRequestCreacionException;
@@ -190,6 +187,25 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
 
         return new ResponseEntity<>(modelMapper.map(ordenReparacion, OrdenReparacionDTO.class), HttpStatus.OK);
 
+    }
+
+    @Override
+    public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionCierre(OrdenReparacionCierreDTO ordenReparacionCierreDTO) {
+
+        if (ordenReparacionCierreDTO.getId() == null)
+            throw new BadRequestModificacionException("Orden de reparacion", "id");
+
+        if (!ordenReparacionRepository.existsById(ordenReparacionCierreDTO.getId()))
+            throw new ResourceNotFoundException("Orden de reparacion", "id", String.valueOf(ordenReparacionCierreDTO.getId()));
+
+        OrdenReparacion ordenReparacion = ordenReparacionRepository.findById(ordenReparacionCierreDTO.getId()).get();
+
+        ordenReparacion.setFechaCierre(ordenReparacionCierreDTO.getFechaCierre());
+        ordenReparacion.setCerrada(true);
+
+        OrdenReparacion ordenReparacionModificada = ordenReparacionRepository.save(ordenReparacion);
+
+        return new ResponseEntity<>(modelMapper.map(ordenReparacion, OrdenReparacionDTO.class), HttpStatus.OK);
     }
 
     @Override

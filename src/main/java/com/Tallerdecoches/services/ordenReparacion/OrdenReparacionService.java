@@ -1,9 +1,6 @@
 package com.Tallerdecoches.services.ordenReparacion;
 
-import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
-import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasParcialDTO;
-import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
-import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionHorasDTO;
+import com.Tallerdecoches.DTOs.ordenReparacion.*;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
@@ -24,5 +21,6 @@ public interface OrdenReparacionService {
     List<OrdenReparacionBusquedasDTO> obtenerOrdenesReparacionPorVehiculo(Long id_vehiculo);
     ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacion(OrdenReparacionDTO ordenReparacionDTO, Long id_vehiculo);
     ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionHoras(OrdenReparacionHorasDTO ordenReparacionHorasDTO);
+    ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionCierre(OrdenReparacionCierreDTO ordenReparacionCierreDTO);
     ResponseEntity<String> deleteById(Long  id);
 }

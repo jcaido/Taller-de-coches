@@ -1,9 +1,6 @@
 package com.Tallerdecoches.controllers;
 
-import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
-import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasParcialDTO;
-import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
-import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionHorasDTO;
+import com.Tallerdecoches.DTOs.ordenReparacion.*;
 import com.Tallerdecoches.DTOs.vehiculo.VehiculoDTO;
 import com.Tallerdecoches.services.ordenReparacion.OrdenReparacionService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -124,6 +121,13 @@ public class OrdenReparacionController {
     public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionHoras(@RequestBody OrdenReparacionHorasDTO ordenReparacionHorasDTO) {
 
         return ordenReparacionService.modificarOrdenReparacionHoras(ordenReparacionHorasDTO);
+    }
+
+    //Modificar una orden de reparacion, solo la fecha de cierre
+    @PutMapping("/cierre")
+    public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionCierre(@RequestBody OrdenReparacionCierreDTO ordenReparacionCierreDTO) {
+
+        return ordenReparacionService.modificarOrdenReparacionCierre(ordenReparacionCierreDTO);
     }
 
     //Eliminar una orden de reparacion existente (no cerrada)
