@@ -12,13 +12,12 @@ public interface PiezaRepository extends JpaRepository<Pieza, Long> {
 
     @Transactional(readOnly = true)
     Optional<Pieza> findByReferencia(String referencia);
-
     @Transactional(readOnly = true)
     List<Pieza> findByNombre (String nombre);
-
     @Transactional(readOnly = true)
     boolean existsByReferencia(String referencia);
-
     @Transactional(readOnly = true)
     boolean existsByNombre(String nombre);
+    @Transactional(readOnly = true)
+    boolean existsById(Long id);
 }

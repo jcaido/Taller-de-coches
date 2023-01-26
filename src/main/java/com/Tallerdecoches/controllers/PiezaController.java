@@ -1,9 +1,7 @@
 package com.Tallerdecoches.controllers;
 
-import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalDTO;
 import com.Tallerdecoches.DTOs.pieza.PiezaCrearDTO;
 import com.Tallerdecoches.DTOs.pieza.PiezaDTO;
-import com.Tallerdecoches.DTOs.vehiculo.VehiculoBusquedasDTO;
 import com.Tallerdecoches.DTOs.vehiculo.VehiculoDTO;
 import com.Tallerdecoches.services.pieza.PiezaService;
 import io.swagger.v3.oas.annotations.Operation;

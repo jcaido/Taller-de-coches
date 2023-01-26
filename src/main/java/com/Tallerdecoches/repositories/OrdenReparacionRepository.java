@@ -13,12 +13,12 @@ public interface OrdenReparacionRepository extends JpaRepository<OrdenReparacion
 
     @Transactional(readOnly = true)
     List<OrdenReparacion> findByFechaApertura (LocalDate fechaApertura);
-
     @Transactional(readOnly = true)
     List<OrdenReparacion> findByFechaCierre (LocalDate fechaCierre);
-
     @Transactional(readOnly = true)
     List<OrdenReparacion> findByCerrada (boolean cerrada);
+    @Transactional(readOnly = true)
+    boolean existsById(Long id);
 
 
 }

@@ -2,6 +2,7 @@ package com.Tallerdecoches.services.piezasReparacion;
 
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionBusquedasDTO;
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionBusquedasParcialDTO;
+import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionCrearDTO;
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.entities.*;
@@ -33,9 +34,15 @@ public class PiezasReparacionServiceImpl implements PiezasReparacionService {
     }
 
     @Override
-    public ResponseEntity<PiezasReparacionDTO> crearPiezasReparacion(PiezasReparacionDTO piezasReparacionDTO, Long id_ordenReparacion, Long id_pieza) {
+    public ResponseEntity<PiezasReparacionDTO> crearPiezasReparacion(PiezasReparacionCrearDTO piezasReparacionCrearDTO, Long id_ordenReparacion, Long id_pieza) {
 
-        PiezasReparacion piezasReparacion = modelMapper.map(piezasReparacionDTO, PiezasReparacion.class);
+        if (!ordenReparacionRepository.existsById(id_ordenReparacion))
+            throw new ResourceNotFoundException("orden de reparación", "id", String.valueOf(id_ordenReparacion));
+
+        if (!piezaRepository.existsById(id_pieza))
+            throw new ResourceNotFoundException("pieza", "id", String.valueOf(id_ordenReparacion));
+
+        PiezasReparacion piezasReparacion = modelMapper.map(piezasReparacionCrearDTO, PiezasReparacion.class);
         OrdenReparacion ordenReparacion = ordenReparacionRepository.findById(id_ordenReparacion).get();
         Pieza pieza = piezaRepository.findById(id_pieza).get();
         piezasReparacion.setOrdenReparacion(ordenReparacion);
