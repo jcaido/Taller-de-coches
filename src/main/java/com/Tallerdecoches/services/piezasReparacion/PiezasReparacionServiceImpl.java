@@ -80,4 +80,15 @@ public class PiezasReparacionServiceImpl implements PiezasReparacionService {
 
         return piezasReparacion.stream().map(piezaReparacion -> modelMapper.map(piezaReparacion, PiezasReparacionBusquedasParcialDTO.class)).toList();
     }
+
+    @Override
+    public ResponseEntity<String> deleteById(Long id) {
+
+        if (!piezasReparacionRepository.existsById(id))
+            throw new ResourceNotFoundException("Imputacion de pieza", "id", String.valueOf(id));
+
+        piezasReparacionRepository.deleteById(id);
+
+        return new ResponseEntity<>("Imputacion de pieza eliminada con exito", HttpStatus.OK);
+    }
 }

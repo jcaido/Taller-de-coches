@@ -118,4 +118,19 @@ public class PiezasReparacionController {
 
         return piezasReparacionService.obtenerPiezasReparacionPorOrdenReparacion(id);
     }
+
+    @Operation(summary = "Eliminar una imputación de pieza a una orden de reparación",
+            description = "Eliminar una imputación de pieza a una orden de reparación")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Imputaciónn de pieza eliminada correctamente",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Imputación de pieza no encontrada",
+                    content = @Content),
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarPiezaReparacion(@Parameter(description = "id de la imputación de pieza a eliminar",
+            required = true) @PathVariable Long id) {
+
+        return piezasReparacionService.deleteById(id);
+    }
 }

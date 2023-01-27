@@ -14,4 +14,5 @@ public interface PiezasReparacionService {
     List<PiezasReparacionBusquedasDTO> findAll();
     ResponseEntity<PiezasReparacionBusquedasDTO> findById(Long id);
     List<PiezasReparacionBusquedasParcialDTO> obtenerPiezasReparacionPorOrdenReparacion(Long id);
+    ResponseEntity<String> deleteById(Long id);
 }
