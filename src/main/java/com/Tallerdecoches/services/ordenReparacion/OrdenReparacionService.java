@@ -18,6 +18,7 @@ public interface OrdenReparacionService {
     List<OrdenReparacionBusquedasParcialDTO> findByCerradaParcial(Boolean cerrada);
     List<OrdenReparacionBusquedasParcialDTO> findByCerradaParcialByFechaAperturaAsc(Boolean cerrada);
     List<OrdenReparacionBusquedasParcialDTO> findByCerradaParcialPorFechaApertura(Boolean cerrada, LocalDate fechaApertura);
+    List<OrdenReparacionBusquedasDTO> findByCerradaEntreFechasDeCierre(Boolean cerrada, LocalDate fechaCierreInicical, LocalDate fechaCierreFinal);
     List<OrdenReparacionBusquedasParcialDTO> findByCerradaParcialPorVehiculo(Boolean cerrada, Long id_vehiculo);
     List<OrdenReparacionBusquedasDTO> obtenerOrdenesReparacionPorVehiculo(Long id_vehiculo);
     ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacion(OrdenReparacionDTO ordenReparacionDTO, Long id_vehiculo);

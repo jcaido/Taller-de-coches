@@ -101,6 +101,16 @@ public class OrdenReparacionController {
         return ordenReparacionService.findByCerradaParcialPorFechaApertura(cerrada, fechaApertura);
     }
 
+    //Obtener ordenes de reparacion por estado (abiertas o cerradas) entre fechas de cierre
+    @GetMapping("/cerrada/{cerrada}/{fechaCierreInicial}/{fechaCierreFinal}")
+    public List<OrdenReparacionBusquedasDTO> obtenerOrdenesReparacionPorIsCerradaEntreFechasDeCierre(
+            @PathVariable Boolean cerrada,
+            @PathVariable(name="fechaCierreInicial")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaCierreInicial,
+            @PathVariable(name="fechaCierreFinal")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaCierreFinal) {
+
+        return ordenReparacionService.findByCerradaEntreFechasDeCierre(cerrada, fechaCierreInicial, fechaCierreFinal);
+    }
+
     //Obtener ordenes de reparacion por estado (abiertas o cerradas) parcial y por vehiculo
     @GetMapping("/cerrada-parcial-vehiculo/{cerrada}/{id_vehiculo}")
     public List<OrdenReparacionBusquedasParcialDTO> obtenerOrdenesReparacionPorIsCerradaParcialVehiculo(

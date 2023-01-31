@@ -133,6 +133,18 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
     }
 
     @Override
+    public List<OrdenReparacionBusquedasDTO> findByCerradaEntreFechasDeCierre(Boolean cerrada, LocalDate fechaCierreInicical, LocalDate fechaCierreFinal) {
+        Query query = entityManager.createQuery("FROM OrdenReparacion o " +
+                "WHERE o.cerrada = :cerrada AND o.fechaCierre >= :fechaCierreInicial AND o.fechaCierre <= :fechaCierreFinal");
+        query.setParameter("cerrada", cerrada);
+        query.setParameter("fechaCierreInicial", fechaCierreInicical);
+        query.setParameter("fechaCierreFinal", fechaCierreFinal);
+        List<OrdenReparacion> ordenesReparacion = query.getResultList();
+
+        return ordenesReparacion.stream().map(ordenReparacion-> modelMapper.map(ordenReparacion, OrdenReparacionBusquedasDTO.class)).toList();
+    }
+
+    @Override
     public List<OrdenReparacionBusquedasParcialDTO> findByCerradaParcialPorVehiculo(Boolean cerrada, Long id_vehiculo) {
         Query query = entityManager.createQuery("FROM OrdenReparacion o WHERE o.cerrada = :cerrada AND o.vehiculo.id = :id");
         query.setParameter("cerrada", cerrada);
