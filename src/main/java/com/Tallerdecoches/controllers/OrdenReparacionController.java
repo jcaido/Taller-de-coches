@@ -85,6 +85,13 @@ public class OrdenReparacionController {
         return ordenReparacionService.findByCerradaParcial(cerrada);
     }
 
+    //Obtener ordenes de reparacion por estado (abiertas o cerradas) ordenada for fecha apertura, campos(id, fechaApertura, descripcion, kilometros, matricula)
+    @GetMapping("/cerrada-parcial-sort/{cerrada}")
+    public List<OrdenReparacionBusquedasParcialDTO> obtenerOrdenesReparacionPorIsCerradaParcialByFechaAperturaAsc(@PathVariable Boolean cerrada) {
+
+        return ordenReparacionService.findByCerradaParcialByFechaAperturaAsc(cerrada);
+    }
+
     //Obtener ordenes de reparacion por estado (abiertas o cerradas) parcial y por fecha de apertura
     @GetMapping("/cerrada-parcial/{cerrada}/{fechaApertura}")
     public List<OrdenReparacionBusquedasParcialDTO> obtenerOrdenesReparacionPorIsCerradaParcialFechaApertura(

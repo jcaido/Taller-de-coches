@@ -18,6 +18,8 @@ public interface OrdenReparacionRepository extends JpaRepository<OrdenReparacion
     @Transactional(readOnly = true)
     List<OrdenReparacion> findByCerrada (boolean cerrada);
     @Transactional(readOnly = true)
+    List<OrdenReparacion> findByCerradaOrderByFechaAperturaAsc (boolean cerrada);
+    @Transactional(readOnly = true)
     boolean existsById(Long id);
 
 

@@ -27,7 +27,6 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
     private final OrdenReparacionRepository ordenReparacionRepository;
     private final VehiculoRepository vehiculoRepository;
     private final PiezaRepository piezaRepository;
-    //private final PiezasReparacionRepository piezasReparacionRepository;
     private final EntityManager entityManager;
     private final ModelMapper modelMapper;
     private final OrdenReparacionModificacionCambiosService ordenReparacionModificacionCambiosService;
@@ -112,6 +111,13 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
     @Override
     public List<OrdenReparacionBusquedasParcialDTO> findByCerradaParcial(Boolean cerrada) {
         List<OrdenReparacion> ordenesReparacion = ordenReparacionRepository.findByCerrada(cerrada);
+
+        return ordenesReparacion.stream().map(ordenReparacion-> modelMapper.map(ordenReparacion, OrdenReparacionBusquedasParcialDTO.class)).toList();
+    }
+
+    @Override
+    public List<OrdenReparacionBusquedasParcialDTO> findByCerradaParcialByFechaAperturaAsc(Boolean cerrada) {
+        List<OrdenReparacion> ordenesReparacion = ordenReparacionRepository.findByCerradaOrderByFechaAperturaAsc(cerrada);
 
         return ordenesReparacion.stream().map(ordenReparacion-> modelMapper.map(ordenReparacion, OrdenReparacionBusquedasParcialDTO.class)).toList();
     }
