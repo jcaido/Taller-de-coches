@@ -27,6 +27,8 @@ public class OrdenReparacion implements Serializable {
     private String descripcion;
     private Long kilometros;
     private Double horas;
+    @OneToOne()
+    private ManoDeObra manoDeObra;
     private Boolean cerrada;
     @OneToOne()
     private Vehiculo vehiculo;
