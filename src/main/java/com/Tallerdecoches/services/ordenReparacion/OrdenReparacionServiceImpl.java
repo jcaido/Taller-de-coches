@@ -1,11 +1,13 @@
 package com.Tallerdecoches.services.ordenReparacion;
 
 import com.Tallerdecoches.DTOs.ordenReparacion.*;
+import com.Tallerdecoches.entities.ManoDeObra;
 import com.Tallerdecoches.entities.OrdenReparacion;
 import com.Tallerdecoches.entities.Vehiculo;
 import com.Tallerdecoches.exceptions.BadRequestCreacionException;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
+import com.Tallerdecoches.repositories.ManoDeObraRepository;
 import com.Tallerdecoches.repositories.OrdenReparacionRepository;
 import com.Tallerdecoches.repositories.PiezaRepository;
 import com.Tallerdecoches.repositories.VehiculoRepository;
@@ -27,15 +29,17 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
     private final OrdenReparacionRepository ordenReparacionRepository;
     private final VehiculoRepository vehiculoRepository;
     private final PiezaRepository piezaRepository;
+    private final ManoDeObraRepository manoDeObraRepository;
     private final EntityManager entityManager;
     private final ModelMapper modelMapper;
     private final OrdenReparacionModificacionCambiosService ordenReparacionModificacionCambiosService;
     private final PiezasReparacionService piezasReparacionService;
 
-    public OrdenReparacionServiceImpl(OrdenReparacionRepository ordenReparacionRepository, VehiculoRepository vehiculoRepository, PiezaRepository piezaRepository, EntityManager entityManager, ModelMapper modelMapper, OrdenReparacionModificacionCambiosService ordenReparacionModificacionCambiosService, PiezasReparacionService piezasReparacionService) {
+    public OrdenReparacionServiceImpl(OrdenReparacionRepository ordenReparacionRepository, VehiculoRepository vehiculoRepository, PiezaRepository piezaRepository, ManoDeObraRepository manoDeObraRepository, EntityManager entityManager, ModelMapper modelMapper, OrdenReparacionModificacionCambiosService ordenReparacionModificacionCambiosService, PiezasReparacionService piezasReparacionService) {
         this.ordenReparacionRepository = ordenReparacionRepository;
         this.vehiculoRepository = vehiculoRepository;
         this.piezaRepository = piezaRepository;
+        this.manoDeObraRepository = manoDeObraRepository;
         this.entityManager = entityManager;
         this.modelMapper = modelMapper;
         this.ordenReparacionModificacionCambiosService = ordenReparacionModificacionCambiosService;
@@ -220,6 +224,9 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
 
         ordenReparacion.setFechaCierre(ordenReparacionCierreDTO.getFechaCierre());
         ordenReparacion.setCerrada(true);
+
+        ManoDeObra manoDeObraActual = manoDeObraRepository.findByPrecioHoraClienteTallerActual(true).get();
+        ordenReparacion.setManoDeObra(manoDeObraActual);
 
         OrdenReparacion ordenReparacionModificada = ordenReparacionRepository.save(ordenReparacion);
 

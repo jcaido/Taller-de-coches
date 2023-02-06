@@ -1,6 +1,7 @@
 package com.Tallerdecoches.DTOs.ordenReparacion;
 
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionBusquedasParcialDTO;
+import com.Tallerdecoches.entities.ManoDeObra;
 import com.Tallerdecoches.entities.Vehiculo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -26,5 +27,6 @@ public class OrdenReparacionBusquedasDTO {
     private Double horas;
     private Boolean cerrada;
     private Vehiculo vehiculo;
+    private ManoDeObra manoDeObra;
     private List<PiezasReparacionBusquedasParcialDTO> piezasReparacion;
 }
