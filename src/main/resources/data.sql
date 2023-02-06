@@ -43,7 +43,7 @@ insert into piezas (referencia, nombre_pieza, precio_venta) values ('VA55555', '
 insert into piezas (referencia, nombre_pieza, precio_venta) values ('VA44099', 'caja de cambios', 300.34);
 
 insert into mano_de_obra (fecha_nuevo_precio, precio_hora, precio_hora_actual) values ('2022/11/19', 20.5, false);
-insert into mano_de_obra (fecha_nuevo_precio, precio_hora, precio_hora_actual) values ('2023/01/01', 32.0, false);
+insert into mano_de_obra (fecha_nuevo_precio, precio_hora, precio_hora_actual) values ('2023/01/01', 32.0, true);
 
 insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada) values (1, 1, '2022/11/19', '2022/11/21', 'REVISAR ARRANQUE', 120000, 4.5, true);
 insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada) values (2, null, '2022/11/20', null, 'REVISAR RUIDO MOTOR', 23987, null, false);

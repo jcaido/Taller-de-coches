@@ -7,10 +7,14 @@ import com.Tallerdecoches.entities.CodigoPostal;
 import com.Tallerdecoches.entities.ManoDeObra;
 import com.Tallerdecoches.repositories.ManoDeObraRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDate;
+import java.util.Date;
 
 @Service
 public class ManoDeObraServiceImpl implements ManoDeObraService {
@@ -29,7 +33,12 @@ public class ManoDeObraServiceImpl implements ManoDeObraService {
         if (manoDeObraRepository.existsByprecioHoraClienteTaller(manoDeObraCrearDTO.getPrecioHoraClienteTaller()))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El precio horario ya existe");
 
+        // Establecemos todos los precios anteriores a false
+        manoDeObraRepository.PrecioHoraActualFalse(false);
+
         ManoDeObra manoDeObra = modelMapper.map(manoDeObraCrearDTO, ManoDeObra.class);
+        manoDeObra.setFechaNuevoPrecio(LocalDate.now());
+        manoDeObra.setPrecioHoraClienteTallerActual(true);
         ManoDeObra nuevoPrecioManoDeObra = manoDeObraRepository.save(manoDeObra);
         ManoDeObraDTO manoDeObraRespuesta = modelMapper.map(nuevoPrecioManoDeObra, ManoDeObraDTO.class);
 
