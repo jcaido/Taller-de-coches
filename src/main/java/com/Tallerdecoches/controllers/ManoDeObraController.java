@@ -6,6 +6,7 @@ import com.Tallerdecoches.DTOs.manoDeObra.ManoDeObraDTO;
 import com.Tallerdecoches.entities.ManoDeObra;
 import com.Tallerdecoches.repositories.ManoDeObraRepository;
 import com.Tallerdecoches.services.manoDeObra.ManoDeObraService;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,8 +34,14 @@ public class ManoDeObraController {
     }
 
     @GetMapping()
-    public List<ManoDeObra> obtenerTodosLosPreciosManoDeObra() {
+    public List<ManoDeObraDTO> obtenerTodosLosPreciosManoDeObra() {
 
-        return manoDeObraRepository.findAll();
+        return manoDeObraService.findAll();
+    }
+
+    @GetMapping("/precio-actual/{precioActual}")
+    public ResponseEntity<ManoDeObraDTO> obtenerPrecioActualManoDeObra(@PathVariable Boolean precioActual) {
+
+        return manoDeObraService.findByPrecioHoraClienteTallerActual(precioActual);
     }
 }
