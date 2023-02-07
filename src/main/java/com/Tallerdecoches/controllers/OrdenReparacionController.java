@@ -119,6 +119,16 @@ public class OrdenReparacionController {
 
         return ordenReparacionService.findByCerradaParcialPorVehiculo(cerrada, id_vehiculo);
     }
+
+    //Obtener ordenes de reparacion por estado (abiertas o cerradas) por vehiculo
+    @GetMapping("/cerrada-vehiculo/{cerrada}/{id_vehiculo}")
+    public List<OrdenReparacionBusquedasDTO> obtenerOrdenesReparacionPorIsCerradaVehiculo(
+            @PathVariable Boolean cerrada,
+            @PathVariable Long id_vehiculo) {
+
+        return ordenReparacionService.findByCerradaPorVehiculo(cerrada, id_vehiculo);
+    }
+
     //Obtener ordenes de reparacion por vehiculo
     @GetMapping("/vehiculo/{id_vehiculo}")
     public List<OrdenReparacionBusquedasDTO> obtenerOrdenesReparacionPorVehiculo(@PathVariable Long id_vehiculo) {
