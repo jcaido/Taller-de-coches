@@ -160,7 +160,7 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
 
     @Override
     public List<OrdenReparacionBusquedasDTO> findByCerradaPorVehiculo(Boolean cerrada, Long id_vehiculo) {
-        Query query = entityManager.createQuery("FROM OrdenReparacion o WHERE o.cerrada = :cerrada AND o.vehiculo.id = :id");
+        Query query = entityManager.createQuery("FROM OrdenReparacion o WHERE o.cerrada = :cerrada AND o.vehiculo.id = :id ORDER BY o.fechaCierre desc");
         query.setParameter("cerrada", cerrada);
         query.setParameter("id", id_vehiculo);
         List<OrdenReparacion> ordenesReparacion = query.getResultList();
