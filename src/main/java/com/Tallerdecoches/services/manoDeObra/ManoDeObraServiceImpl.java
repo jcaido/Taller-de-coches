@@ -52,7 +52,7 @@ public class ManoDeObraServiceImpl implements ManoDeObraService {
 
     @Override
     public List<ManoDeObraDTO> findAll() {
-        List<ManoDeObra> preciosManoDeObra = manoDeObraRepository.findAll();
+        List<ManoDeObra> preciosManoDeObra = manoDeObraRepository.findAllByOrderByFechaNuevoPrecioDesc();
 
         return  preciosManoDeObra.stream().map(precioManoDeObra-> modelMapper.map(precioManoDeObra, ManoDeObraDTO.class)).toList();
 
