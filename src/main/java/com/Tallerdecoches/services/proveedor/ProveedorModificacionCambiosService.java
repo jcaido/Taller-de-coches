@@ -1,6 +1,5 @@
 package com.Tallerdecoches.services.proveedor;
 
-import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorDTO;
 import com.Tallerdecoches.entities.CodigoPostal;
 import com.Tallerdecoches.repositories.CodigoPostalRepository;

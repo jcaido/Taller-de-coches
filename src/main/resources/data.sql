@@ -48,6 +48,12 @@ insert into piezas (referencia, nombre_pieza, precio_venta) values ('R333300', '
 insert into piezas (referencia, nombre_pieza, precio_venta) values ('VA55555', 'culata', 300.45);
 insert into piezas (referencia, nombre_pieza, precio_venta) values ('VA44099', 'caja de cambios', 300.34);
 
+insert into entrada_pieza (proveedor_id, fecha_entrada, numero_albaran, pieza_id, cantidad, precio_entrada, facturada) values (1, '2022/11/19', 'A344332', 1, 2, 5.34, false);
+insert into entrada_pieza (proveedor_id, fecha_entrada, numero_albaran, pieza_id, cantidad, precio_entrada, facturada) values (2, '2022/11/20', '34W2333', 4, 3, 3.54, false);
+insert into entrada_pieza (proveedor_id, fecha_entrada, numero_albaran, pieza_id, cantidad, precio_entrada, facturada) values (1, '2022/11/21', '34ttr3333', 2, 1, 23.45, false);
+insert into entrada_pieza (proveedor_id, fecha_entrada, numero_albaran, pieza_id, cantidad, precio_entrada, facturada) values (3, '2022/11/20', 'Err44', 3, 2, 4.56, false);
+insert into entrada_pieza (proveedor_id, fecha_entrada, numero_albaran, pieza_id, cantidad, precio_entrada, facturada) values (4, '2022/11/21', '56tty6', 2, 1, 43.32, false);
+
 insert into mano_de_obra (fecha_nuevo_precio, precio_hora, precio_hora_actual) values ('2022/11/19', 20.5, false);
 insert into mano_de_obra (fecha_nuevo_precio, precio_hora, precio_hora_actual) values ('2023/01/01', 32.0, true);
 

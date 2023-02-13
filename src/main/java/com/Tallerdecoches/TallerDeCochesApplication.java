@@ -1,6 +1,7 @@
 package com.Tallerdecoches;
 
 import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalDTO;
+import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaDTO;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
 import com.Tallerdecoches.DTOs.pieza.PiezaDTO;
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionDTO;
@@ -47,6 +48,10 @@ public class TallerDeCochesApplication {
 	@Bean
 	public ProveedorDTO proveedorDTO() {
 		return new ProveedorDTO();
+	}
+	@Bean
+	public EntradaPiezaDTO entradaPiezaDTO() {
+		return new EntradaPiezaDTO();
 	}
 
 	public static void main(String[] args) {

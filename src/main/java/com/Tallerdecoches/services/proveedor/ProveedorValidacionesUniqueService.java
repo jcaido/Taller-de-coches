@@ -1,6 +1,5 @@
 package com.Tallerdecoches.services.proveedor;
 
-import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorDTO;
 import com.Tallerdecoches.repositories.ProveedorRepository;
 import org.springframework.stereotype.Service;

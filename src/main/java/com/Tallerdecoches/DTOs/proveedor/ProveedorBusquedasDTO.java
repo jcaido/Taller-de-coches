@@ -1,6 +1,7 @@
 package com.Tallerdecoches.DTOs.proveedor;
 
 import com.Tallerdecoches.entities.CodigoPostal;
+import com.Tallerdecoches.entities.EntradaPieza;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,4 +17,5 @@ public class ProveedorBusquedasDTO {
     private String dniCif;
     private String domicilio;
     private CodigoPostal codigoPostal;
+    private EntradaPieza entradaPieza;
 }

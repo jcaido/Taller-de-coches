@@ -1,7 +1,5 @@
 package com.Tallerdecoches.services.proveedor;
 
-import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
-import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorDTO;

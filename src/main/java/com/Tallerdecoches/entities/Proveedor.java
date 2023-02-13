@@ -1,9 +1,12 @@
 package com.Tallerdecoches.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "proveedores")
@@ -23,4 +26,7 @@ public class Proveedor implements Serializable {
     private String domicilio;
     @OneToOne()
     private CodigoPostal codigoPostal;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "proveedor")
+    private List<EntradaPieza> entradasPiezas = new ArrayList<>();
 }
