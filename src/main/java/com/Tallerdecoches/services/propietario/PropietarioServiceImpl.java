@@ -6,7 +6,6 @@ import com.Tallerdecoches.DTOs.propietario.PropietarioCrearDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
 import com.Tallerdecoches.entities.CodigoPostal;
 import com.Tallerdecoches.entities.Propietario;
-import com.Tallerdecoches.exceptions.BadRequestCreacionException;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.CodigoPostalRepository;

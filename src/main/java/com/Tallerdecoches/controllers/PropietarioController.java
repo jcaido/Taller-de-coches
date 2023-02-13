@@ -233,7 +233,6 @@ public class PropietarioController {
         return propietarioService.modificarPropietario(propietarioDTO, id_codigoPostal);
     }
 
-    //Eliminar un propietario existente
     @Operation(summary = "Eliminar un Propietario", description = "Eliminar un Propietario")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Propietario eliminado correctamente",

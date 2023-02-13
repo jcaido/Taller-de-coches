@@ -5,6 +5,7 @@ import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
 import com.Tallerdecoches.DTOs.pieza.PiezaDTO;
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
+import com.Tallerdecoches.DTOs.proveedor.ProveedorDTO;
 import com.Tallerdecoches.DTOs.vehiculo.VehiculoDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
@@ -42,6 +43,10 @@ public class TallerDeCochesApplication {
 	@Bean
 	public PiezasReparacionDTO piezasReparacionDTO() {
 		return new PiezasReparacionDTO();
+	}
+	@Bean
+	public ProveedorDTO proveedorDTO() {
+		return new ProveedorDTO();
 	}
 
 	public static void main(String[] args) {

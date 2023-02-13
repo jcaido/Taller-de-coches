@@ -28,4 +28,7 @@ public class CodigoPostal implements Serializable {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "codigoPostal")
     private List<Propietario> propietarios = new ArrayList<>();
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "codigoPostal")
+    private List<Proveedor> proveedores = new ArrayList<>();
 }

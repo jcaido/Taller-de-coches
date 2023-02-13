@@ -20,6 +20,12 @@ insert into propietarios (nombre, primer_apellido, segundo_apellido, dni, domici
 insert into propietarios (nombre, primer_apellido, segundo_apellido, dni, domicilio, codigo_postal_id) values ('Pablo', 'Varo', 'Arjona', '31239852O', 'Torito, 7', 1);
 insert into propietarios (nombre, primer_apellido, segundo_apellido, dni, domicilio, codigo_postal_id) values ('Mario', 'Perez', 'Arjona', '12319852P', 'Llano, 89', 1);
 
+insert into proveedores (nombre, dni_cif, domicilio, codigo_postal_id) values ('GRUPO PEÑA SL', 'B14995673', 'Peña Blanca, 2', 3);
+insert into proveedores (nombre, dni_cif, domicilio, codigo_postal_id) values ('TORNILLOS LA LAGUNA SL', 'B14445676', 'Calle Blanca Palima, 3', 5);
+insert into proveedores (nombre, dni_cif, domicilio, codigo_postal_id) values ('PLACAS DE PIEZAS, SL', 'B14665765', 'Las Albarizas, 5', 6);
+insert into proveedores (nombre, dni_cif, domicilio, codigo_postal_id) values ('MOTORES ORDOÑEZ', 'B14436571', 'Calle Baena, 28', 3);
+insert into proveedores (nombre, dni_cif, domicilio, codigo_postal_id) values ('COMPONENTES ELOY', 'B14005600', 'Calle las cimas, 80', 2);
+
 insert into vehiculos (matricula, marca, modelo, color, propietario_id) values ('2345DFG', 'RENAULT', 'CLIO', 'Blanco', 1);
 insert into vehiculos (matricula, marca, modelo, color, propietario_id) values ('3214FVC', 'FORD', 'FIESTA', 'Azul', 3);
 insert into vehiculos (matricula, marca, modelo, color, propietario_id) values ('0090VVC', 'CITROEN', 'BERLINGO', 'Negro', 1);
