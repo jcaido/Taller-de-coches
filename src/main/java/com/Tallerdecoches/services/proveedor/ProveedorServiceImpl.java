@@ -1,11 +1,10 @@
 package com.Tallerdecoches.services.proveedor;
 
-import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorBusquedasDTO;
+import com.Tallerdecoches.DTOs.proveedor.ProveedorBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorDTO;
 import com.Tallerdecoches.entities.CodigoPostal;
-import com.Tallerdecoches.entities.Propietario;
 import com.Tallerdecoches.entities.Proveedor;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
@@ -57,6 +56,13 @@ public class ProveedorServiceImpl implements ProveedorService{
         List<Proveedor> proveedores = proveedorRepository.findAll();
 
         return proveedores.stream().map(proveedor-> modelMapper.map(proveedor, ProveedorBusquedasDTO.class)).toList();
+    }
+
+    @Override
+    public List<ProveedorBusquedasParcialDTO> findAllParcial() {
+        List<Proveedor> proveedores = proveedorRepository.findAll();
+
+        return proveedores.stream().map(proveedor-> modelMapper.map(proveedor, ProveedorBusquedasParcialDTO.class)).toList();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.Tallerdecoches.controllers;
 
 import com.Tallerdecoches.DTOs.proveedor.ProveedorBusquedasDTO;
+import com.Tallerdecoches.DTOs.proveedor.ProveedorBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorDTO;
 import com.Tallerdecoches.services.proveedor.ProveedorService;
@@ -59,6 +60,21 @@ public class ProveedorController {
     public List<ProveedorBusquedasDTO> obtenerTodosLosProveedores() {
 
         return proveedorService.findAll();
+    }
+
+    @Operation(summary = "Obtener todos los Proveedores", description = "Obtener todos los Proveedores sin incluir todos los campos" +
+            "solo incluimos los campos id, nombre y dniCif")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Proveedores obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ProveedorBusquedasParcialDTO.class))
+                    })
+    })
+    @GetMapping("/parcial")
+    public List<ProveedorBusquedasParcialDTO> obtenerTodosLosPropietariosParcial() {
+
+        return proveedorService.findAllParcial();
     }
 
     @Operation(summary = "Obtener Poveedor por id", description = "Obtener Proveedor por id")
