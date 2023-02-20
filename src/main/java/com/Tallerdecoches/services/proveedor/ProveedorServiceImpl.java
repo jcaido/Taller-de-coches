@@ -1,10 +1,12 @@
 package com.Tallerdecoches.services.proveedor;
 
+import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorDTO;
 import com.Tallerdecoches.entities.CodigoPostal;
+import com.Tallerdecoches.entities.Propietario;
 import com.Tallerdecoches.entities.Proveedor;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
@@ -83,6 +85,13 @@ public class ProveedorServiceImpl implements ProveedorService{
             throw new ResourceNotFoundException("Proveedor", "dni", dniCif);
 
         return new ResponseEntity<>(modelMapper.map(proveedor, ProveedorBusquedasDTO.class), HttpStatus.OK);
+    }
+
+    @Override
+    public List<ProveedorBusquedasDTO> findByNombre(String nombre) {
+        List<Proveedor> proveedores = proveedorRepository.findByNombre(nombre);
+
+        return proveedores.stream().map(proveedor-> modelMapper.map(proveedor, ProveedorBusquedasDTO.class)).toList();
     }
 
     @Override

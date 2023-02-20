@@ -1,5 +1,6 @@
 package com.Tallerdecoches.services.proveedor;
 
+import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorCrearDTO;
@@ -15,6 +16,7 @@ public interface ProveedorService {
     List<ProveedorBusquedasParcialDTO> findAllParcial();
     ResponseEntity<ProveedorBusquedasDTO> findById(Long id);
     ResponseEntity<ProveedorBusquedasDTO> findByDniCif(String dniCif);
+    List<ProveedorBusquedasDTO> findByNombre(String nombre);
     ResponseEntity<ProveedorDTO> modificarProveedor(ProveedorDTO proveedorDTO, Long idCodigoPostal);
     ResponseEntity<String> deleteById(Long  id);
 }

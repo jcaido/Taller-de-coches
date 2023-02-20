@@ -1,5 +1,6 @@
 package com.Tallerdecoches.controllers;
 
+import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorCrearDTO;
@@ -109,6 +110,21 @@ public class ProveedorController {
             required = true) @PathVariable String dniCif) {
 
         return proveedorService.findByDniCif(dniCif);
+    }
+
+    @Operation(summary = "Obtener Proveedores por nombre", description = "Obtener Proveedores por nombre")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Proveedores obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ProveedorBusquedasDTO.class))
+                    })
+    })
+    @GetMapping("/nombre/{nombre}")
+    public List<ProveedorBusquedasDTO> obtenerProveedoresPorNombre(@Parameter(description = "nombre del proveedor a buscar",
+            required = true) @PathVariable String nombre) {
+
+        return proveedorService.findByNombre(nombre);
     }
 
     @Operation(summary = "Modificar un Proveedor", description = "Modificar un Proveedor")

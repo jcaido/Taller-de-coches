@@ -16,7 +16,7 @@ public interface ProveedorRepository extends JpaRepository<Proveedor, Long> {
     Optional<Proveedor> findByDniCif(String dniCif);
 
     @Transactional(readOnly = true)
-    List<Propietario> findByNombre(String nombre);
+    List<Proveedor> findByNombre(String nombre);
 
     @Transactional(readOnly = true)
     boolean existsById(Long id);
