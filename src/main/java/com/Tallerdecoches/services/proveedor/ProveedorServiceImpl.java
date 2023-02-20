@@ -95,6 +95,13 @@ public class ProveedorServiceImpl implements ProveedorService{
     }
 
     @Override
+    public List<ProveedorBusquedasParcialDTO> findByNombreParcial(String nombre) {
+        List<Proveedor> proveedores = proveedorRepository.findByNombre(nombre);
+
+        return proveedores.stream().map(proveedor-> modelMapper.map(proveedor, ProveedorBusquedasParcialDTO.class)).toList();
+    }
+
+    @Override
     public ResponseEntity<ProveedorDTO> modificarProveedor(ProveedorDTO proveedorDTO, Long idCodigoPostal) {
 
         if (proveedorDTO.getId() == null)

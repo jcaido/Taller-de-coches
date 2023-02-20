@@ -127,6 +127,21 @@ public class ProveedorController {
         return proveedorService.findByNombre(nombre);
     }
 
+    @Operation(summary = "Obtener Proveedores por nombre, solo id, nombre y dni-dif", description = "Obtener Proveedores por nombre, solo id, nombre y dni-cif")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Proveedores obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ProveedorBusquedasParcialDTO.class))
+                    })
+    })
+    @GetMapping("/nombre-parcial/{nombre}")
+    public List<ProveedorBusquedasParcialDTO> obtenerProveedoresPorNombreParcial(@Parameter(description = "nombre del proveedor a buscar",
+            required = true) @PathVariable String nombre) {
+
+        return proveedorService.findByNombreParcial(nombre);
+    }
+
     @Operation(summary = "Modificar un Proveedor", description = "Modificar un Proveedor")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Proveedor modificado correctamente",
