@@ -1,5 +1,6 @@
 package com.Tallerdecoches.services.piezasReparacion;
 
+import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaBusquedasDTO;
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionBusquedasDTO;
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionCrearDTO;
@@ -14,5 +15,6 @@ public interface PiezasReparacionService {
     List<PiezasReparacionBusquedasDTO> findAll();
     ResponseEntity<PiezasReparacionBusquedasDTO> findById(Long id);
     List<PiezasReparacionBusquedasParcialDTO> obtenerPiezasReparacionPorOrdenReparacion(Long id);
+    List<PiezasReparacionBusquedasDTO> obtenerPiezasReparacionPorPiezaHQL(Long id_pieza);
     ResponseEntity<String> deleteById(Long id);
 }

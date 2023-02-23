@@ -1,5 +1,6 @@
 package com.Tallerdecoches.controllers;
 
+import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaBusquedasDTO;
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionBusquedasDTO;
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionCrearDTO;
@@ -117,6 +118,21 @@ public class PiezasReparacionController {
             required = true) @PathVariable Long id) {
 
         return piezasReparacionService.obtenerPiezasReparacionPorOrdenReparacion(id);
+    }
+
+    @Operation(summary = "Obtener Piezas imputadas por pieza", description = "Obtener Piezas imputadas por pieza")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Imputaciones de piezas obtenidas correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = PiezasReparacionBusquedasDTO.class))
+                    })
+    })
+    @GetMapping("/pieza/{id_pieza}")
+    public List<PiezasReparacionBusquedasDTO> obtenerPiezasReparacionPorPieza(@Parameter(description = "id de la pieza",
+            required = true) @PathVariable Long id_pieza) {
+
+        return piezasReparacionService.obtenerPiezasReparacionPorPiezaHQL(id_pieza);
     }
 
     @Operation(summary = "Eliminar una imputación de pieza a una orden de reparación",

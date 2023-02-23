@@ -1,10 +1,10 @@
 package com.Tallerdecoches.services.piezasReparacion;
 
+import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaBusquedasDTO;
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionBusquedasDTO;
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionCrearDTO;
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionDTO;
-import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.entities.*;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.OrdenReparacionRepository;
@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,12 +27,14 @@ public class PiezasReparacionServiceImpl implements PiezasReparacionService {
     private final OrdenReparacionRepository ordenReparacionRepository;
     private final PiezaRepository piezaRepository;
     private final ModelMapper modelMapper;
+    private final EntityManager entityManager;
 
-    public PiezasReparacionServiceImpl(PiezasReparacionRepository piezasReparacionRepository, OrdenReparacionRepository ordenReparacionRepository, PiezaRepository piezaRepository, ModelMapper modelMapper) {
+    public PiezasReparacionServiceImpl(PiezasReparacionRepository piezasReparacionRepository, OrdenReparacionRepository ordenReparacionRepository, PiezaRepository piezaRepository, ModelMapper modelMapper, EntityManager entityManager) {
         this.piezasReparacionRepository = piezasReparacionRepository;
         this.ordenReparacionRepository = ordenReparacionRepository;
         this.piezaRepository = piezaRepository;
         this.modelMapper = modelMapper;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -79,6 +83,15 @@ public class PiezasReparacionServiceImpl implements PiezasReparacionService {
         List<PiezasReparacion> piezasReparacion = ordenReparacion.get().getPiezasReparacion();
 
         return piezasReparacion.stream().map(piezaReparacion -> modelMapper.map(piezaReparacion, PiezasReparacionBusquedasParcialDTO.class)).toList();
+    }
+
+    @Override
+    public List<PiezasReparacionBusquedasDTO> obtenerPiezasReparacionPorPiezaHQL(Long id_pieza) {
+        Query query = entityManager.createQuery("FROM PiezasReparacion p WHERE p.pieza.id = :id" );
+        query.setParameter("id", id_pieza);
+        List<PiezasReparacion> piezas = query.getResultList();
+
+        return piezas.stream().map(pieza-> modelMapper.map(pieza, PiezasReparacionBusquedasDTO.class)).toList();
     }
 
     @Override
