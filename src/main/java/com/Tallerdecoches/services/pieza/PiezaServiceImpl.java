@@ -3,10 +3,10 @@ package com.Tallerdecoches.services.pieza;
 import com.Tallerdecoches.DTOs.pieza.PiezaCrearDTO;
 import com.Tallerdecoches.DTOs.pieza.PiezaDTO;
 import com.Tallerdecoches.entities.Pieza;
-import com.Tallerdecoches.exceptions.BadRequestCreacionException;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.PiezaRepository;
+import com.Tallerdecoches.services.piezasReparacion.PiezasReparacionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +22,14 @@ public class PiezaServiceImpl implements PiezaService {
     private  final ModelMapper modelMapper;
     private final PiezaValidacionesUniqueService piezaValidacionesUniqueService;
     private final PiezaModificacionCambiosService piezaModificacionCambiosService;
+    private final PiezasReparacionService piezasReparacionService;
 
-    public PiezaServiceImpl(PiezaRepository piezaRepository, ModelMapper modelMapper, PiezaValidacionesUniqueService piezaValidacionesUniqueService, PiezaModificacionCambiosService piezaModificacionCambiosService) {
+    public PiezaServiceImpl(PiezaRepository piezaRepository, ModelMapper modelMapper, PiezaValidacionesUniqueService piezaValidacionesUniqueService, PiezaModificacionCambiosService piezaModificacionCambiosService, PiezasReparacionService piezasReparacionService) {
         this.piezaRepository = piezaRepository;
         this.modelMapper = modelMapper;
         this.piezaValidacionesUniqueService = piezaValidacionesUniqueService;
         this.piezaModificacionCambiosService = piezaModificacionCambiosService;
+        this.piezasReparacionService = piezasReparacionService;
     }
 
     @Override
@@ -104,7 +106,9 @@ public class PiezaServiceImpl implements PiezaService {
         if (!piezaRepository.existsById(id))
             throw new ResourceNotFoundException("Pieza", "id", String.valueOf(id));
 
-        //TODO: Si la pieza existe en alguna orden de reparacion no se puede borrar
+        if (piezasReparacionService.obtenerPiezasReparacionPorPiezaHQL(id).size() > 0)
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La pieza está imputada");
+
         //TODO: Si la pieza existe en alguna entrada de almacen no se puede borrar
 
         piezaRepository.deleteById(id);
