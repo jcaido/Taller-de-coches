@@ -6,6 +6,7 @@ import com.Tallerdecoches.entities.Pieza;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.PiezaRepository;
+import com.Tallerdecoches.services.entradaPieza.EntradaPiezaService;
 import com.Tallerdecoches.services.piezasReparacion.PiezasReparacionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -23,13 +24,15 @@ public class PiezaServiceImpl implements PiezaService {
     private final PiezaValidacionesUniqueService piezaValidacionesUniqueService;
     private final PiezaModificacionCambiosService piezaModificacionCambiosService;
     private final PiezasReparacionService piezasReparacionService;
+    private final EntradaPiezaService entradaPiezasService;
 
-    public PiezaServiceImpl(PiezaRepository piezaRepository, ModelMapper modelMapper, PiezaValidacionesUniqueService piezaValidacionesUniqueService, PiezaModificacionCambiosService piezaModificacionCambiosService, PiezasReparacionService piezasReparacionService) {
+    public PiezaServiceImpl(PiezaRepository piezaRepository, ModelMapper modelMapper, PiezaValidacionesUniqueService piezaValidacionesUniqueService, PiezaModificacionCambiosService piezaModificacionCambiosService, PiezasReparacionService piezasReparacionService, EntradaPiezaService entradaPiezasService) {
         this.piezaRepository = piezaRepository;
         this.modelMapper = modelMapper;
         this.piezaValidacionesUniqueService = piezaValidacionesUniqueService;
         this.piezaModificacionCambiosService = piezaModificacionCambiosService;
         this.piezasReparacionService = piezasReparacionService;
+        this.entradaPiezasService = entradaPiezasService;
     }
 
     @Override
@@ -109,7 +112,8 @@ public class PiezaServiceImpl implements PiezaService {
         if (piezasReparacionService.obtenerPiezasReparacionPorPiezaHQL(id).size() > 0)
             throw new ResponseStatusException(HttpStatus.CONFLICT, "La pieza está imputada");
 
-        //TODO: Si la pieza existe en alguna entrada de almacen no se puede borrar
+        if (entradaPiezasService.obtenerEntradasPorPiezaHQL(id).size() > 0)
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La pieza tiene entradas asociadas");
 
         piezaRepository.deleteById(id);
 
