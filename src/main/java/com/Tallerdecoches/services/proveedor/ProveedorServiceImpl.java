@@ -134,6 +134,8 @@ public class ProveedorServiceImpl implements ProveedorService{
         if (!proveedorRepository.existsById(id))
             throw new ResourceNotFoundException("Proveedor", "id", String.valueOf(id));
 
+        //TODO: Si el proveedor existe en alguna entrada de almacen, no se puede borrar
+
         proveedorRepository.deleteById(id);
 
         return new ResponseEntity<>("Proveedor eliminado con exito", HttpStatus.OK);

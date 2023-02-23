@@ -125,4 +125,19 @@ public class PiezaController {
 
         return piezaService.modificarPieza(piezaDTO);
     }
+
+    @Operation(summary = "Eliminar una pieza", description = "Eliminar una pieza")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pieza eliminada correctamente",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Pieza no encontrado",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "Dato/s invalidos",
+                    content = @Content),
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarPieza(@Parameter(description = "id de la pieza", required = true) @PathVariable Long id) {
+
+        return piezaService.deleteById(id);
+    }
 }

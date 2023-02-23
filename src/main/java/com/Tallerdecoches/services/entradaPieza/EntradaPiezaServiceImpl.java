@@ -3,8 +3,10 @@ package com.Tallerdecoches.services.entradaPieza;
 import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaBusquedasDTO;
 import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaCrearDTO;
 import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaDTO;
+import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.entities.EntradaPieza;
 import com.Tallerdecoches.entities.Pieza;
+import com.Tallerdecoches.entities.Propietario;
 import com.Tallerdecoches.entities.Proveedor;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
@@ -17,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,14 +30,16 @@ public class EntradaPiezaServiceImpl implements EntradaPiezaService{
     private final ProveedorRepository proveedorRepository;
     private final PiezaRepository piezaRepository;
     private final ModelMapper modelMapper;
+    private final EntityManager entityManager;
     private final EntradaPiezaModificacionCambiosService entradaPiezaModificacionCambiosService;
     private final EntradaPiezaValidacionesUniqueService entradaPiezaValidacionesUniqueService;
 
-    public EntradaPiezaServiceImpl(EntradaPiezaRepository entradaPiezaRepository, ProveedorRepository proveedorRepository, PiezaRepository piezaRepository, ModelMapper modelMapper, EntradaPiezaModificacionCambiosService entradaPiezaModificacionCambiosService, EntradaPiezaValidacionesUniqueService entradaPiezaValidacionesUniqueService) {
+    public EntradaPiezaServiceImpl(EntradaPiezaRepository entradaPiezaRepository, ProveedorRepository proveedorRepository, PiezaRepository piezaRepository, ModelMapper modelMapper, EntityManager entityManager, EntradaPiezaModificacionCambiosService entradaPiezaModificacionCambiosService, EntradaPiezaValidacionesUniqueService entradaPiezaValidacionesUniqueService) {
         this.entradaPiezaRepository = entradaPiezaRepository;
         this.proveedorRepository = proveedorRepository;
         this.piezaRepository = piezaRepository;
         this.modelMapper = modelMapper;
+        this.entityManager = entityManager;
         this.entradaPiezaModificacionCambiosService = entradaPiezaModificacionCambiosService;
         this.entradaPiezaValidacionesUniqueService = entradaPiezaValidacionesUniqueService;
     }
@@ -77,6 +83,15 @@ public class EntradaPiezaServiceImpl implements EntradaPiezaService{
             throw new ResourceNotFoundException("Entrada", "id", String.valueOf(id));
 
         return new ResponseEntity<>(modelMapper.map(entradaPieza, EntradaPiezaBusquedasDTO.class), HttpStatus.OK);
+    }
+
+    @Override
+    public List<EntradaPiezaBusquedasDTO> obtenerEntradasPorProveedorHQL(Long id_proveedor) {
+        Query query = entityManager.createQuery("FROM EntradaPieza e WHERE e.proveedor.id = :id" );
+        query.setParameter("id", id_proveedor);
+        List<EntradaPieza> entradasPiezas = query.getResultList();
+
+        return entradasPiezas.stream().map(entradaPieza-> modelMapper.map(entradaPieza, EntradaPiezaBusquedasDTO.class)).toList();
     }
 
     @Override

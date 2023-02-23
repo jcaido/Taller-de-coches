@@ -3,6 +3,7 @@ package com.Tallerdecoches.controllers;
 import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaBusquedasDTO;
 import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaCrearDTO;
 import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaDTO;
+import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.services.entradaPieza.EntradaPiezaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -80,6 +81,23 @@ public class EntradaPiezaController {
 
         return entradaPiezaService.findById(id);
     }
+
+    @Operation(summary = "Obtener Entradas de piezas por proveedor", description = "Obtener Entradas de piezas por proveedor")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Entradas obtenida correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = EntradaPiezaBusquedasDTO.class))
+                    })
+    })
+    @GetMapping("/proveedor/{id_proveedor}")
+    public List<EntradaPiezaBusquedasDTO> obtenerEntradaPorProveedor(@Parameter(description = "id del proveedor",
+            required = true) @PathVariable Long id_proveedor) {
+
+        return entradaPiezaService.obtenerEntradasPorProveedorHQL(id_proveedor);
+    }
+
+
 
     @Operation(summary = "Modificar una Entrada", description = "Modificar una Entrada")
     @ApiResponses(value = {

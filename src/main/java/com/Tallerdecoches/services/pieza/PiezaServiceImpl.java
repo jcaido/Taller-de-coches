@@ -105,6 +105,7 @@ public class PiezaServiceImpl implements PiezaService {
             throw new ResourceNotFoundException("Pieza", "id", String.valueOf(id));
 
         //TODO: Si la pieza existe en alguna orden de reparacion no se puede borrar
+        //TODO: Si la pieza existe en alguna entrada de almacen no se puede borrar
 
         piezaRepository.deleteById(id);
 
