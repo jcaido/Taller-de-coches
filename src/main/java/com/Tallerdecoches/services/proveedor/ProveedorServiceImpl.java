@@ -1,17 +1,16 @@
 package com.Tallerdecoches.services.proveedor;
 
-import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.proveedor.ProveedorDTO;
 import com.Tallerdecoches.entities.CodigoPostal;
-import com.Tallerdecoches.entities.Propietario;
 import com.Tallerdecoches.entities.Proveedor;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.CodigoPostalRepository;
 import com.Tallerdecoches.repositories.ProveedorRepository;
+import com.Tallerdecoches.services.entradaPieza.EntradaPiezaService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +26,15 @@ public class ProveedorServiceImpl implements ProveedorService{
     private final ModelMapper modelMapper;
     private final ProveedorModificacionCambiosService proveedorModificacionCambiosService;
     private final ProveedorValidacionesUniqueService proveedorValidacionesUniqueService;
+    private final EntradaPiezaService entradaPiezaService;
 
-    public ProveedorServiceImpl(ProveedorRepository proveedorRepository, CodigoPostalRepository codigoPostalRepository, ModelMapper modelMapper, ProveedorModificacionCambiosService proveedorModificacionCambiosService, ProveedorValidacionesUniqueService proveedorValidacionesUniqueService) {
+    public ProveedorServiceImpl(ProveedorRepository proveedorRepository, CodigoPostalRepository codigoPostalRepository, ModelMapper modelMapper, ProveedorModificacionCambiosService proveedorModificacionCambiosService, ProveedorValidacionesUniqueService proveedorValidacionesUniqueService, EntradaPiezaService entradaPiezaService) {
         this.proveedorRepository = proveedorRepository;
         this.codigoPostalRepository = codigoPostalRepository;
         this.modelMapper = modelMapper;
         this.proveedorModificacionCambiosService = proveedorModificacionCambiosService;
         this.proveedorValidacionesUniqueService = proveedorValidacionesUniqueService;
+        this.entradaPiezaService = entradaPiezaService;
     }
 
     @Override
@@ -134,7 +135,8 @@ public class ProveedorServiceImpl implements ProveedorService{
         if (!proveedorRepository.existsById(id))
             throw new ResourceNotFoundException("Proveedor", "id", String.valueOf(id));
 
-        //TODO: Si el proveedor existe en alguna entrada de almacen, no se puede borrar
+        if (entradaPiezaService.obtenerEntradasPorProveedorHQL(id).size() > 0)
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Existen entradas asociadas a ese proveedor");
 
         proveedorRepository.deleteById(id);
 
