@@ -97,7 +97,20 @@ public class EntradaPiezaController {
         return entradaPiezaService.obtenerEntradasPorProveedorHQL(id_proveedor);
     }
 
+    @Operation(summary = "Obtener Entradas de piezas por pieza", description = "Obtener Entradas de piezas por pieza")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Entradas obtenida correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = EntradaPiezaBusquedasDTO.class))
+                    })
+    })
+    @GetMapping("/pieza/{id_pieza}")
+    public List<EntradaPiezaBusquedasDTO> obtenerEntradaPorPieza(@Parameter(description = "id de la pieza",
+            required = true) @PathVariable Long id_pieza) {
 
+        return entradaPiezaService.obtenerEntradasPorPiezaHQL(id_pieza);
+    }
 
     @Operation(summary = "Modificar una Entrada", description = "Modificar una Entrada")
     @ApiResponses(value = {

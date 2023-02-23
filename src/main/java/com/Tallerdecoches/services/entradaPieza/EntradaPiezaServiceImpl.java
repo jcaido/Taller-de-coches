@@ -93,6 +93,15 @@ public class EntradaPiezaServiceImpl implements EntradaPiezaService{
     }
 
     @Override
+    public List<EntradaPiezaBusquedasDTO> obtenerEntradasPorPiezaHQL(Long id_pieza) {
+        Query query = entityManager.createQuery("FROM EntradaPieza e WHERE e.pieza.id = :id" );
+        query.setParameter("id", id_pieza);
+        List<EntradaPieza> entradasPiezas = query.getResultList();
+
+        return entradasPiezas.stream().map(entradaPieza-> modelMapper.map(entradaPieza, EntradaPiezaBusquedasDTO.class)).toList();
+    }
+
+    @Override
     public ResponseEntity<EntradaPiezaDTO> modificarEntradaPieza(EntradaPiezaDTO entradaPiezaDTO, Long idProveedor, Long idPieza) {
 
         if (entradaPiezaDTO.getId() == null)
