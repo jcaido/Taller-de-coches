@@ -135,8 +135,9 @@ public class ProveedorServiceImpl implements ProveedorService{
         if (!proveedorRepository.existsById(id))
             throw new ResourceNotFoundException("Proveedor", "id", String.valueOf(id));
 
-        if (entradaPiezaService.obtenerEntradasPorProveedorHQL(id).size() > 0)
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Existen entradas asociadas a ese proveedor");
+        // TODO: Validar que no existan albaranes asociados
+        //if (entradaPiezaService.obtenerEntradasPorProveedorHQL(id).size() > 0)
+        //    throw new ResponseStatusException(HttpStatus.CONFLICT, "Existen entradas asociadas a ese proveedor");
 
         proveedorRepository.deleteById(id);
 

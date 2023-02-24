@@ -37,18 +37,16 @@ public class EntradaPiezaController {
             @ApiResponse(responseCode = "400",
                     description = "Bad Request",
                     content = @Content),
-            @ApiResponse(responseCode = "404", description = "proveedor y/o pieza no encontrados",
+            @ApiResponse(responseCode = "404", description = "pieza no encontrados",
                     content = @Content)
     })
-    @PostMapping("/{id_proveedor}/{id_pieza}")
+    @PostMapping("/{id_pieza}")
     public ResponseEntity<EntradaPiezaDTO> crearEntradaPieza(
             @Valid @RequestBody EntradaPiezaCrearDTO entradaPiezaCrearDTO,
-            @Parameter(description = "id del proveedor de la entrada", required = true)
-            @PathVariable Long id_proveedor,
             @Parameter(description = "id de la pieza de la entrada", required = true)
             @PathVariable Long id_pieza) {
 
-        return entradaPiezaService.crearEntradaPieza(entradaPiezaCrearDTO, id_proveedor, id_pieza);
+        return entradaPiezaService.crearEntradaPieza(entradaPiezaCrearDTO, id_pieza);
     }
 
     @Operation(summary = "Obtener todas las entradas de piezas", description = "Obtener todas las entradas de piezas")
@@ -81,22 +79,6 @@ public class EntradaPiezaController {
 
         return entradaPiezaService.findById(id);
     }
-
-    @Operation(summary = "Obtener Entradas de piezas por proveedor", description = "Obtener Entradas de piezas por proveedor")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Entradas obtenida correctamente",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = EntradaPiezaBusquedasDTO.class))
-                    })
-    })
-    @GetMapping("/proveedor/{id_proveedor}")
-    public List<EntradaPiezaBusquedasDTO> obtenerEntradaPorProveedor(@Parameter(description = "id del proveedor",
-            required = true) @PathVariable Long id_proveedor) {
-
-        return entradaPiezaService.obtenerEntradasPorProveedorHQL(id_proveedor);
-    }
-
     @Operation(summary = "Obtener Entradas de piezas por pieza", description = "Obtener Entradas de piezas por pieza")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Entradas obtenida correctamente",
@@ -124,15 +106,13 @@ public class EntradaPiezaController {
             @ApiResponse(responseCode = "409", description = "Dato/s invalidos",
                     content = @Content)
     })
-    @PutMapping("/{id_proveedor}/{id_pieza}")
+    @PutMapping("/{id_pieza}")
     public ResponseEntity<EntradaPiezaDTO> modificarEntradaPieza(
             @Valid @RequestBody EntradaPiezaDTO entradaPiezaDTO,
-            @Parameter(description = "id del proveedor", required = true)
-            @PathVariable Long id_proveedor,
             @Parameter(description = "id de la pieza", required = true)
             @PathVariable Long id_pieza) {
 
-        return entradaPiezaService.modificarEntradaPieza(entradaPiezaDTO, id_proveedor, id_pieza);
+        return entradaPiezaService.modificarEntradaPieza(entradaPiezaDTO, id_pieza);
     }
 
     @DeleteMapping("/{id}")

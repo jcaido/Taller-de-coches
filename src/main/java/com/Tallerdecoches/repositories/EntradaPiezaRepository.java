@@ -11,6 +11,4 @@ import java.util.Optional;
 @Repository
 public interface EntradaPiezaRepository extends JpaRepository<EntradaPieza, Long> {
 
-    @Transactional(readOnly = true)
-    boolean existsByNumeroAlbaran(String numeroAlbaran);
 }

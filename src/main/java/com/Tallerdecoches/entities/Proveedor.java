@@ -26,7 +26,7 @@ public class Proveedor implements Serializable {
     private String domicilio;
     @OneToOne()
     private CodigoPostal codigoPostal;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "proveedor")
-    private List<EntradaPieza> entradasPiezas = new ArrayList<>();
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    //@OneToMany(mappedBy = "proveedor")
+    //private List<EntradaPieza> entradasPiezas = new ArrayList<>();
 }
