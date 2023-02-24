@@ -2,7 +2,6 @@ package com.Tallerdecoches.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;

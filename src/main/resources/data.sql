@@ -48,11 +48,27 @@ insert into piezas (referencia, nombre_pieza, precio_venta) values ('R333300', '
 insert into piezas (referencia, nombre_pieza, precio_venta) values ('VA55555', 'culata', 300.45);
 insert into piezas (referencia, nombre_pieza, precio_venta) values ('VA44099', 'caja de cambios', 300.34);
 
-insert into entrada_pieza (pieza_id, cantidad, precio_entrada) values (1, 2, 5.34);
-insert into entrada_pieza (pieza_id, cantidad, precio_entrada) values (4, 3, 3.54);
-insert into entrada_pieza (pieza_id, cantidad, precio_entrada) values (2, 1, 23.45);
-insert into entrada_pieza (pieza_id, cantidad, precio_entrada) values (3, 2, 4.56);
-insert into entrada_pieza (pieza_id, cantidad, precio_entrada) values (8, 1, 43.32);
+insert into albaran_proveedor (proveedor_id, fecha_albaran, numero_albaran, facturado) values(3, '2022/11/19', 'AOO3445', false);
+insert into albaran_proveedor (proveedor_id, fecha_albaran, numero_albaran, facturado) values(2, '2022/11/19', 'DEFFT55', false);
+insert into albaran_proveedor (proveedor_id, fecha_albaran, numero_albaran, facturado) values(3, '2022/11/19', '3EED45', false);
+insert into albaran_proveedor (proveedor_id, fecha_albaran, numero_albaran, facturado) values(1, '2022/11/19', 'RTTF4442', false);
+insert into albaran_proveedor (proveedor_id, fecha_albaran, numero_albaran, facturado) values(3, '2022/11/19', '4400OPL', false);
+insert into albaran_proveedor (proveedor_id, fecha_albaran, numero_albaran, facturado) values(2, '2022/11/19', 'TTTY4SS', false);
+insert into albaran_proveedor (proveedor_id, fecha_albaran, numero_albaran, facturado) values(4, '2022/11/19', 'EEEERR', false);
+insert into albaran_proveedor (proveedor_id, fecha_albaran, numero_albaran, facturado) values(3, '2022/11/19', 'RT667FDD', false);
+insert into albaran_proveedor (proveedor_id, fecha_albaran, numero_albaran, facturado) values(2, '2022/11/19', '1234REE', false);
+insert into albaran_proveedor (proveedor_id, fecha_albaran, numero_albaran, facturado) values(1, '2022/11/19', '5TGBNHY6', false);
+
+insert into entrada_pieza (pieza_id, cantidad, precio_entrada, albaran_proveedor_id) values (1, 2, 5.34, 1);
+insert into entrada_pieza (pieza_id, cantidad, precio_entrada, albaran_proveedor_id) values (4, 3, 3.54, 1);
+insert into entrada_pieza (pieza_id, cantidad, precio_entrada, albaran_proveedor_id) values (2, 1, 23.45, 2);
+insert into entrada_pieza (pieza_id, cantidad, precio_entrada, albaran_proveedor_id) values (3, 2, 4.56, 2);
+insert into entrada_pieza (pieza_id, cantidad, precio_entrada, albaran_proveedor_id) values (8, 1, 43.32, 1);
+insert into entrada_pieza (pieza_id, cantidad, precio_entrada, albaran_proveedor_id) values (1, 2, 5.34, 3);
+insert into entrada_pieza (pieza_id, cantidad, precio_entrada, albaran_proveedor_id) values (4, 3, 3.54, 4);
+insert into entrada_pieza (pieza_id, cantidad, precio_entrada, albaran_proveedor_id) values (2, 1, 23.45, 3);
+insert into entrada_pieza (pieza_id, cantidad, precio_entrada, albaran_proveedor_id) values (3, 2, 4.56, 5);
+insert into entrada_pieza (pieza_id, cantidad, precio_entrada, albaran_proveedor_id) values (8, 1, 43.32, 7);
 
 insert into mano_de_obra (fecha_nuevo_precio, precio_hora, precio_hora_actual) values ('2022/11/19', 20.5, false);
 insert into mano_de_obra (fecha_nuevo_precio, precio_hora, precio_hora_actual) values ('2023/01/01', 32.0, true);

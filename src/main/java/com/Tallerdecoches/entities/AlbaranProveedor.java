@@ -5,28 +5,30 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "proveedores")
+@Table(name = "albaran_proveedor")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
 @Builder
-public class Proveedor implements Serializable {
+public class AlbaranProveedor implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nombre;
-    @Column(unique = true)
-    private String dniCif;
-    private String domicilio;
     @OneToOne()
-    private CodigoPostal codigoPostal;
+    private Proveedor proveedor;
+    @Column(name = "fecha_albaran")
+    private LocalDate fechaAlbaran;
+    @Column(name = "numero_albaran")
+    private String numeroAlbaran;
+    private Boolean facturado = false;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "proveedor")
-    private List<AlbaranProveedor> albaranesProveedores = new ArrayList<>();
+    @OneToMany(mappedBy = "albaranProveedor")
+    private List<EntradaPieza> entradasPiezas = new ArrayList<>();
 }
