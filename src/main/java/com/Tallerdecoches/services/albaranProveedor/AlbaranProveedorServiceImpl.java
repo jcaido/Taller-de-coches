@@ -7,6 +7,7 @@ import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
 import com.Tallerdecoches.entities.AlbaranProveedor;
 import com.Tallerdecoches.entities.OrdenReparacion;
 import com.Tallerdecoches.entities.Proveedor;
+import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.AlbaranProveedorRepository;
 import com.Tallerdecoches.repositories.ProveedorRepository;
 import org.modelmapper.ModelMapper;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
@@ -55,5 +57,15 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
         List<AlbaranProveedor> ordenes = albaranProveedorRepository.findAll();
 
         return ordenes.stream().map(orden-> modelMapper.map(orden, AlbaranProveedorBusquedasDTO.class)).toList();
+    }
+
+    @Override
+    public ResponseEntity<AlbaranProveedorBusquedasDTO> findById(Long id) {
+        Optional<AlbaranProveedor> albaranProveedor = albaranProveedorRepository.findById(id);
+
+        if (!albaranProveedor.isPresent())
+            throw new ResourceNotFoundException("Albaran de proveedor", "id", String.valueOf(id));
+
+        return new ResponseEntity<>(modelMapper.map(albaranProveedor, AlbaranProveedorBusquedasDTO.class), HttpStatus.OK);
     }
 }

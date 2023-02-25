@@ -11,4 +11,5 @@ import java.util.List;
 public interface AlbaranProveedorService {
     ResponseEntity<AlbaranProveedorDTO> crearAlbaranProveedor(AlbaranProveedorCrearDTO albaranProveedorCrearDTO, Long idProveedor);
     List<AlbaranProveedorBusquedasDTO> findAll();
+    ResponseEntity<AlbaranProveedorBusquedasDTO> findById(Long id);
 }
