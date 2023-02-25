@@ -1,5 +1,6 @@
 package com.Tallerdecoches.DTOs.entradaPieza;
 
+import com.Tallerdecoches.entities.AlbaranProveedor;
 import com.Tallerdecoches.entities.Pieza;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,4 +16,5 @@ public class EntradaPiezaBusquedasDTO {
     private Pieza pieza;
     private Integer cantidad;
     private Double precioEntrada;
+    private AlbaranProveedor albaranProveedor;
 }

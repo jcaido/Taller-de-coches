@@ -3,8 +3,6 @@ package com.Tallerdecoches.services.albaranProveedor;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
-import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaBusquedasDTO;
-import com.Tallerdecoches.DTOs.proveedor.ProveedorBusquedasDTO;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

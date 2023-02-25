@@ -3,9 +3,7 @@ package com.Tallerdecoches.services.albaranProveedor;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
-import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaBusquedasDTO;
 import com.Tallerdecoches.entities.AlbaranProveedor;
-import com.Tallerdecoches.entities.EntradaPieza;
 import com.Tallerdecoches.entities.Proveedor;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
@@ -17,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;

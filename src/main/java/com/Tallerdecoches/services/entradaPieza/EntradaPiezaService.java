@@ -3,7 +3,6 @@ package com.Tallerdecoches.services.entradaPieza;
 import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaBusquedasDTO;
 import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaCrearDTO;
 import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaDTO;
-import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionBusquedasDTO;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

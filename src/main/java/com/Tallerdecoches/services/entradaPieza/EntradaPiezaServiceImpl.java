@@ -3,10 +3,8 @@ package com.Tallerdecoches.services.entradaPieza;
 import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaBusquedasDTO;
 import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaCrearDTO;
 import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaDTO;
-import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionBusquedasDTO;
 import com.Tallerdecoches.entities.EntradaPieza;
 import com.Tallerdecoches.entities.Pieza;
-import com.Tallerdecoches.entities.PiezasReparacion;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.EntradaPiezaRepository;
@@ -39,6 +37,9 @@ public class EntradaPiezaServiceImpl implements EntradaPiezaService{
         this.entityManager = entityManager;
         this.entradaPiezaModificacionCambiosService = entradaPiezaModificacionCambiosService;
     }
+    //private final AlbaranProveedorService albaranProveedorService;
+
+
 
     @Override
     public ResponseEntity<EntradaPiezaDTO> crearEntradaPieza(EntradaPiezaCrearDTO entradaPiezaCrearDTO, Long idPieza) {
@@ -118,7 +119,8 @@ public class EntradaPiezaServiceImpl implements EntradaPiezaService{
         if (!entradaPiezaRepository.existsById(id))
             throw new ResourceNotFoundException("Entrada", "id", String.valueOf(id));
 
-        // TODO: Validar si tiene albaranes facturados asociados
+        if (entradaPiezaModificacionCambiosService.validaciionEntradaPiezaAlbaranFacturado(id))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Existen albaranes facturados asociados con ese entrada de piezas");
 
         entradaPiezaRepository.deleteById(id);
 
