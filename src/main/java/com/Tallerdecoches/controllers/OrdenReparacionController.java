@@ -1,7 +1,6 @@
 package com.Tallerdecoches.controllers;
 
 import com.Tallerdecoches.DTOs.ordenReparacion.*;
-import com.Tallerdecoches.DTOs.vehiculo.VehiculoDTO;
 import com.Tallerdecoches.services.ordenReparacion.OrdenReparacionService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;

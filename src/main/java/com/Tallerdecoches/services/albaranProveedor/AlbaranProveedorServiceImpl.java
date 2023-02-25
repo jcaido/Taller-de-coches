@@ -1,9 +1,11 @@
 package com.Tallerdecoches.services.albaranProveedor;
 
+import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
 import com.Tallerdecoches.entities.AlbaranProveedor;
+import com.Tallerdecoches.entities.OrdenReparacion;
 import com.Tallerdecoches.entities.Proveedor;
 import com.Tallerdecoches.repositories.AlbaranProveedorRepository;
 import com.Tallerdecoches.repositories.ProveedorRepository;
@@ -46,5 +48,12 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
         albaranProveedorRepository.save(albaranProveedor);
 
         return new ResponseEntity<>(modelMapper.map(albaranProveedor, AlbaranProveedorDTO.class), HttpStatus.CREATED);
+    }
+
+    @Override
+    public List<AlbaranProveedorBusquedasDTO> findAll() {
+        List<AlbaranProveedor> ordenes = albaranProveedorRepository.findAll();
+
+        return ordenes.stream().map(orden-> modelMapper.map(orden, AlbaranProveedorBusquedasDTO.class)).toList();
     }
 }
