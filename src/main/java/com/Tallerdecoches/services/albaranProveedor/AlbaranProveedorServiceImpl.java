@@ -3,16 +3,13 @@ package com.Tallerdecoches.services.albaranProveedor;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
-import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
-import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
 import com.Tallerdecoches.entities.AlbaranProveedor;
-import com.Tallerdecoches.entities.OrdenReparacion;
 import com.Tallerdecoches.entities.Proveedor;
-import com.Tallerdecoches.entities.Vehiculo;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.AlbaranProveedorRepository;
 import com.Tallerdecoches.repositories.ProveedorRepository;
+import com.Tallerdecoches.services.entradaPieza.EntradaPiezaService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +24,15 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
 
     private final AlbaranProveedorRepository albaranProveedorRepository;
     private final AlbaranProveedorModificacionCambiosService albaranProveedorModificacionCambiosService;
+    private final EntradaPiezaService entradaPiezaService;
     private final ModelMapper modelMapper;
     private final ProveedorRepository proveedorRepository;
 
 
-    public AlbaranProveedorServiceImpl(AlbaranProveedorRepository albaranProveedorRepository, AlbaranProveedorModificacionCambiosService albaranProveedorModificacionCambiosService, ModelMapper modelMapper, ProveedorRepository proveedorRepository) {
+    public AlbaranProveedorServiceImpl(AlbaranProveedorRepository albaranProveedorRepository, AlbaranProveedorModificacionCambiosService albaranProveedorModificacionCambiosService, EntradaPiezaService entradaPiezaService, ModelMapper modelMapper, ProveedorRepository proveedorRepository) {
         this.albaranProveedorRepository = albaranProveedorRepository;
         this.albaranProveedorModificacionCambiosService = albaranProveedorModificacionCambiosService;
+        this.entradaPiezaService = entradaPiezaService;
         this.modelMapper = modelMapper;
         this.proveedorRepository = proveedorRepository;
     }
@@ -98,5 +97,19 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
         albaranProveedorRepository.save(albaranProveedor);
 
         return new ResponseEntity<>(modelMapper.map(albaranProveedor, AlbaranProveedorDTO.class), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<String> deleteById(Long id) {
+        Optional<AlbaranProveedor> albaranProveedor = albaranProveedorRepository.findById(id);
+
+        if (entradaPiezaService.obtenerEntradasPiezasPorAlbaranProveedorHQL(id).size() > 0)
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Existen entradas de piezas asociadas con ese albaran de proveedor");
+
+        //TODO: Validar que el albaran no este asociado con ninguna factura
+
+        albaranProveedorRepository.deleteById(id);
+
+        return new ResponseEntity<>("Albaran de proveedor eliminado con exito", HttpStatus.OK);
     }
 }
