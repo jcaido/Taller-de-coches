@@ -12,4 +12,6 @@ public interface AlbaranProveedorRepository extends JpaRepository<AlbaranProveed
 
     @Transactional(readOnly = true)
     List<AlbaranProveedor> findByNumeroAlbaran(String numeroAlbaran);
+    @Transactional(readOnly = true)
+    boolean existsById(Long id);
 }

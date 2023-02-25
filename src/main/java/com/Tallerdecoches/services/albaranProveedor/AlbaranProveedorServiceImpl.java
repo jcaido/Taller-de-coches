@@ -4,9 +4,12 @@ import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
+import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
 import com.Tallerdecoches.entities.AlbaranProveedor;
 import com.Tallerdecoches.entities.OrdenReparacion;
 import com.Tallerdecoches.entities.Proveedor;
+import com.Tallerdecoches.entities.Vehiculo;
+import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.AlbaranProveedorRepository;
 import com.Tallerdecoches.repositories.ProveedorRepository;
@@ -67,5 +70,33 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
             throw new ResourceNotFoundException("Albaran de proveedor", "id", String.valueOf(id));
 
         return new ResponseEntity<>(modelMapper.map(albaranProveedor, AlbaranProveedorBusquedasDTO.class), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<AlbaranProveedorDTO> modificarAlbaranProveedor(AlbaranProveedorDTO albaranProveedorDTO, Long idProveedor) {
+
+        if (albaranProveedorDTO.getId() == null)
+            throw new BadRequestModificacionException("Albarán de proveedor", "id");
+
+        if (!albaranProveedorRepository.existsById(albaranProveedorDTO.getId()))
+            throw new ResourceNotFoundException("Albarán de proveedor", "id", String.valueOf(albaranProveedorDTO.getId()));
+
+        if (!albaranProveedorModificacionCambiosService.validacionProveedor(idProveedor))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El proveedor asociado al albarán no existe");
+
+        if (!albaranProveedorModificacionCambiosService.validacionNumeroAlbaran(albaranProveedorDTO.getNumeroAlbaran()))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero de albaran ya existe");
+
+        AlbaranProveedor albaranProveedor = albaranProveedorRepository.findById(albaranProveedorDTO.getId()).get();
+        Proveedor proveedor = proveedorRepository.findById(idProveedor).get();
+
+        albaranProveedor.setProveedor(proveedor);
+        albaranProveedor.setFechaAlbaran(albaranProveedorDTO.getFechaAlbaran());
+        albaranProveedor.setNumeroAlbaran(albaranProveedorDTO.getNumeroAlbaran());
+        albaranProveedor.setFacturado(albaranProveedorDTO.getFacturado());
+
+        albaranProveedorRepository.save(albaranProveedor);
+
+        return new ResponseEntity<>(modelMapper.map(albaranProveedor, AlbaranProveedorDTO.class), HttpStatus.OK);
     }
 }

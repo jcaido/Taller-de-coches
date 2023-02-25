@@ -4,6 +4,7 @@ import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
 import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
+import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
 import com.Tallerdecoches.services.albaranProveedor.AlbaranProveedorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +43,12 @@ public class AlbaranProveedorController {
     public ResponseEntity<AlbaranProveedorBusquedasDTO> obtenerAlbaranProveedorPorId(@PathVariable Long id) {
 
         return albaranProveedorService.findById(id);
+    }
+
+    //Modificar un albarán de proveedor
+    @PutMapping("/{idProveedor}")
+    public ResponseEntity<AlbaranProveedorDTO> modificarAlbaranProveedor(@Valid @RequestBody AlbaranProveedorDTO albaranProveedorDTO, @PathVariable Long idProveedor) {
+
+        return albaranProveedorService.modificarAlbaranProveedor(albaranProveedorDTO, idProveedor);
     }
 }
