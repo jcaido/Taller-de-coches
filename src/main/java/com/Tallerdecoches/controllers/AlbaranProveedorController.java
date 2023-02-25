@@ -1,7 +1,7 @@
 package com.Tallerdecoches.controllers;
 
+import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
-import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
 import com.Tallerdecoches.services.albaranProveedor.AlbaranProveedorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +21,9 @@ public class AlbaranProveedorController {
 
     //crear una nuevo Albarán de Proveedor
     @PostMapping("/{idProveedor}")
-    public ResponseEntity<AlbaranProveedorDTO> crearAlbaranProveedor(@Valid @RequestBody AlbaranProveedorDTO albaranProveedorDTO
+    public ResponseEntity<AlbaranProveedorDTO> crearAlbaranProveedor(@Valid @RequestBody AlbaranProveedorCrearDTO albaranProveedorCrearDTO
             , @PathVariable Long idProveedor) {
 
-        return albaranProveedorService.crearAlbaranProveedor(albaranProveedorDTO, idProveedor);
+        return albaranProveedorService.crearAlbaranProveedor(albaranProveedorCrearDTO, idProveedor);
     }
 }

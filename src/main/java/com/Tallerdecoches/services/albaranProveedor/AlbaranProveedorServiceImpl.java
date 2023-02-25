@@ -1,10 +1,10 @@
 package com.Tallerdecoches.services.albaranProveedor;
 
+import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
-import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionDTO;
+import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
 import com.Tallerdecoches.entities.AlbaranProveedor;
 import com.Tallerdecoches.entities.Proveedor;
-import com.Tallerdecoches.exceptions.BadRequestCreacionException;
 import com.Tallerdecoches.repositories.AlbaranProveedorRepository;
 import com.Tallerdecoches.repositories.ProveedorRepository;
 import org.modelmapper.ModelMapper;
@@ -32,18 +32,15 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
     }
 
     @Override
-    public ResponseEntity<AlbaranProveedorDTO> crearAlbaranProveedor(AlbaranProveedorDTO albaranProveedorDTO, Long idProveedor) {
-
-        if (albaranProveedorDTO.getId() != null)
-            throw new BadRequestCreacionException("Albaran", "id");
+    public ResponseEntity<AlbaranProveedorDTO> crearAlbaranProveedor(AlbaranProveedorCrearDTO albaranProveedorCrearDTO, Long idProveedor) {
 
         if (!albaranProveedorModificacionCambiosService.validacionProveedor(idProveedor))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El proveedor asociado al albarán no existe");
 
-        if (!albaranProveedorModificacionCambiosService.validacionNumeroAlbaran(albaranProveedorDTO.getNumeroAlbaran()))
+        if (!albaranProveedorModificacionCambiosService.validacionNumeroAlbaran(albaranProveedorCrearDTO.getNumeroAlbaran()))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero de albaran ya existe");
 
-        AlbaranProveedor albaranProveedor = modelMapper.map(albaranProveedorDTO, AlbaranProveedor.class);
+        AlbaranProveedor albaranProveedor = modelMapper.map(albaranProveedorCrearDTO, AlbaranProveedor.class);
         Proveedor proveedor = proveedorRepository.findById(idProveedor).get();
         albaranProveedor.setProveedor(proveedor);
         albaranProveedorRepository.save(albaranProveedor);
