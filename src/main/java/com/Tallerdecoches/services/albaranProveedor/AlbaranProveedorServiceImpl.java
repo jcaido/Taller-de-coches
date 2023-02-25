@@ -3,7 +3,9 @@ package com.Tallerdecoches.services.albaranProveedor;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
+import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaBusquedasDTO;
 import com.Tallerdecoches.entities.AlbaranProveedor;
+import com.Tallerdecoches.entities.EntradaPieza;
 import com.Tallerdecoches.entities.Proveedor;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
@@ -16,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,14 +31,16 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
     private final EntradaPiezaService entradaPiezaService;
     private final ModelMapper modelMapper;
     private final ProveedorRepository proveedorRepository;
+    private final EntityManager entityManager;
 
 
-    public AlbaranProveedorServiceImpl(AlbaranProveedorRepository albaranProveedorRepository, AlbaranProveedorModificacionCambiosService albaranProveedorModificacionCambiosService, EntradaPiezaService entradaPiezaService, ModelMapper modelMapper, ProveedorRepository proveedorRepository) {
+    public AlbaranProveedorServiceImpl(AlbaranProveedorRepository albaranProveedorRepository, AlbaranProveedorModificacionCambiosService albaranProveedorModificacionCambiosService, EntradaPiezaService entradaPiezaService, ModelMapper modelMapper, ProveedorRepository proveedorRepository, EntityManager entityManager) {
         this.albaranProveedorRepository = albaranProveedorRepository;
         this.albaranProveedorModificacionCambiosService = albaranProveedorModificacionCambiosService;
         this.entradaPiezaService = entradaPiezaService;
         this.modelMapper = modelMapper;
         this.proveedorRepository = proveedorRepository;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -69,6 +75,15 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
             throw new ResourceNotFoundException("Albaran de proveedor", "id", String.valueOf(id));
 
         return new ResponseEntity<>(modelMapper.map(albaranProveedor, AlbaranProveedorBusquedasDTO.class), HttpStatus.OK);
+    }
+
+    @Override
+    public List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesProveedorPorProveedorHQL(Long idProveedor) {
+        Query query = entityManager.createQuery("FROM AlbaranProveedor a WHERE a.proveedor.id = :idProveedor" );
+        query.setParameter("idProveedor", idProveedor);
+        List<AlbaranProveedor> albaranesProveedor = query.getResultList();
+
+        return albaranesProveedor.stream().map(albaranProveedor-> modelMapper.map(albaranProveedor, AlbaranProveedorBusquedasDTO.class)).toList();
     }
 
     @Override

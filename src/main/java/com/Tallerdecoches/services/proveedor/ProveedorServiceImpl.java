@@ -10,6 +10,7 @@ import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.CodigoPostalRepository;
 import com.Tallerdecoches.repositories.ProveedorRepository;
+import com.Tallerdecoches.services.albaranProveedor.AlbaranProveedorService;
 import com.Tallerdecoches.services.entradaPieza.EntradaPiezaService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -27,14 +28,16 @@ public class ProveedorServiceImpl implements ProveedorService{
     private final ProveedorModificacionCambiosService proveedorModificacionCambiosService;
     private final ProveedorValidacionesUniqueService proveedorValidacionesUniqueService;
     private final EntradaPiezaService entradaPiezaService;
+    private final AlbaranProveedorService albaranProveedorService;
 
-    public ProveedorServiceImpl(ProveedorRepository proveedorRepository, CodigoPostalRepository codigoPostalRepository, ModelMapper modelMapper, ProveedorModificacionCambiosService proveedorModificacionCambiosService, ProveedorValidacionesUniqueService proveedorValidacionesUniqueService, EntradaPiezaService entradaPiezaService) {
+    public ProveedorServiceImpl(ProveedorRepository proveedorRepository, CodigoPostalRepository codigoPostalRepository, ModelMapper modelMapper, ProveedorModificacionCambiosService proveedorModificacionCambiosService, ProveedorValidacionesUniqueService proveedorValidacionesUniqueService, EntradaPiezaService entradaPiezaService, AlbaranProveedorService albaranProveedorService) {
         this.proveedorRepository = proveedorRepository;
         this.codigoPostalRepository = codigoPostalRepository;
         this.modelMapper = modelMapper;
         this.proveedorModificacionCambiosService = proveedorModificacionCambiosService;
         this.proveedorValidacionesUniqueService = proveedorValidacionesUniqueService;
         this.entradaPiezaService = entradaPiezaService;
+        this.albaranProveedorService = albaranProveedorService;
     }
 
     @Override
@@ -135,9 +138,8 @@ public class ProveedorServiceImpl implements ProveedorService{
         if (!proveedorRepository.existsById(id))
             throw new ResourceNotFoundException("Proveedor", "id", String.valueOf(id));
 
-        // TODO: Validar que no existan albaranes asociados
-        //if (entradaPiezaService.obtenerEntradasPorProveedorHQL(id).size() > 0)
-        //    throw new ResponseStatusException(HttpStatus.CONFLICT, "Existen entradas asociadas a ese proveedor");
+        if (albaranProveedorService.obtenerAlbaranesProveedorPorProveedorHQL(id).size() > 0)
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Existen albaranes asociados a ese proveedor");
 
         proveedorRepository.deleteById(id);
 

@@ -118,7 +118,7 @@ public class EntradaPiezaServiceImpl implements EntradaPiezaService{
         if (!entradaPiezaRepository.existsById(id))
             throw new ResourceNotFoundException("Entrada", "id", String.valueOf(id));
 
-        // TODO: Validar si tiene albaranes asociados
+        // TODO: Validar si tiene albaranes facturados asociados
 
         entradaPiezaRepository.deleteById(id);
 
