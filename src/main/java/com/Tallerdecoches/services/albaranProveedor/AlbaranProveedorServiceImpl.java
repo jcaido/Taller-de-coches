@@ -1,6 +1,7 @@
 package com.Tallerdecoches.services.albaranProveedor;
 
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasDTO;
+import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
 import com.Tallerdecoches.entities.AlbaranProveedor;
@@ -62,6 +63,13 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
         List<AlbaranProveedor> ordenes = albaranProveedorRepository.findAll();
 
         return ordenes.stream().map(orden-> modelMapper.map(orden, AlbaranProveedorBusquedasDTO.class)).toList();
+    }
+
+    @Override
+    public List<AlbaranProveedorBusquedasParcialDTO> findAllParcial() {
+        List<AlbaranProveedor> ordenes = albaranProveedorRepository.findAll();
+
+        return ordenes.stream().map(orden-> modelMapper.map(orden, AlbaranProveedorBusquedasParcialDTO.class)).toList();
     }
 
     @Override

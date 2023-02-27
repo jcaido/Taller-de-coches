@@ -1,6 +1,7 @@
 package com.Tallerdecoches.controllers;
 
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasDTO;
+import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
 import com.Tallerdecoches.services.albaranProveedor.AlbaranProveedorService;
@@ -34,6 +35,13 @@ public class AlbaranProveedorController {
     public List<AlbaranProveedorBusquedasDTO> obtenerTodosLosAlbaranesProveedor() {
 
         return albaranProveedorService.findAll();
+    }
+
+    //Obtener una lista con todos los albaranes de proveedor, campos id, fecha, numero y nombre del proveedor
+    @GetMapping("/parcial")
+    public List<AlbaranProveedorBusquedasParcialDTO> obtenerTodosLosAlbaranesProveedorParcial() {
+
+        return albaranProveedorService.findAllParcial();
     }
 
     //Obtener un albarán de proveedor por su id
