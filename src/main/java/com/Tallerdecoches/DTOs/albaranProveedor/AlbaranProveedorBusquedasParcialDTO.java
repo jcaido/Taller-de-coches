@@ -22,4 +22,6 @@ public class AlbaranProveedorBusquedasParcialDTO {
     private LocalDate fechaAlbaran;
     private String numeroAlbaran;
     private String proveedorNombre;
+    private String proveedorDniCif;
+
 }
