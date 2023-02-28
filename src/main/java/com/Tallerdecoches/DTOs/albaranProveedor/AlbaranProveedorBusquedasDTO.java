@@ -1,13 +1,12 @@
 package com.Tallerdecoches.DTOs.albaranProveedor;
 
-import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaBusquedasDTO;
+import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaBusquedasParcialDTO;
 import com.Tallerdecoches.entities.Proveedor;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
@@ -24,5 +23,5 @@ public class AlbaranProveedorBusquedasDTO {
     private LocalDate fechaAlbaran;
     private String numeroAlbaran;
     private Boolean facturado = false;
-    private List<EntradaPiezaBusquedasDTO> entradasPiezas;
+    private List<EntradaPiezaBusquedasParcialDTO> entradasPiezas;
 }
