@@ -40,13 +40,15 @@ public class EntradaPiezaController {
             @ApiResponse(responseCode = "404", description = "pieza no encontrados",
                     content = @Content)
     })
-    @PostMapping("/{id_pieza}")
+    @PostMapping("/{idPieza}/{idAlbaranProveedor}")
     public ResponseEntity<EntradaPiezaDTO> crearEntradaPieza(
             @Valid @RequestBody EntradaPiezaCrearDTO entradaPiezaCrearDTO,
             @Parameter(description = "id de la pieza de la entrada", required = true)
-            @PathVariable Long id_pieza) {
+            @PathVariable Long idPieza,
+            @Parameter(description = "id del albarán del proveedor", required = true)
+            @PathVariable Long idAlbaranProveedor) {
 
-        return entradaPiezaService.crearEntradaPieza(entradaPiezaCrearDTO, id_pieza);
+        return entradaPiezaService.crearEntradaPieza(entradaPiezaCrearDTO, idPieza, idAlbaranProveedor);
     }
 
     @Operation(summary = "Obtener todas las entradas de piezas", description = "Obtener todas las entradas de piezas")

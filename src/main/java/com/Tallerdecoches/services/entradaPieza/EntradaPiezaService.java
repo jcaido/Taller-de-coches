@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface EntradaPiezaService {
 
-    ResponseEntity<EntradaPiezaDTO> crearEntradaPieza(EntradaPiezaCrearDTO entradaPiezaCrearDTO, Long idPieza);
+    ResponseEntity<EntradaPiezaDTO> crearEntradaPieza(EntradaPiezaCrearDTO entradaPiezaCrearDTO, Long idPieza, Long idAlbaranProvedor);
     List<EntradaPiezaBusquedasDTO> findAll();
     ResponseEntity<EntradaPiezaBusquedasDTO> findById(Long id);
     List<EntradaPiezaBusquedasDTO> obtenerEntradasPorPiezaHQL(Long id_pieza);

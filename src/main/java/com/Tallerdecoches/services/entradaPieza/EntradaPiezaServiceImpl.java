@@ -3,10 +3,12 @@ package com.Tallerdecoches.services.entradaPieza;
 import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaBusquedasDTO;
 import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaCrearDTO;
 import com.Tallerdecoches.DTOs.entradaPieza.EntradaPiezaDTO;
+import com.Tallerdecoches.entities.AlbaranProveedor;
 import com.Tallerdecoches.entities.EntradaPieza;
 import com.Tallerdecoches.entities.Pieza;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
+import com.Tallerdecoches.repositories.AlbaranProveedorRepository;
 import com.Tallerdecoches.repositories.EntradaPiezaRepository;
 import com.Tallerdecoches.repositories.PiezaRepository;
 import com.Tallerdecoches.repositories.ProveedorRepository;
@@ -25,24 +27,23 @@ public class EntradaPiezaServiceImpl implements EntradaPiezaService{
     private final EntradaPiezaRepository entradaPiezaRepository;
     private final ProveedorRepository proveedorRepository;
     private final PiezaRepository piezaRepository;
+    private final AlbaranProveedorRepository albaranProveedorRepository;
     private final ModelMapper modelMapper;
     private final EntityManager entityManager;
     private final EntradaPiezaModificacionCambiosService entradaPiezaModificacionCambiosService;
 
-    public EntradaPiezaServiceImpl(EntradaPiezaRepository entradaPiezaRepository, ProveedorRepository proveedorRepository, PiezaRepository piezaRepository, ModelMapper modelMapper, EntityManager entityManager, EntradaPiezaModificacionCambiosService entradaPiezaModificacionCambiosService) {
+    public EntradaPiezaServiceImpl(EntradaPiezaRepository entradaPiezaRepository, ProveedorRepository proveedorRepository, PiezaRepository piezaRepository, AlbaranProveedorRepository albaranProveedorRepository, ModelMapper modelMapper, EntityManager entityManager, EntradaPiezaModificacionCambiosService entradaPiezaModificacionCambiosService) {
         this.entradaPiezaRepository = entradaPiezaRepository;
         this.proveedorRepository = proveedorRepository;
         this.piezaRepository = piezaRepository;
+        this.albaranProveedorRepository = albaranProveedorRepository;
         this.modelMapper = modelMapper;
         this.entityManager = entityManager;
         this.entradaPiezaModificacionCambiosService = entradaPiezaModificacionCambiosService;
     }
-    //private final AlbaranProveedorService albaranProveedorService;
-
-
 
     @Override
-    public ResponseEntity<EntradaPiezaDTO> crearEntradaPieza(EntradaPiezaCrearDTO entradaPiezaCrearDTO, Long idPieza) {
+    public ResponseEntity<EntradaPiezaDTO> crearEntradaPieza(EntradaPiezaCrearDTO entradaPiezaCrearDTO, Long idPieza, Long idAlbaranProveedor) {
 
         if (!entradaPiezaModificacionCambiosService.validacionPieza(idPieza))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "La pieza asociada a la entrada no existe");
@@ -50,6 +51,8 @@ public class EntradaPiezaServiceImpl implements EntradaPiezaService{
         EntradaPieza entradaPieza = modelMapper.map(entradaPiezaCrearDTO, EntradaPieza.class);
         Pieza pieza = piezaRepository.findById(idPieza).get();
         entradaPieza.setPieza(pieza);
+        AlbaranProveedor albaranProveedor = albaranProveedorRepository.findById(idAlbaranProveedor).get();
+        entradaPieza.setAlbaranProveedor(albaranProveedor);
         entradaPiezaRepository.save(entradaPieza);
 
         return new ResponseEntity<>(modelMapper.map(entradaPieza, EntradaPiezaDTO.class), HttpStatus.CREATED);
