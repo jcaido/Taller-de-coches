@@ -6,7 +6,6 @@ import com.Tallerdecoches.DTOs.vehiculo.VehiculoCrearDTO;
 import com.Tallerdecoches.DTOs.vehiculo.VehiculoDTO;
 import com.Tallerdecoches.entities.Propietario;
 import com.Tallerdecoches.entities.Vehiculo;
-import com.Tallerdecoches.exceptions.BadRequestCreacionException;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.PropietarioRepository;
