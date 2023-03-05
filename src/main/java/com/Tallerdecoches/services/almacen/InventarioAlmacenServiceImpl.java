@@ -45,6 +45,6 @@ public class InventarioAlmacenServiceImpl implements  InventarioAlmacenService{
             inventarioAlmacen.add(new MovimientoAlmacenDTO(k.piezaReferencia(), k.piezaNombre(), v));
         });
 
-        return inventarioAlmacen;
+        return inventarioAlmacen.stream().filter(movimiento-> movimiento.getTotal() != 0).toList();
     }
 }
