@@ -7,6 +7,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface InventarioAlmacenService {
-    List<MovimientoAlmacenDTO> obtenerInventarioAlmacen();
     List<MovimientoAlmacenDTO> obtenerInventarioAlmacenFecha(LocalDate fecha);
 }

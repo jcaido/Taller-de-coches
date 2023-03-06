@@ -12,13 +12,6 @@ import java.util.List;
 
 @Repository
 public interface PiezasReparacionRepository extends JpaRepository<PiezasReparacion, Long> {
-
-    @Query("SELECT new com.Tallerdecoches.DTOs.almacen.MovimientoAlmacenDTO(" +
-        " p.pieza.referencia, p.pieza.nombre, SUM(p.cantidad))" +
-            " FROM PiezasReparacion AS p" +
-            " GROUP BY p.pieza.referencia, p.pieza.nombre")
-    List<MovimientoAlmacenDTO> obtenerTotalPiezasReparacion();
-
     @Query("SELECT new com.Tallerdecoches.DTOs.almacen.MovimientoAlmacenDTO(" +
             " p.pieza.referencia, p.pieza.nombre, SUM(p.cantidad))" +
             " FROM PiezasReparacion AS p" +

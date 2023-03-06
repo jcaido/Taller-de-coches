@@ -22,7 +22,7 @@ public class AlmacenController {
     @GetMapping()
     public List<MovimientoAlmacenDTO> obtenerInventarioAlmacen() {
 
-        return inventarioAlmacenService.obtenerInventarioAlmacen();
+        return inventarioAlmacenService.obtenerInventarioAlmacenFecha(LocalDate.now());
     }
 
     @GetMapping("/{fecha}")
