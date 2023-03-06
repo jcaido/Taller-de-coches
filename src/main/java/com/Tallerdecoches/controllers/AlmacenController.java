@@ -2,8 +2,10 @@ package com.Tallerdecoches.controllers;
 
 import com.Tallerdecoches.DTOs.almacen.MovimientoAlmacenDTO;
 import com.Tallerdecoches.services.almacen.InventarioAlmacenService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -21,5 +23,11 @@ public class AlmacenController {
     public List<MovimientoAlmacenDTO> obtenerInventarioAlmacen() {
 
         return inventarioAlmacenService.obtenerInventarioAlmacen();
+    }
+
+    @GetMapping("/{fecha}")
+    public List<MovimientoAlmacenDTO> obtenerInventarioAlmacenFecha(@PathVariable(name="fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+
+        return inventarioAlmacenService.obtenerInventarioAlmacenFecha(fecha);
     }
 }
