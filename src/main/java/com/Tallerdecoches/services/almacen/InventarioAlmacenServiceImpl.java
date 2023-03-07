@@ -3,8 +3,10 @@ package com.Tallerdecoches.services.almacen;
 import com.Tallerdecoches.DTOs.almacen.MovimientoAlmacenDTO;
 import com.Tallerdecoches.repositories.EntradaPiezaRepository;
 import com.Tallerdecoches.repositories.PiezasReparacionRepository;
-import net.bytebuddy.asm.Advice;
+import com.Tallerdecoches.services.piezasReparacion.PiezasReparacionService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,14 +22,21 @@ import static java.util.stream.Collectors.summingLong;
 public class InventarioAlmacenServiceImpl implements  InventarioAlmacenService{
     private final EntradaPiezaRepository entradaPiezaRepository;
     private final PiezasReparacionRepository piezasReparacionRepository;
+    private final PiezasReparacionService piezasReparacionService;
 
-    public InventarioAlmacenServiceImpl(EntradaPiezaRepository entradaPiezaRepository, PiezasReparacionRepository piezasReparacionRepository) {
+    public InventarioAlmacenServiceImpl(EntradaPiezaRepository entradaPiezaRepository, PiezasReparacionRepository piezasReparacionRepository, PiezasReparacionService piezasReparacionService) {
         this.entradaPiezaRepository = entradaPiezaRepository;
         this.piezasReparacionRepository = piezasReparacionRepository;
+        this.piezasReparacionService = piezasReparacionService;
     }
 
     @Override
     public List<MovimientoAlmacenDTO> obtenerInventarioAlmacenFecha(LocalDate fecha) {
+
+        if (piezasReparacionService.obtenerPiezasReparacionPorOrdenReparacion(fecha).size() > 0)
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Existen piezas imputadas a Ordenes de Reparación abiertas " +
+                    "con fecha igual o anterior a la fecha solicitada. Debe cerrar esas órdenes para poder obtener " +
+                    "el inventario a la fecha solicitada. La fecha de cierre debe ser la del inventario.");
 
         List<MovimientoAlmacenDTO> entradas = entradaPiezaRepository.obtenerTotalEntradasFecha(fecha);
 

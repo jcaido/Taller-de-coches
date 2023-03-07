@@ -7,6 +7,7 @@ import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionCrearDTO;
 import com.Tallerdecoches.DTOs.piezasReparacion.PiezasReparacionDTO;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface PiezasReparacionService {
@@ -16,5 +17,6 @@ public interface PiezasReparacionService {
     ResponseEntity<PiezasReparacionBusquedasDTO> findById(Long id);
     List<PiezasReparacionBusquedasParcialDTO> obtenerPiezasReparacionPorOrdenReparacion(Long id);
     List<PiezasReparacionBusquedasDTO> obtenerPiezasReparacionPorPiezaHQL(Long id_pieza);
+    List<PiezasReparacionBusquedasDTO> obtenerPiezasReparacionPorOrdenReparacion(LocalDate fecha);
     ResponseEntity<String> deleteById(Long id);
 }

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,6 +90,16 @@ public class PiezasReparacionServiceImpl implements PiezasReparacionService {
     public List<PiezasReparacionBusquedasDTO> obtenerPiezasReparacionPorPiezaHQL(Long id_pieza) {
         Query query = entityManager.createQuery("FROM PiezasReparacion p WHERE p.pieza.id = :id" );
         query.setParameter("id", id_pieza);
+        List<PiezasReparacion> piezas = query.getResultList();
+
+        return piezas.stream().map(pieza-> modelMapper.map(pieza, PiezasReparacionBusquedasDTO.class)).toList();
+    }
+
+    @Override
+    public List<PiezasReparacionBusquedasDTO> obtenerPiezasReparacionPorOrdenReparacion(LocalDate fecha) {
+        Query query = entityManager.createQuery("FROM PiezasReparacion p WHERE p.ordenReparacion.fechaApertura <= :fecha " +
+                "AND p.ordenReparacion.cerrada = false");
+        query.setParameter("fecha", fecha);
         List<PiezasReparacion> piezas = query.getResultList();
 
         return piezas.stream().map(pieza-> modelMapper.map(pieza, PiezasReparacionBusquedasDTO.class)).toList();
