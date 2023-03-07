@@ -1,6 +1,7 @@
 package com.Tallerdecoches.services.almacen;
 
 import com.Tallerdecoches.DTOs.almacen.MovimientoAlmacenDTO;
+import com.Tallerdecoches.DTOs.almacen.MovimientoPiezaDTO;
 import com.Tallerdecoches.repositories.EntradaPiezaRepository;
 import com.Tallerdecoches.repositories.PiezasReparacionRepository;
 import com.Tallerdecoches.services.piezasReparacion.PiezasReparacionService;
@@ -9,10 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -57,6 +57,24 @@ public class InventarioAlmacenServiceImpl implements  InventarioAlmacenService{
         });
 
         return inventarioAlmacen.stream().filter(movimiento-> movimiento.getTotal() != 0).toList();
+    }
+
+    @Override
+    public List<MovimientoPiezaDTO> obtenerEntradasPorPieza(String referencia) {
+        List<MovimientoPiezaDTO> entradas = entradaPiezaRepository.obtenerEntradasPorPieza(referencia);
+
+        List<MovimientoPiezaDTO> salidas = piezasReparacionRepository.obtenerPiezasReparacionPorPieza(referencia);
+
+        for (MovimientoPiezaDTO salida: salidas
+        ) {
+            salida.setCantidad(-salida.getCantidad());
+        }
+
+        List<MovimientoPiezaDTO> movimientos = Stream.of(entradas, salidas).flatMap(Collection::stream).toList();
+
+        List<MovimientoPiezaDTO> movimientosSort = movimientos.stream().sorted(Comparator.comparing(MovimientoPiezaDTO::getFechaMovimiento)).collect(Collectors.toList());
+
+        return movimientosSort;
     }
 
 }
