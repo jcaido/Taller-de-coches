@@ -60,7 +60,13 @@ public class InventarioAlmacenServiceImpl implements  InventarioAlmacenService{
     }
 
     @Override
-    public List<MovimientoPiezaDTO> obtenerEntradasPorPieza(String referencia) {
+    public List<MovimientoPiezaDTO> obtenerMovimientosPorPieza(String referencia) {
+
+        if (piezasReparacionService.obtenerPiezasReparacionPorPiezaYOrdenReparacion(referencia).size() > 0)
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Existen Ordenes de Reparación abiertas " +
+                    "con la pieza solicitada imputada. Debe cerrar esas órdenes para poder obtener " +
+                    "los movimientos de esa pieza.");
+
         List<MovimientoPiezaDTO> entradas = entradaPiezaRepository.obtenerEntradasPorPieza(referencia);
 
         List<MovimientoPiezaDTO> salidas = piezasReparacionRepository.obtenerPiezasReparacionPorPieza(referencia);

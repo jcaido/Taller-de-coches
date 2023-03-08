@@ -35,6 +35,6 @@ public class AlmacenController {
     @GetMapping("/movimientos/{pieza}")
     public List<MovimientoPiezaDTO> obtenerEntradasPorPieza(@PathVariable(name="pieza") String pieza) {
 
-        return inventarioAlmacenService.obtenerEntradasPorPieza(pieza);
+        return inventarioAlmacenService.obtenerMovimientosPorPieza(pieza);
     }
 }

@@ -106,6 +106,16 @@ public class PiezasReparacionServiceImpl implements PiezasReparacionService {
     }
 
     @Override
+    public List<PiezasReparacionBusquedasDTO> obtenerPiezasReparacionPorPiezaYOrdenReparacion(String referencia) {
+        Query query = entityManager.createQuery("FROM PiezasReparacion p WHERE p.pieza.referencia = :referencia " +
+                "AND p.ordenReparacion.cerrada = false");
+        query.setParameter("referencia", referencia);
+        List<PiezasReparacion> piezas = query.getResultList();
+
+        return piezas.stream().map(pieza-> modelMapper.map(pieza, PiezasReparacionBusquedasDTO.class)).toList();
+    }
+
+    @Override
     public ResponseEntity<String> deleteById(Long id) {
 
         if (!piezasReparacionRepository.existsById(id))
