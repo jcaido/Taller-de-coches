@@ -29,4 +29,7 @@ public class Proveedor implements Serializable {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "proveedor")
     private List<AlbaranProveedor> albaranesProveedores = new ArrayList<>();
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "proveedor")
+    private List<FacturaProveedor> facturasProveedores = new ArrayList<>();
 }
