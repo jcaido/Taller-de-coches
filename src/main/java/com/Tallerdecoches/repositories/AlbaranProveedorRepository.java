@@ -1,13 +1,13 @@
 package com.Tallerdecoches.repositories;
 
 import com.Tallerdecoches.entities.AlbaranProveedor;
-import com.Tallerdecoches.entities.CodigoPostal;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
+@Repository
 public interface AlbaranProveedorRepository extends JpaRepository<AlbaranProveedor, Long> {
 
     @Transactional(readOnly = true)
