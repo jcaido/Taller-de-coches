@@ -10,4 +10,5 @@ import java.util.List;
 public interface FacturaProveedorRepository extends JpaRepository<FacturaProveedor, Long> {
 
     List<FacturaProveedor> findByNumeroFactura(String numeroFactura);
+    boolean existsById(Long id);
 }

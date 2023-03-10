@@ -12,4 +12,5 @@ public interface FacturaProveedorService {
     ResponseEntity<FacturaProveedorDTO> crearFacturaProveedor(FacturaProveedorCrearDTO facturaProveedorCrearDTO, Long idProveedor);
     List<FacturaProveedorBusquedasDTO> findAll();
     ResponseEntity<FacturaProveedorBusquedasDTO> findById(Long id);
+    ResponseEntity<FacturaProveedorDTO> modificarFacturaProveedor(FacturaProveedorDTO facturaProveedorDTO, Long idProveedor);
 }

@@ -1,8 +1,10 @@
 package com.Tallerdecoches.controllers;
 
+import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorDTO;
+import com.Tallerdecoches.entities.FacturaProveedor;
 import com.Tallerdecoches.services.facturaProveedor.FacturaProveedorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,5 +43,12 @@ public class FacturaProveedorController {
     public ResponseEntity<FacturaProveedorBusquedasDTO> obtenerFacturaProveedorPorId(@PathVariable Long id) {
 
         return facturaProveedorService.findById(id);
+    }
+
+    //Modificar una factura de proveedor
+    @PutMapping("/{idProveedor}")
+    public ResponseEntity<FacturaProveedorDTO> modificarFacturaProveedor(@Valid @RequestBody FacturaProveedorDTO facturaProveedorDTO, @PathVariable Long idProveedor) {
+
+        return facturaProveedorService.modificarFacturaProveedor(facturaProveedorDTO, idProveedor);
     }
 }
