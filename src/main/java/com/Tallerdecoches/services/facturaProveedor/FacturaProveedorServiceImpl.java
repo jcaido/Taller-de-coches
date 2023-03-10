@@ -1,5 +1,6 @@
 package com.Tallerdecoches.services.facturaProveedor;
 
+import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorDTO;
 import com.Tallerdecoches.entities.FacturaProveedor;
@@ -12,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @Service
 public class FacturaProveedorServiceImpl implements FacturaProveedorService{
@@ -45,5 +48,12 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
         facturaProveedorRepository.save(facturaProveedor);
 
         return new ResponseEntity<>(modelMapper.map(facturaProveedor, FacturaProveedorDTO.class), HttpStatus.CREATED);
+    }
+
+    @Override
+    public List<FacturaProveedorBusquedasDTO> findAll() {
+        List<FacturaProveedor> facturas = facturaProveedorRepository.findAll();
+
+        return facturas.stream().map(factura -> modelMapper.map(factura, FacturaProveedorBusquedasDTO.class)).toList();
     }
 }
