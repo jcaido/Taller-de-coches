@@ -13,4 +13,5 @@ public interface FacturaProveedorService {
     List<FacturaProveedorBusquedasDTO> findAll();
     ResponseEntity<FacturaProveedorBusquedasDTO> findById(Long id);
     ResponseEntity<FacturaProveedorDTO> modificarFacturaProveedor(FacturaProveedorDTO facturaProveedorDTO, Long idProveedor);
+    ResponseEntity<String> deleteById(Long id);
 }

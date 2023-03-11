@@ -1,10 +1,8 @@
 package com.Tallerdecoches.services.facturaProveedor;
 
-import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorDTO;
-import com.Tallerdecoches.entities.AlbaranProveedor;
 import com.Tallerdecoches.entities.FacturaProveedor;
 import com.Tallerdecoches.entities.Proveedor;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
@@ -12,6 +10,7 @@ import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.FacturaProveedorRepository;
 import com.Tallerdecoches.repositories.ProveedorRepository;
 import com.Tallerdecoches.services.albaranProveedor.AlbaranProveedorModificacionCambiosService;
+import com.Tallerdecoches.services.albaranProveedor.AlbaranProveedorService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +28,15 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
     private final ModelMapper modelMapper;
     private final ProveedorRepository proveedorRepository;
     private final FacturaProveedorRepository facturaProveedorRepository;
+    private final AlbaranProveedorService albaranProveedorService;
 
-    public FacturaProveedorServiceImpl(AlbaranProveedorModificacionCambiosService albaranProveedorModificacionCambiosService, FacturaProveedorModificacionCambiosService facturaProveedorModificacionCambiosService, ModelMapper modelMapper, ProveedorRepository proveedorRepository, FacturaProveedorRepository facturaProveedorRepository) {
+    public FacturaProveedorServiceImpl(AlbaranProveedorModificacionCambiosService albaranProveedorModificacionCambiosService, FacturaProveedorModificacionCambiosService facturaProveedorModificacionCambiosService, ModelMapper modelMapper, ProveedorRepository proveedorRepository, FacturaProveedorRepository facturaProveedorRepository, AlbaranProveedorService albaranProveedorService) {
         this.albaranProveedorModificacionCambiosService = albaranProveedorModificacionCambiosService;
         this.facturaProveedorModificacionCambiosService = facturaProveedorModificacionCambiosService;
         this.modelMapper = modelMapper;
         this.proveedorRepository = proveedorRepository;
         this.facturaProveedorRepository = facturaProveedorRepository;
+        this.albaranProveedorService = albaranProveedorService;
     }
 
     @Override
@@ -99,5 +100,19 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
         facturaProveedorRepository.save(facturaProveedor);
 
         return new ResponseEntity<>(modelMapper.map(facturaProveedor, FacturaProveedorDTO.class), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<String> deleteById(Long id) {
+
+        if (!facturaProveedorRepository.existsById(id))
+            throw new ResourceNotFoundException("Factura", "id", String.valueOf(id));
+
+        if (albaranProveedorService.obtenerAlbaranesProveedorPorFacturaProveedorHQL(id).size() > 0)
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Existen albaranes asociados con esa factura de proveedor");
+
+        //TODO: Validad que la factura no esté contabilizada
+
+        return new ResponseEntity<>("Factura de proveedor eliminada con exito", HttpStatus.OK);
     }
 }

@@ -51,4 +51,11 @@ public class FacturaProveedorController {
 
         return facturaProveedorService.modificarFacturaProveedor(facturaProveedorDTO, idProveedor);
     }
+
+    //Eliminar una factura existente
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarFacturaProveedor(@PathVariable Long id) {
+
+        return facturaProveedorService.deleteById(id);
+    }
 }
