@@ -131,12 +131,13 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
 
     @Override
     public ResponseEntity<String> deleteById(Long id) {
-        Optional<AlbaranProveedor> albaranProveedor = albaranProveedorRepository.findById(id);
+        AlbaranProveedor albaranProveedor = albaranProveedorRepository.findById(id).get();
 
         if (entradaPiezaService.obtenerEntradasPiezasPorAlbaranProveedorHQL(id).size() > 0)
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Existen entradas de piezas asociadas con ese albaran de proveedor");
 
-        //TODO: Validar que el albaran no este asociado con ninguna factura
+        if (albaranProveedor.getFacturaProveedor() != null)
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El albarán ya está asociado a una factura");
 
         albaranProveedorRepository.deleteById(id);
 
