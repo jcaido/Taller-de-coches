@@ -27,6 +27,7 @@ public class FacturaProveedor implements Serializable {
     private LocalDate fechaFactura;
     @Column(name = "numero_factura")
     private String numeroFactura;
+    private Integer tipoIVA;
     private Boolean contabilizada = false;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "facturaProveedor")

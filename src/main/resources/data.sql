@@ -48,11 +48,11 @@ insert into piezas (referencia, nombre_pieza, precio_venta) values ('R333300', '
 insert into piezas (referencia, nombre_pieza, precio_venta) values ('VA55555', 'culata', 300.45);
 insert into piezas (referencia, nombre_pieza, precio_venta) values ('VA44099', 'caja de cambios', 300.34);
 
-insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, contabilizada) values (1, '2022/11/30', 'A0002', false);
-insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, contabilizada) values (2, '2022/11/30', 'BR0002', false);
-insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, contabilizada) values (1, '2022/12/31', 'A00022', false);
-insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, contabilizada) values (2, '2022/12/31', 'BR00025', false);
-insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, contabilizada) values (3, '2022/11/30', 'TR4567', false);
+insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, tipoIVA, contabilizada) values (1, '2022/11/30', 'A0002', 21, false);
+insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, tipoIVA, contabilizada) values (2, '2022/11/30', 'BR0002', 21, false);
+insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, tipoIVA,contabilizada) values (1, '2022/12/31', 'A00022', 21, false);
+insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, tipoIVA, contabilizada) values (2, '2022/12/31', 'BR00025', 21, false);
+insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, tipoIVA, contabilizada) values (3, '2022/11/30', 'TR4567', 21, false);
 
 insert into albaran_proveedor (proveedor_id, fecha_albaran, numero_albaran, facturado, factura_proveedor_id) values (3, '2022/11/19', 'AOO3445', true, 1);
 insert into albaran_proveedor (proveedor_id, fecha_albaran, numero_albaran, facturado, factura_proveedor_id) values (2, '2022/11/19', 'DEFFT55', false, null);

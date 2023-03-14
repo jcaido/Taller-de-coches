@@ -19,5 +19,6 @@ public class FacturaProveedorDTO {
     @NotNull(message = "la fecha de la factura no puede ser nula")
     private LocalDate fechaFactura;
     private String numeroFactura;
+    private Integer tipoIVA;
     private Boolean contabilizada = false;
 }

@@ -1,7 +1,6 @@
 package com.Tallerdecoches.DTOs.facturaProveedor;
 
 import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasParcialDTO;
-import com.Tallerdecoches.entities.AlbaranProveedor;
 import com.Tallerdecoches.entities.Proveedor;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -22,6 +21,7 @@ public class FacturaProveedorBusquedasDTO {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate fechaFactura;
     private String numeroFactura;
+    private Integer tipoIVA;
     private Boolean contabilizada;
     private List<AlbaranProveedorBusquedasParcialDTO> albaranesProveedores;
 }
