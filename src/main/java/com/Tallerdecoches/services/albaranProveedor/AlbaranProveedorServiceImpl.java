@@ -1,9 +1,6 @@
 package com.Tallerdecoches.services.albaranProveedor;
 
-import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasDTO;
-import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasParcialDTO;
-import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorCrearDTO;
-import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
+import com.Tallerdecoches.DTOs.albaranProveedor.*;
 import com.Tallerdecoches.entities.AlbaranProveedor;
 import com.Tallerdecoches.entities.FacturaProveedor;
 import com.Tallerdecoches.entities.Proveedor;
@@ -90,6 +87,16 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
         List<AlbaranProveedor> albaranesProveedor = query.getResultList();
 
         return albaranesProveedor.stream().map(albaranProveedor-> modelMapper.map(albaranProveedor, AlbaranProveedorBusquedasDTO.class)).toList();
+    }
+
+    @Override
+    public List<AlbaranProveedorParcial1DTO> obtenerAlbaranesPtesFacturarPorProveedorHQL(Long idProveedor) {
+        Query query = entityManager.createQuery("FROM AlbaranProveedor a WHERE a.proveedor.id = :idProveedor AND a.facturado = :facturado" );
+        query.setParameter("idProveedor", idProveedor);
+        query.setParameter("facturado", false);
+        List<AlbaranProveedor> albaranesProveedor = query.getResultList();
+
+        return albaranesProveedor.stream().map(albaranProveedor-> modelMapper.map(albaranProveedor, AlbaranProveedorParcial1DTO.class)).toList();
     }
 
     @Override

@@ -1,9 +1,6 @@
 package com.Tallerdecoches.services.albaranProveedor;
 
-import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasDTO;
-import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasParcialDTO;
-import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorCrearDTO;
-import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
+import com.Tallerdecoches.DTOs.albaranProveedor.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -14,6 +11,7 @@ public interface AlbaranProveedorService {
     List<AlbaranProveedorBusquedasParcialDTO> findAllParcial();
     ResponseEntity<AlbaranProveedorBusquedasDTO> findById(Long id);
     List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesProveedorPorProveedorHQL(Long idProveedor);
+    List<AlbaranProveedorParcial1DTO> obtenerAlbaranesPtesFacturarPorProveedorHQL(Long idProveedor);
     List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesProveedorPorFacturaProveedorHQL(Long idFactura);
     ResponseEntity<AlbaranProveedorDTO> modificarAlbaranProveedor(AlbaranProveedorDTO albaranProveedorDTO, Long idProveedor);
     ResponseEntity<String> deleteById(Long  id);

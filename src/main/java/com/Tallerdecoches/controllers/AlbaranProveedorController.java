@@ -1,9 +1,6 @@
 package com.Tallerdecoches.controllers;
 
-import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasDTO;
-import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasParcialDTO;
-import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorCrearDTO;
-import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
+import com.Tallerdecoches.DTOs.albaranProveedor.*;
 import com.Tallerdecoches.services.albaranProveedor.AlbaranProveedorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +46,13 @@ public class AlbaranProveedorController {
     public ResponseEntity<AlbaranProveedorBusquedasDTO> obtenerAlbaranProveedorPorId(@PathVariable Long id) {
 
         return albaranProveedorService.findById(id);
+    }
+
+    //Obtener albaranes no facturados de un proveedor
+    @GetMapping("/no-facturados/{idProveedor}")
+    public List<AlbaranProveedorParcial1DTO> obtenerAlbaranesProveedorNoFacturados(@PathVariable Long idProveedor) {
+
+        return albaranProveedorService.obtenerAlbaranesPtesFacturarPorProveedorHQL(idProveedor);
     }
 
     //Modificar un albarán de proveedor
