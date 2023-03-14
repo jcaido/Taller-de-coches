@@ -90,13 +90,13 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
     }
 
     @Override
-    public List<AlbaranProveedorParcial1DTO> obtenerAlbaranesPtesFacturarPorProveedorHQL(Long idProveedor) {
+    public List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesPtesFacturarPorProveedorHQL(Long idProveedor) {
         Query query = entityManager.createQuery("FROM AlbaranProveedor a WHERE a.proveedor.id = :idProveedor AND a.facturado = :facturado" );
         query.setParameter("idProveedor", idProveedor);
         query.setParameter("facturado", false);
         List<AlbaranProveedor> albaranesProveedor = query.getResultList();
 
-        return albaranesProveedor.stream().map(albaranProveedor-> modelMapper.map(albaranProveedor, AlbaranProveedorParcial1DTO.class)).toList();
+        return albaranesProveedor.stream().map(albaranProveedor-> modelMapper.map(albaranProveedor, AlbaranProveedorBusquedasDTO.class)).toList();
     }
 
     @Override

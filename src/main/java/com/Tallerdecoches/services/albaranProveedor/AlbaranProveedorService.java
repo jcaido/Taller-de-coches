@@ -11,7 +11,7 @@ public interface AlbaranProveedorService {
     List<AlbaranProveedorBusquedasParcialDTO> findAllParcial();
     ResponseEntity<AlbaranProveedorBusquedasDTO> findById(Long id);
     List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesProveedorPorProveedorHQL(Long idProveedor);
-    List<AlbaranProveedorParcial1DTO> obtenerAlbaranesPtesFacturarPorProveedorHQL(Long idProveedor);
+    List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesPtesFacturarPorProveedorHQL(Long idProveedor);
     List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesProveedorPorFacturaProveedorHQL(Long idFactura);
     ResponseEntity<AlbaranProveedorDTO> modificarAlbaranProveedor(AlbaranProveedorDTO albaranProveedorDTO, Long idProveedor);
     ResponseEntity<String> deleteById(Long  id);

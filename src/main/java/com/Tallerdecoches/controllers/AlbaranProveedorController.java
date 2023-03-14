@@ -50,7 +50,7 @@ public class AlbaranProveedorController {
 
     //Obtener albaranes no facturados de un proveedor
     @GetMapping("/no-facturados/{idProveedor}")
-    public List<AlbaranProveedorParcial1DTO> obtenerAlbaranesProveedorNoFacturados(@PathVariable Long idProveedor) {
+    public List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesProveedorNoFacturados(@PathVariable Long idProveedor) {
 
         return albaranProveedorService.obtenerAlbaranesPtesFacturarPorProveedorHQL(idProveedor);
     }
