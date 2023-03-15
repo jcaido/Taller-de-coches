@@ -62,6 +62,13 @@ public class AlbaranProveedorController {
         return albaranProveedorService.modificarAlbaranProveedor(albaranProveedorDTO, idProveedor);
     }
 
+    //Facturar un albaran de proveedor
+    @PutMapping("/facturarAlbaran/{idAlbaran}/{idFactura}")
+    public ResponseEntity<AlbaranProveedorDTO> facturarAlbaranProveedor(@PathVariable Long idAlbaran, @PathVariable Long idFactura) {
+
+        return albaranProveedorService.facturarAlbaranProveedor(idAlbaran, idFactura);
+    }
+
     //Eliminar un albarán de proveedor
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarAlbaranProveedor(@PathVariable Long id) {

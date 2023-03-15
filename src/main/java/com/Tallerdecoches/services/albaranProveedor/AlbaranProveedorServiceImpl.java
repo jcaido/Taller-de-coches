@@ -7,6 +7,7 @@ import com.Tallerdecoches.entities.Proveedor;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.AlbaranProveedorRepository;
+import com.Tallerdecoches.repositories.FacturaProveedorRepository;
 import com.Tallerdecoches.repositories.ProveedorRepository;
 import com.Tallerdecoches.services.entradaPieza.EntradaPiezaService;
 import org.modelmapper.ModelMapper;
@@ -27,15 +28,17 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
     private final EntradaPiezaService entradaPiezaService;
     private final ModelMapper modelMapper;
     private final ProveedorRepository proveedorRepository;
+    private final FacturaProveedorRepository facturaProveedorRepository;
     private final EntityManager entityManager;
 
 
-    public AlbaranProveedorServiceImpl(AlbaranProveedorRepository albaranProveedorRepository, AlbaranProveedorModificacionCambiosService albaranProveedorModificacionCambiosService, EntradaPiezaService entradaPiezaService, ModelMapper modelMapper, ProveedorRepository proveedorRepository, EntityManager entityManager) {
+    public AlbaranProveedorServiceImpl(AlbaranProveedorRepository albaranProveedorRepository, AlbaranProveedorModificacionCambiosService albaranProveedorModificacionCambiosService, EntradaPiezaService entradaPiezaService, ModelMapper modelMapper, ProveedorRepository proveedorRepository, FacturaProveedorRepository facturaProveedorRepository, EntityManager entityManager) {
         this.albaranProveedorRepository = albaranProveedorRepository;
         this.albaranProveedorModificacionCambiosService = albaranProveedorModificacionCambiosService;
         this.entradaPiezaService = entradaPiezaService;
         this.modelMapper = modelMapper;
         this.proveedorRepository = proveedorRepository;
+        this.facturaProveedorRepository = facturaProveedorRepository;
         this.entityManager = entityManager;
     }
 
@@ -134,6 +137,19 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
         albaranProveedorRepository.save(albaranProveedor);
 
         return new ResponseEntity<>(modelMapper.map(albaranProveedor, AlbaranProveedorDTO.class), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<AlbaranProveedorDTO> facturarAlbaranProveedor(Long idAlbaran, Long idFactura) {
+        AlbaranProveedor albaran = albaranProveedorRepository.findById(idAlbaran).get();
+        FacturaProveedor factura = facturaProveedorRepository.findById(idFactura).get();
+
+        albaran.setFacturaProveedor(factura);
+        albaran.setFacturado(true);
+
+        albaranProveedorRepository.save(albaran);
+
+        return new ResponseEntity<>(modelMapper.map(albaran, AlbaranProveedorDTO.class), HttpStatus.OK);
     }
 
     @Override
