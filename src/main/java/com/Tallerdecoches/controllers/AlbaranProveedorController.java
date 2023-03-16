@@ -55,6 +55,13 @@ public class AlbaranProveedorController {
         return albaranProveedorService.obtenerAlbaranesPtesFacturarPorProveedorHQL(idProveedor);
     }
 
+    //Obtener albaranes asignados a una factura de proveedor
+    @GetMapping("/factura/{idFactura}")
+    public List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesPorFacturaProveedor(@PathVariable Long idFactura) {
+
+        return albaranProveedorService.obtenerAlbaranesProveedorPorFacturaProveedorHQL(idFactura);
+    }
+
     //Modificar un albarán de proveedor
     @PutMapping("/{idProveedor}")
     public ResponseEntity<AlbaranProveedorDTO> modificarAlbaranProveedor(@Valid @RequestBody AlbaranProveedorDTO albaranProveedorDTO, @PathVariable Long idProveedor) {
