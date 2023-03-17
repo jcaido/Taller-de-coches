@@ -1,5 +1,6 @@
 package com.Tallerdecoches.DTOs.facturaProveedor;
 
+import com.Tallerdecoches.entities.Proveedor;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,4 +22,5 @@ public class FacturaProveedorDTO {
     private String numeroFactura;
     private Integer tipoIVA;
     private Boolean contabilizada = false;
+    private Proveedor proveedor;
 }
