@@ -48,8 +48,8 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
         if (!albaranProveedorModificacionCambiosService.validacionProveedor(idProveedor))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El proveedor asociado al albarán no existe");
 
-        if (!albaranProveedorModificacionCambiosService.validacionNumeroAlbaran(albaranProveedorCrearDTO.getNumeroAlbaran()))
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero de albaran ya existe");
+        if (!albaranProveedorModificacionCambiosService.validacionNumeroAlbaran(albaranProveedorCrearDTO.getNumeroAlbaran(), idProveedor))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero de albaran ya existe para ese proveedor");
 
         AlbaranProveedor albaranProveedor = modelMapper.map(albaranProveedorCrearDTO, AlbaranProveedor.class);
         Proveedor proveedor = proveedorRepository.findById(idProveedor).get();
@@ -123,8 +123,8 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
         if (!albaranProveedorModificacionCambiosService.validacionProveedor(idProveedor))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El proveedor asociado al albarán no existe");
 
-        if (!albaranProveedorModificacionCambiosService.validacionNumeroAlbaran(albaranProveedorDTO.getNumeroAlbaran()))
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero de albaran ya existe");
+        if (!albaranProveedorModificacionCambiosService.validacionNumeroAlbaran(albaranProveedorDTO.getNumeroAlbaran(), idProveedor))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero de albaran ya existe para ese proveedor");
 
         AlbaranProveedor albaranProveedor = albaranProveedorRepository.findById(albaranProveedorDTO.getId()).get();
         Proveedor proveedor = proveedorRepository.findById(idProveedor).get();

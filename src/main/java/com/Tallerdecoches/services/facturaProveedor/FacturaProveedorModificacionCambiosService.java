@@ -1,10 +1,7 @@
 package com.Tallerdecoches.services.facturaProveedor;
 
 import com.Tallerdecoches.entities.FacturaProveedor;
-import com.Tallerdecoches.entities.Vehiculo;
-import com.Tallerdecoches.repositories.FacturaProveedorRepository;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
@@ -14,15 +11,11 @@ public class FacturaProveedorModificacionCambiosService {
 
     private final EntityManager entityManager;
 
-    private final FacturaProveedorRepository facturaProveedorRepository;
-
-    public FacturaProveedorModificacionCambiosService(EntityManager entityManager, FacturaProveedorRepository facturaProveedorRepository) {
+    public FacturaProveedorModificacionCambiosService(EntityManager entityManager) {
         this.entityManager = entityManager;
-        this.facturaProveedorRepository = facturaProveedorRepository;
     }
 
     public boolean validacionNumeroFactura(String numeroFactura, Long idProveedor) {
-        //List<FacturaProveedor> facturasProveedor = facturaProveedorRepository.findByNumeroFactura(numeroFactura);
 
         Query query = entityManager.createQuery("FROM FacturaProveedor f WHERE f.numeroFactura = :numeroFactura" +
                 " AND f.proveedor.id = :idProveedor");

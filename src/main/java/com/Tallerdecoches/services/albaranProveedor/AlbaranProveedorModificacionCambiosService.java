@@ -2,10 +2,11 @@ package com.Tallerdecoches.services.albaranProveedor;
 
 import com.Tallerdecoches.entities.AlbaranProveedor;
 import com.Tallerdecoches.entities.Proveedor;
-import com.Tallerdecoches.repositories.AlbaranProveedorRepository;
 import com.Tallerdecoches.repositories.ProveedorRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,11 +14,11 @@ import java.util.Optional;
 public class AlbaranProveedorModificacionCambiosService {
 
     private final ProveedorRepository proveedorRepository;
-    private final AlbaranProveedorRepository albaranProveedorRepository;
+    private final EntityManager entityManager;
 
-    public AlbaranProveedorModificacionCambiosService(ProveedorRepository proveedorRepository, AlbaranProveedorRepository albaranProveedorRepository) {
+    public AlbaranProveedorModificacionCambiosService(ProveedorRepository proveedorRepository, EntityManager entityManager) {
         this.proveedorRepository = proveedorRepository;
-        this.albaranProveedorRepository = albaranProveedorRepository;
+        this.entityManager = entityManager;
     }
 
     public boolean validacionProveedor(Long idProveedor) {
@@ -29,8 +30,13 @@ public class AlbaranProveedorModificacionCambiosService {
         return false;
     }
 
-    public boolean validacionNumeroAlbaran(String numeroAlbaran) {
-        List<AlbaranProveedor> albaranesProveedor = albaranProveedorRepository.findByNumeroAlbaran(numeroAlbaran);
+    public boolean validacionNumeroAlbaran(String numeroAlbaran, Long idProveedor) {
+
+        Query query = entityManager.createQuery("FROM AlbaranProveedor a WHERE a.numeroAlbaran = :numeroAlbaran" +
+                " AND a.proveedor.id = :idProveedor");
+        query.setParameter("numeroAlbaran", numeroAlbaran);
+        query.setParameter("idProveedor", idProveedor);
+        List<AlbaranProveedor> albaranesProveedor = query.getResultList();
 
         if (albaranesProveedor.size() > 0)
             return false;
