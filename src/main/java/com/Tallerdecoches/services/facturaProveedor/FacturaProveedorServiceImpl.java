@@ -16,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -88,6 +87,11 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
 
         if (!facturaProveedorModificacionCambiosService.validacionNumeroFactura(facturaProveedorDTO.getNumeroFactura(), idProveedor))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero de factura ya existe para ese proveedor");
+
+        if (!facturaProveedorModificacionCambiosService.proveedorHaCambiado(facturaProveedorDTO, idProveedor)) {
+            if (!facturaProveedorModificacionCambiosService.validacionAlbaranes(facturaProveedorDTO.getId()))
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "La factura tiene albaranes asociados");
+        }
 
         FacturaProveedor facturaProveedor = facturaProveedorRepository.findById(facturaProveedorDTO.getId()).get();
         Proveedor proveedor = proveedorRepository.findById(idProveedor).get();

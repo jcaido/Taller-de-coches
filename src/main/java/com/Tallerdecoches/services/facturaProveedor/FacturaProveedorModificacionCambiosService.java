@@ -1,6 +1,9 @@
 package com.Tallerdecoches.services.facturaProveedor;
 
+import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorDTO;
+import com.Tallerdecoches.entities.AlbaranProveedor;
 import com.Tallerdecoches.entities.FacturaProveedor;
+import com.Tallerdecoches.repositories.FacturaProveedorRepository;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -10,9 +13,11 @@ import java.util.List;
 public class FacturaProveedorModificacionCambiosService {
 
     private final EntityManager entityManager;
+    private final FacturaProveedorRepository facturaProveedorRepository;
 
-    public FacturaProveedorModificacionCambiosService(EntityManager entityManager) {
+    public FacturaProveedorModificacionCambiosService(EntityManager entityManager, FacturaProveedorRepository facturaProveedorRepository) {
         this.entityManager = entityManager;
+        this.facturaProveedorRepository = facturaProveedorRepository;
     }
 
     public boolean validacionNumeroFactura(String numeroFactura, Long idProveedor) {
@@ -27,5 +32,26 @@ public class FacturaProveedorModificacionCambiosService {
             return false;
 
         return true;
+    }
+
+    public boolean validacionAlbaranes(Long idFactura) {
+
+        FacturaProveedor factura = facturaProveedorRepository.findById(idFactura).get();
+        List<AlbaranProveedor> albaranes = factura.getAlbaranesProveedores();
+
+        if (albaranes.size() > 0)
+            return false;
+
+        return true;
+    }
+
+    public boolean proveedorHaCambiado(FacturaProveedorDTO facturaDTO, Long idProveedor) {
+        FacturaProveedor factura = facturaProveedorRepository.findById(facturaDTO.getId()).get();
+
+        if (factura.getProveedor().getId().equals(idProveedor))
+           return true;
+
+        return false;
+
     }
 }
