@@ -43,10 +43,10 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
     public ResponseEntity<FacturaProveedorDTO> crearFacturaProveedor(FacturaProveedorCrearDTO facturaProveedorCrearDTO, Long idProveedor) {
 
         if (!albaranProveedorModificacionCambiosService.validacionProveedor(idProveedor))
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "El proveedor asociado a la factura no existe");
+            throw new ResourceNotFoundException("Proveedor", "id", String.valueOf(idProveedor));
 
-        if (!facturaProveedorModificacionCambiosService.validacionNumeroFactura(facturaProveedorCrearDTO.getNumeroFactura()))
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero de factura ya existe");
+        if (!facturaProveedorModificacionCambiosService.validacionNumeroFactura(facturaProveedorCrearDTO.getNumeroFactura(), idProveedor))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero de factura ya existe para ese proveedor");
 
         FacturaProveedor facturaProveedor = modelMapper.map(facturaProveedorCrearDTO, FacturaProveedor.class);
         Proveedor proveedor = proveedorRepository.findById(idProveedor).get();
@@ -78,7 +78,7 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
     public ResponseEntity<FacturaProveedorDTO> modificarFacturaProveedor(FacturaProveedorDTO facturaProveedorDTO, Long idProveedor) {
 
         if (facturaProveedorDTO.getId() ==  null)
-            throw new BadRequestModificacionException("Albarán de proveedor", "id");
+            throw new BadRequestModificacionException("Factura de proveedor", "id");
 
         if (!facturaProveedorRepository.existsById(facturaProveedorDTO.getId()))
             throw new ResourceNotFoundException("Factura de proveedor", "id", String.valueOf(facturaProveedorDTO.getId()));
@@ -86,8 +86,8 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
         if (!albaranProveedorModificacionCambiosService.validacionProveedor(idProveedor))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El proveedor asociado a la factura no existe");
 
-        if (!facturaProveedorModificacionCambiosService.validacionNumeroFactura(facturaProveedorDTO.getNumeroFactura()))
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero de factura ya existe");
+        if (!facturaProveedorModificacionCambiosService.validacionNumeroFactura(facturaProveedorDTO.getNumeroFactura(), idProveedor))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero de factura ya existe para ese proveedor");
 
         FacturaProveedor facturaProveedor = facturaProveedorRepository.findById(facturaProveedorDTO.getId()).get();
         Proveedor proveedor = proveedorRepository.findById(idProveedor).get();
