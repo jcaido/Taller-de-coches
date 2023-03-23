@@ -85,8 +85,10 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
         if (!albaranProveedorModificacionCambiosService.validacionProveedor(idProveedor))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El proveedor asociado a la factura no existe");
 
-        if (!facturaProveedorModificacionCambiosService.validacionNumeroFactura(facturaProveedorDTO.getNumeroFactura(), idProveedor))
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero de factura ya existe para ese proveedor");
+        if (facturaProveedorModificacionCambiosService.numeroFacturaHaCambiado(facturaProveedorDTO)) {
+            if (!facturaProveedorModificacionCambiosService.validacionNumeroFactura(facturaProveedorDTO.getNumeroFactura(), idProveedor))
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero de factura ya existe para ese proveedor");
+        }
 
         if (!facturaProveedorModificacionCambiosService.proveedorHaCambiado(facturaProveedorDTO, idProveedor)) {
             if (!facturaProveedorModificacionCambiosService.validacionAlbaranes(facturaProveedorDTO.getId()))
@@ -99,6 +101,7 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
         facturaProveedor.setProveedor(proveedor);
         facturaProveedor.setFechaFactura(facturaProveedorDTO.getFechaFactura());
         facturaProveedor.setNumeroFactura(facturaProveedorDTO.getNumeroFactura());
+        facturaProveedor.setTipoIVA(facturaProveedorDTO.getTipoIVA());
         facturaProveedor.setContabilizada(facturaProveedorDTO.getContabilizada());
 
         facturaProveedorRepository.save(facturaProveedor);

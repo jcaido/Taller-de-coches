@@ -123,8 +123,10 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
         if (!albaranProveedorModificacionCambiosService.validacionProveedor(idProveedor))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El proveedor asociado al albarán no existe");
 
-        if (!albaranProveedorModificacionCambiosService.validacionNumeroAlbaran(albaranProveedorDTO.getNumeroAlbaran(), idProveedor))
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero de albaran ya existe para ese proveedor");
+        if (albaranProveedorModificacionCambiosService.numeroAlbaranHaCambiado(albaranProveedorDTO)) {
+            if (!albaranProveedorModificacionCambiosService.validacionNumeroAlbaran(albaranProveedorDTO.getNumeroAlbaran(), idProveedor))
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero de albaran ya existe para ese proveedor");
+        }
 
         AlbaranProveedor albaranProveedor = albaranProveedorRepository.findById(albaranProveedorDTO.getId()).get();
         Proveedor proveedor = proveedorRepository.findById(idProveedor).get();

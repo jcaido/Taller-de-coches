@@ -54,4 +54,13 @@ public class FacturaProveedorModificacionCambiosService {
         return false;
 
     }
+
+    public boolean numeroFacturaHaCambiado(FacturaProveedorDTO facturaDTO) {
+        FacturaProveedor factura = facturaProveedorRepository.findById(facturaDTO.getId()).get();
+
+        if (factura.getNumeroFactura().equals(facturaDTO.getNumeroFactura()))
+            return false;
+
+        return true;
+    }
 }

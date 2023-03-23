@@ -1,7 +1,9 @@
 package com.Tallerdecoches.services.albaranProveedor;
 
+import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
 import com.Tallerdecoches.entities.AlbaranProveedor;
 import com.Tallerdecoches.entities.Proveedor;
+import com.Tallerdecoches.repositories.AlbaranProveedorRepository;
 import com.Tallerdecoches.repositories.ProveedorRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,12 @@ import java.util.Optional;
 public class AlbaranProveedorModificacionCambiosService {
 
     private final ProveedorRepository proveedorRepository;
+    private final AlbaranProveedorRepository albaranProveedorRepository;
     private final EntityManager entityManager;
 
-    public AlbaranProveedorModificacionCambiosService(ProveedorRepository proveedorRepository, EntityManager entityManager) {
+    public AlbaranProveedorModificacionCambiosService(ProveedorRepository proveedorRepository, AlbaranProveedorRepository albaranProveedorRepository, EntityManager entityManager) {
         this.proveedorRepository = proveedorRepository;
+        this.albaranProveedorRepository = albaranProveedorRepository;
         this.entityManager = entityManager;
     }
 
@@ -39,6 +43,15 @@ public class AlbaranProveedorModificacionCambiosService {
         List<AlbaranProveedor> albaranesProveedor = query.getResultList();
 
         if (albaranesProveedor.size() > 0)
+            return false;
+
+        return true;
+    }
+
+    public boolean numeroAlbaranHaCambiado(AlbaranProveedorDTO albaranDTO) {
+        AlbaranProveedor albaran = albaranProveedorRepository.findById(albaranDTO.getId()).get();
+
+        if (albaran.getNumeroAlbaran().equals(albaranDTO.getNumeroAlbaran()))
             return false;
 
         return true;
