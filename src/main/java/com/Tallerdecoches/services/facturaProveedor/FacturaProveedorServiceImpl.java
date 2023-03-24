@@ -120,6 +120,8 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
 
         //TODO: Validad que la factura no esté contabilizada
 
+        facturaProveedorRepository.deleteById(id);
+
         return new ResponseEntity<>("Factura de proveedor eliminada con exito", HttpStatus.OK);
     }
 }
