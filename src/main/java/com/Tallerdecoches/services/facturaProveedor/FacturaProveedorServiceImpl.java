@@ -3,6 +3,7 @@ package com.Tallerdecoches.services.facturaProveedor;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorDTO;
+import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
 import com.Tallerdecoches.entities.FacturaProveedor;
 import com.Tallerdecoches.entities.Proveedor;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
@@ -16,6 +17,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,14 +33,16 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
     private final ProveedorRepository proveedorRepository;
     private final FacturaProveedorRepository facturaProveedorRepository;
     private final AlbaranProveedorService albaranProveedorService;
+    private final EntityManager entityManager;
 
-    public FacturaProveedorServiceImpl(AlbaranProveedorModificacionCambiosService albaranProveedorModificacionCambiosService, FacturaProveedorModificacionCambiosService facturaProveedorModificacionCambiosService, ModelMapper modelMapper, ProveedorRepository proveedorRepository, FacturaProveedorRepository facturaProveedorRepository, AlbaranProveedorService albaranProveedorService) {
+    public FacturaProveedorServiceImpl(AlbaranProveedorModificacionCambiosService albaranProveedorModificacionCambiosService, FacturaProveedorModificacionCambiosService facturaProveedorModificacionCambiosService, ModelMapper modelMapper, ProveedorRepository proveedorRepository, FacturaProveedorRepository facturaProveedorRepository, AlbaranProveedorService albaranProveedorService, EntityManager entityManager) {
         this.albaranProveedorModificacionCambiosService = albaranProveedorModificacionCambiosService;
         this.facturaProveedorModificacionCambiosService = facturaProveedorModificacionCambiosService;
         this.modelMapper = modelMapper;
         this.proveedorRepository = proveedorRepository;
         this.facturaProveedorRepository = facturaProveedorRepository;
         this.albaranProveedorService = albaranProveedorService;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -71,6 +78,19 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
             throw new ResourceNotFoundException("Factura de proveedor", "id", String.valueOf(id));
 
         return new ResponseEntity<>(modelMapper.map(facturasProveedor, FacturaProveedorBusquedasDTO.class), HttpStatus.OK);
+    }
+
+    @Override
+    public List<FacturaProveedorBusquedasDTO> obtenerFacturasProveedorEntreFechas(LocalDate fechaFacturaInicial, LocalDate fechaFacturaFinal) {
+        Query query = entityManager.createQuery("FROM FacturaProveedor f " +
+                "WHERE f.fechaFactura >= :fechaFacturaInicial AND f.fechaFactura <= :fechaFacturaFinal " +
+                "ORDER BY f.fechaFactura asc");
+        query.setParameter("fechaFacturaInicial", fechaFacturaInicial);
+        query.setParameter("fechaFacturaFinal", fechaFacturaFinal);
+
+        List<FacturaProveedor> facturasProveedor = query.getResultList();
+
+        return facturasProveedor.stream().map(facturaProveedor-> modelMapper.map(facturaProveedor, FacturaProveedorBusquedasDTO.class)).toList();
     }
 
     @Override

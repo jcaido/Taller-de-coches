@@ -6,10 +6,12 @@ import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorDTO;
 import com.Tallerdecoches.entities.FacturaProveedor;
 import com.Tallerdecoches.services.facturaProveedor.FacturaProveedorService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -43,6 +45,15 @@ public class FacturaProveedorController {
     public ResponseEntity<FacturaProveedorBusquedasDTO> obtenerFacturaProveedorPorId(@PathVariable Long id) {
 
         return facturaProveedorService.findById(id);
+    }
+
+    //Obtener facturas de proveedor entre fechas
+    @GetMapping("/{fechaFacturaInicial}/{fechaFacturaFinal}")
+    public List<FacturaProveedorBusquedasDTO> obtenerFacturasProveedorEntreFechas(
+            @PathVariable(name="fechaFacturaInicial")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFacturaInicial,
+            @PathVariable(name="fechaFacturaFinal")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFacturaFinal) {
+
+        return facturaProveedorService.obtenerFacturasProveedorEntreFechas(fechaFacturaInicial, fechaFacturaFinal);
     }
 
     //Modificar una factura de proveedor
