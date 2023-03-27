@@ -3,7 +3,6 @@ package com.Tallerdecoches.services.facturaProveedor;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorDTO;
-import com.Tallerdecoches.DTOs.ordenReparacion.OrdenReparacionBusquedasDTO;
 import com.Tallerdecoches.entities.FacturaProveedor;
 import com.Tallerdecoches.entities.Proveedor;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
@@ -81,7 +80,7 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
     }
 
     @Override
-    public List<FacturaProveedorBusquedasDTO> obtenerFacturasProveedorEntreFechas(LocalDate fechaFacturaInicial, LocalDate fechaFacturaFinal) {
+    public List<FacturaProveedorBusquedasDTO> obtenerFacturasProveedoresEntreFechas(LocalDate fechaFacturaInicial, LocalDate fechaFacturaFinal) {
         Query query = entityManager.createQuery("FROM FacturaProveedor f " +
                 "WHERE f.fechaFactura >= :fechaFacturaInicial AND f.fechaFactura <= :fechaFacturaFinal " +
                 "ORDER BY f.fechaFactura asc");
@@ -93,6 +92,20 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
         return facturasProveedor.stream().map(facturaProveedor-> modelMapper.map(facturaProveedor, FacturaProveedorBusquedasDTO.class)).toList();
     }
 
+    @Override
+    public List<FacturaProveedorBusquedasDTO> obtenerFacturasPorProveedorEntreFechas(Long idProveedor, LocalDate fechaFacturaInicial, LocalDate fechaFacturaFinal) {
+        Query query = entityManager.createQuery("FROM FacturaProveedor f " +
+                "WHERE f.proveedor.id = :idProveedor AND f.fechaFactura >= :fechaFacturaInicial " +
+                "AND f.fechaFactura <= :fechaFacturaFinal " +
+                "ORDER BY f.fechaFactura asc");
+        query.setParameter("idProveedor", idProveedor);
+        query.setParameter("fechaFacturaInicial", fechaFacturaInicial);
+        query.setParameter("fechaFacturaFinal", fechaFacturaFinal);
+
+        List<FacturaProveedor> facturasProveedor = query.getResultList();
+
+        return facturasProveedor.stream().map(facturaProveedor -> modelMapper.map(facturaProveedor, FacturaProveedorBusquedasDTO.class)).toList();
+    }
     @Override
     public ResponseEntity<FacturaProveedorDTO> modificarFacturaProveedor(FacturaProveedorDTO facturaProveedorDTO, Long idProveedor) {
 

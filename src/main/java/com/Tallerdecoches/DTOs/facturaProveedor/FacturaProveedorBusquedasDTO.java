@@ -1,6 +1,6 @@
 package com.Tallerdecoches.DTOs.facturaProveedor;
 
-import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasParcialDTO;
+import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasDTO;
 import com.Tallerdecoches.entities.Proveedor;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -23,5 +23,5 @@ public class FacturaProveedorBusquedasDTO {
     private String numeroFactura;
     private Integer tipoIVA;
     private Boolean contabilizada;
-    private List<AlbaranProveedorBusquedasParcialDTO> albaranesProveedores;
+    private List<AlbaranProveedorBusquedasDTO> albaranesProveedores;
 }

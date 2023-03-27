@@ -47,13 +47,24 @@ public class FacturaProveedorController {
         return facturaProveedorService.findById(id);
     }
 
-    //Obtener facturas de proveedor entre fechas
+    //Obtener facturas de proveedores entre fechas
     @GetMapping("/{fechaFacturaInicial}/{fechaFacturaFinal}")
     public List<FacturaProveedorBusquedasDTO> obtenerFacturasProveedorEntreFechas(
             @PathVariable(name="fechaFacturaInicial")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFacturaInicial,
             @PathVariable(name="fechaFacturaFinal")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFacturaFinal) {
 
-        return facturaProveedorService.obtenerFacturasProveedorEntreFechas(fechaFacturaInicial, fechaFacturaFinal);
+        return facturaProveedorService.obtenerFacturasProveedoresEntreFechas(fechaFacturaInicial, fechaFacturaFinal);
+    }
+
+    //Obtener facturas por proveedor entre fechas
+    @GetMapping("/{idProveedor}/{fechaFacturaInicial}/{fechaFacturaFinal}")
+    public List<FacturaProveedorBusquedasDTO> obtenerFacturasPorProveedorEntreFechas(
+            @PathVariable Long idProveedor,
+            @PathVariable(name="fechaFacturaInicial")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFacturaInicial,
+            @PathVariable(name="fechaFacturaFinal")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFacturaFinal) {
+
+        return facturaProveedorService.obtenerFacturasPorProveedorEntreFechas(idProveedor, fechaFacturaInicial, fechaFacturaFinal);
+
     }
 
     //Modificar una factura de proveedor
