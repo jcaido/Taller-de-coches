@@ -1,10 +1,8 @@
 package com.Tallerdecoches.controllers;
 
-import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorDTO;
-import com.Tallerdecoches.entities.FacturaProveedor;
 import com.Tallerdecoches.services.facturaProveedor.FacturaProveedorService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;

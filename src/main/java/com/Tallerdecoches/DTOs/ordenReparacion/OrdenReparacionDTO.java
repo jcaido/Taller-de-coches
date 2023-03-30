@@ -24,4 +24,5 @@ public class OrdenReparacionDTO {
     private Long kilometros;
     private Double horas;
     private Boolean cerrada;
+    private Boolean facturada;
 }

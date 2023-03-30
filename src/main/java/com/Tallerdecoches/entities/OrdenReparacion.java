@@ -29,6 +29,7 @@ public class OrdenReparacion implements Serializable {
     @OneToOne()
     private ManoDeObra manoDeObra;
     private Boolean cerrada;
+    private Boolean facturada;
     @OneToOne()
     private Vehiculo vehiculo;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

@@ -26,6 +26,7 @@ public class OrdenReparacionBusquedasDTO {
     private Long kilometros;
     private Double horas;
     private Boolean cerrada;
+    private Boolean facturada;
     private Vehiculo vehiculo;
     private ManoDeObra manoDeObra;
     private List<PiezasReparacionBusquedasParcialDTO> piezasReparacion;
