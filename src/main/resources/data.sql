@@ -48,11 +48,11 @@ insert into piezas (referencia, nombre_pieza, precio_venta) values ('R333300', '
 insert into piezas (referencia, nombre_pieza, precio_venta) values ('VA55555', 'culata', 300.45);
 insert into piezas (referencia, nombre_pieza, precio_venta) values ('VA44099', 'caja de cambios', 300.34);
 
-insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, tipoIVA, contabilizada) values (1, '2022/11/30', 'A0002', 21, false);
-insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, tipoIVA, contabilizada) values (2, '2022/11/03', 'BR0002', 21, false);
-insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, tipoIVA,contabilizada) values (1, '2022/12/20', 'A00022', 21, false);
-insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, tipoIVA, contabilizada) values (2, '2022/12/10', 'BR00025', 21, false);
-insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, tipoIVA, contabilizada) values (3, '2022/11/12', 'TR4567', 21, false);
+insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, tipo_iva, contabilizada) values (1, '2022/11/30', 'A0002', 21, false);
+insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, tipo_iva, contabilizada) values (2, '2022/11/03', 'BR0002', 21, false);
+insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, tipo_iva,contabilizada) values (1, '2022/12/20', 'A00022', 21, false);
+insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, tipo_iva, contabilizada) values (2, '2022/12/10', 'BR00025', 21, false);
+insert into factura_proveedor (proveedor_id, fecha_factura, numero_factura, tipo_iva, contabilizada) values (3, '2022/11/12', 'TR4567', 21, false);
 
 insert into albaran_proveedor (proveedor_id, fecha_albaran, numero_albaran, facturado, factura_proveedor_id) values (3, '2022/11/19', 'AOO3445', false, null);
 insert into albaran_proveedor (proveedor_id, fecha_albaran, numero_albaran, facturado, factura_proveedor_id) values (2, '2022/11/19', 'DEFFT55', false, null);
@@ -79,7 +79,7 @@ insert into entrada_pieza (pieza_id, cantidad, precio_entrada, albaran_proveedor
 insert into mano_de_obra (fecha_nuevo_precio, precio_hora, precio_hora_actual) values ('2022/11/19', 20.5, false);
 insert into mano_de_obra (fecha_nuevo_precio, precio_hora, precio_hora_actual) values ('2023/01/01', 32.0, true);
 
-insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada, facturada) values (1, 1, '2022/11/19', '2022/11/21', 'REVISAR ARRANQUE', 120000, 4.5, true, false);
+insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada, facturada) values (1, 1, '2022/11/19', '2022/11/21', 'REVISAR ARRANQUE', 120000, 4.5, true, true);
 insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada, facturada) values (2, null, '2022/11/20', null, 'REVISAR RUIDO MOTOR', 23987, null, false, false);
 insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada, facturada) values (3, null, '2022/11/19', null, 'RUIDO EMBRAGUE', 165776, null, false, false);
 insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada, facturada) values (1, 1, '2022/11/22', '2022/11/23', 'CAMBIO ACEITE', 13455, 1.5, true, false);
@@ -100,3 +100,5 @@ insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (
 insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (1, 6, 1);
 insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (1, 6, 2);
 insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (2, 6, 4);
+
+insert into factura_cliente (fecha_factura, numero_factura, tipo_iva, orden_reparacion_id, propietario_id) values ('2022/11/19', 1, 21, 1, 1);
