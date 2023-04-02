@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "factura_cliente")
+@Table(name = "facturas_clientes")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

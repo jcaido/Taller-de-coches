@@ -101,4 +101,3 @@ insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (
 insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (1, 6, 2);
 insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (2, 6, 4);
 
-insert into factura_cliente (fecha_factura, numero_factura, tipo_iva, orden_reparacion_id, propietario_id) values ('2022/11/19', 1, 21, 1, 1);
