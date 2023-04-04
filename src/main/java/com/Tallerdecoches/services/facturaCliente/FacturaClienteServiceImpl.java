@@ -2,6 +2,8 @@ package com.Tallerdecoches.services.facturaCliente;
 
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteCrearDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteDTO;
+import com.Tallerdecoches.DTOs.facturaCliente.FacturaClientesBusquedasDTO;
+import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorBusquedasDTO;
 import com.Tallerdecoches.entities.FacturaCliente;
 import com.Tallerdecoches.entities.OrdenReparacion;
 import com.Tallerdecoches.entities.Propietario;
@@ -79,5 +81,12 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
         }
 
         return new ResponseEntity<>(modelMapper.map(facturaCliente, FacturaClienteDTO.class), HttpStatus.CREATED);
+    }
+
+    @Override
+    public List<FacturaClientesBusquedasDTO> findAll() {
+        List<FacturaCliente> facturasCliente = facturaClienteRepository.findAll();
+
+        return facturasCliente.stream().map(factura -> modelMapper.map(factura, FacturaClientesBusquedasDTO.class)).toList();
     }
 }
