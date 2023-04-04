@@ -1,5 +1,6 @@
 package com.Tallerdecoches.services.facturaCliente;
 
+import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteCrearDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClientesBusquedasDTO;
@@ -7,6 +8,7 @@ import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorBusquedasDTO;
 import com.Tallerdecoches.entities.FacturaCliente;
 import com.Tallerdecoches.entities.OrdenReparacion;
 import com.Tallerdecoches.entities.Propietario;
+import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.FacturaClienteRepository;
 import com.Tallerdecoches.repositories.OrdenReparacionRepository;
 import com.Tallerdecoches.repositories.PropietarioRepository;
@@ -20,6 +22,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FacturaClienteServiceImpl implements FacturaClienteService{
@@ -88,5 +91,16 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
         List<FacturaCliente> facturasCliente = facturaClienteRepository.findAll();
 
         return facturasCliente.stream().map(factura -> modelMapper.map(factura, FacturaClientesBusquedasDTO.class)).toList();
+    }
+
+    @Override
+    public ResponseEntity<FacturaClientesBusquedasDTO> findById(Long id) {
+
+        Optional<FacturaCliente> facturaCliente = facturaClienteRepository.findById(id);
+
+        if (!facturaCliente.isPresent())
+            throw new ResourceNotFoundException("Factura de cliente", "id", String.valueOf(id));
+
+        return new ResponseEntity<>(modelMapper.map(facturaCliente, FacturaClientesBusquedasDTO.class), HttpStatus.OK);
     }
 }

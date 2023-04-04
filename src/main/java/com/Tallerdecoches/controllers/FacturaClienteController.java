@@ -36,4 +36,11 @@ public class FacturaClienteController {
 
         return facturaClienteService.findAll();
     }
+
+    //Obtener una factura de cliente por su id
+    @GetMapping("/{id}")
+    public ResponseEntity<FacturaClientesBusquedasDTO> obtenerFacturaClientePorId(@PathVariable Long id) {
+
+        return facturaClienteService.findById(id);
+    }
 }
