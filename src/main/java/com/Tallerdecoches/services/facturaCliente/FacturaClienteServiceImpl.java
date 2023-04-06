@@ -1,10 +1,8 @@
 package com.Tallerdecoches.services.facturaCliente;
 
-import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteCrearDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClientesBusquedasDTO;
-import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorBusquedasDTO;
 import com.Tallerdecoches.entities.FacturaCliente;
 import com.Tallerdecoches.entities.OrdenReparacion;
 import com.Tallerdecoches.entities.Propietario;
@@ -33,12 +31,15 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
     private final EntityManager entityManager;
     private final ModelMapper modelMapper;
 
-    public FacturaClienteServiceImpl(PropietarioRepository propietarioRepository, OrdenReparacionRepository ordenReparacionRepository, FacturaClienteRepository facturaClienteRepository, EntityManager entityManager, ModelMapper modelMapper) {
+    private final FacturaClienteConsultasService facturaClienteConsultasService;
+
+    public FacturaClienteServiceImpl(PropietarioRepository propietarioRepository, OrdenReparacionRepository ordenReparacionRepository, FacturaClienteRepository facturaClienteRepository, EntityManager entityManager, ModelMapper modelMapper, FacturaClienteConsultasService facturaClienteConsultasService) {
         this.propietarioRepository = propietarioRepository;
         this.ordenReparacionRepository = ordenReparacionRepository;
         this.facturaClienteRepository = facturaClienteRepository;
         this.entityManager = entityManager;
         this.modelMapper = modelMapper;
+        this.facturaClienteConsultasService = facturaClienteConsultasService;
     }
 
     @Override
@@ -47,39 +48,17 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
 
         Propietario propietario = propietarioRepository.findById(idPropietario).get();
         OrdenReparacion ordenReparacion = ordenReparacionRepository.findById(idOrdenReparacion).get();
-
-        int year = facturaClienteCrearDTO.getFechaFactura().getYear();
-        LocalDate fechaInicial = LocalDate.of(year, 01, 01);
-        LocalDate fechaFinal = LocalDate.of(year, 12, 31);
-
-        Query query = entityManager.createNativeQuery("SELECT * FROM facturas_clientes " +
-                "WHERE fecha_factura >= :fechaInicial " +
-                "AND fecha_factura <= :fechaFinal");
-        query.setParameter("fechaInicial", fechaInicial);
-        query.setParameter("fechaFinal", fechaFinal);
-        List<FacturaCliente> facturasYear = query.getResultList();
         FacturaCliente facturaCliente = modelMapper.map(facturaClienteCrearDTO, FacturaCliente.class);
         facturaCliente.setPropietario(propietario);
         facturaCliente.setOrdenReparacion(ordenReparacion);
 
-        if (facturasYear.isEmpty()) {
-
+        if (facturaClienteConsultasService.obtenerFacturasClientesEntreFechas(facturaClienteCrearDTO).isEmpty()) {
             facturaClienteRepository.save(facturaCliente);
             facturaCliente.setNumeroFactura(1L);
             facturaClienteRepository.save(facturaCliente);
         } else {
-            Query queryMax = entityManager.createNativeQuery("SELECT * FROM facturas_clientes " +
-                    "WHERE fecha_factura >= :fechaInicial " +
-                    "AND fecha_factura <= :fechaFinal " +
-                    "AND numero_factura = (SELECT MAX(numero_factura) FROM facturas_clientes WHERE " +
-                    " fecha_factura >= :fechaInicial AND fecha_factura <= :fechaFinal)", FacturaCliente.class);
-            queryMax.setParameter("fechaInicial", fechaInicial);
-            queryMax.setParameter("fechaFinal", fechaFinal);
-            Object facturaNumero = queryMax.getSingleResult();
-            FacturaCliente factura = (FacturaCliente) facturaNumero;
-
             facturaClienteRepository.save(facturaCliente);
-            facturaCliente.setNumeroFactura(factura.getNumeroFactura() + 1);
+            facturaCliente.setNumeroFactura(facturaClienteConsultasService.obtenerFacturaMaximoNumeroFacturaEntreFechas(facturaClienteCrearDTO).getNumeroFactura() + 1);
             facturaClienteRepository.save(facturaCliente);
         }
 
