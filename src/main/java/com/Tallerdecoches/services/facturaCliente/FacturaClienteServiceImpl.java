@@ -15,10 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,15 +29,16 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
     private final FacturaClienteRepository facturaClienteRepository;
     private final EntityManager entityManager;
     private final ModelMapper modelMapper;
-
+    private final FacturaClienteValidacionesService facturaClienteValidacionesService;
     private final FacturaClienteConsultasService facturaClienteConsultasService;
 
-    public FacturaClienteServiceImpl(PropietarioRepository propietarioRepository, OrdenReparacionRepository ordenReparacionRepository, FacturaClienteRepository facturaClienteRepository, EntityManager entityManager, ModelMapper modelMapper, FacturaClienteConsultasService facturaClienteConsultasService) {
+    public FacturaClienteServiceImpl(PropietarioRepository propietarioRepository, OrdenReparacionRepository ordenReparacionRepository, FacturaClienteRepository facturaClienteRepository, EntityManager entityManager, ModelMapper modelMapper, FacturaClienteValidacionesService facturaClienteValidacionesService, FacturaClienteConsultasService facturaClienteConsultasService) {
         this.propietarioRepository = propietarioRepository;
         this.ordenReparacionRepository = ordenReparacionRepository;
         this.facturaClienteRepository = facturaClienteRepository;
         this.entityManager = entityManager;
         this.modelMapper = modelMapper;
+        this.facturaClienteValidacionesService = facturaClienteValidacionesService;
         this.facturaClienteConsultasService = facturaClienteConsultasService;
     }
 
@@ -46,11 +46,24 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
     @Transactional
     public ResponseEntity<FacturaClienteDTO> crearFacturaCliente(FacturaClienteCrearDTO facturaClienteCrearDTO, Long idPropietario, Long idOrdenReparacion) {
 
+        if (!facturaClienteValidacionesService.validacionPropietario(idPropietario))
+            throw new ResourceNotFoundException("Propietario", "id", String.valueOf(idPropietario));
+
+        if (!facturaClienteValidacionesService.validacionOrdenReparacion(idOrdenReparacion))
+            throw new ResourceNotFoundException("Orden de reparacion", "id", String.valueOf(idOrdenReparacion));
+
+        if (!facturaClienteValidacionesService.validacionOrdenReparacionPerteneceAPropietario(idPropietario, idOrdenReparacion))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La orden de reparación no pertenece al propietario");
+
+        if (!facturaClienteValidacionesService.validacionOrdenReparacionFacturada(idOrdenReparacion))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La orden de reparación ya está facturada");
+
         Propietario propietario = propietarioRepository.findById(idPropietario).get();
         OrdenReparacion ordenReparacion = ordenReparacionRepository.findById(idOrdenReparacion).get();
         FacturaCliente facturaCliente = modelMapper.map(facturaClienteCrearDTO, FacturaCliente.class);
         facturaCliente.setPropietario(propietario);
         facturaCliente.setOrdenReparacion(ordenReparacion);
+        facturaCliente.getOrdenReparacion().setFacturada(true);
 
         if (facturaClienteConsultasService.obtenerFacturasClientesEntreFechas(facturaClienteCrearDTO).isEmpty()) {
             facturaClienteRepository.save(facturaCliente);

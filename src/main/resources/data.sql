@@ -79,7 +79,7 @@ insert into entrada_pieza (pieza_id, cantidad, precio_entrada, albaran_proveedor
 insert into mano_de_obra (fecha_nuevo_precio, precio_hora, precio_hora_actual) values ('2022/11/19', 20.5, false);
 insert into mano_de_obra (fecha_nuevo_precio, precio_hora, precio_hora_actual) values ('2023/01/01', 32.0, true);
 
-insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada, facturada) values (1, 1, '2022/11/19', '2022/11/21', 'REVISAR ARRANQUE', 120000, 4.5, true, true);
+insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada, facturada) values (1, 1, '2022/11/19', '2022/11/21', 'REVISAR ARRANQUE', 120000, 4.5, true, false);
 insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada, facturada) values (2, null, '2022/11/20', null, 'REVISAR RUIDO MOTOR', 23987, null, false, false);
 insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada, facturada) values (3, null, '2022/11/19', null, 'RUIDO EMBRAGUE', 165776, null, false, false);
 insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada, facturada) values (1, 1, '2022/11/22', '2022/11/23', 'CAMBIO ACEITE', 13455, 1.5, true, false);
