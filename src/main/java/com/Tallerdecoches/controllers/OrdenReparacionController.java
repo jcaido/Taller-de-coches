@@ -135,6 +135,13 @@ public class OrdenReparacionController {
         return ordenReparacionService.obtenerOrdenesReparacionPorVehiculo(id_vehiculo);
     }
 
+    //Obtener ordenes de reparacion cerradas pendientes de facturar
+    @GetMapping("/cerradas-ptes-facturar")
+    public List<OrdenReparacionReducidaDTO> obtenerOrdenesReparacionCerradasPtesFacturar() {
+
+        return ordenReparacionService.obtenerOrdenesReparacionCerradasPtesFacturar();
+    }
+
     //Modificar una orden de reparacion
     @PutMapping("/{id_vehiculo}")
     public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacion(@Valid @RequestBody OrdenReparacionDTO ordenReparacionDTO, @PathVariable Long id_vehiculo) {

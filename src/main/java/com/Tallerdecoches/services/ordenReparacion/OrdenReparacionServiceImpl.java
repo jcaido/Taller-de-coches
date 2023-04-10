@@ -178,6 +178,17 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
     }
 
     @Override
+    public List<OrdenReparacionReducidaDTO> obtenerOrdenesReparacionCerradasPtesFacturar() {
+        Query query = entityManager.createQuery("FROM OrdenReparacion o WHERE o.cerrada = :cerrada "+
+                "AND o.facturada = :facturada");
+        query.setParameter("cerrada", true);
+        query.setParameter("facturada", false);
+        List<OrdenReparacion> ordenesReparacion = query.getResultList();
+
+        return ordenesReparacion.stream().map(ordenReparacion-> modelMapper.map(ordenReparacion, OrdenReparacionReducidaDTO.class)).toList();
+    }
+
+    @Override
     public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacion(OrdenReparacionDTO ordenReparacionDTO, Long id_vehiculo) {
 
         if (ordenReparacionDTO.getId() == null)
