@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -41,6 +43,19 @@ public class CodigoPostalRepositoryTest {
         assertThat(codigoPostalGuardado).isNotNull();
         assertThat(codigoPostalGuardado.getId()).isGreaterThan(0);
         assertThat(codigoPostalGuardado.getCodigo()).isEqualTo("14920");
+    }
+
+    @DisplayName("Test para listar todos los codigos postales")
+    @Test
+    void listarTodosLosEmpleadosTest() {
+        CodigoPostal codigoPostal2 = CodigoPostal.builder()
+                .codigo("23456")
+                .localidad("Maracena")
+                .provincia("Granada")
+                .build();
+        codigoPostalRepository.save(codigoPostal2);
+        List<CodigoPostal> codigosPostales = codigoPostalRepository.findAll();
+        assertThat(codigosPostales.size()).isEqualTo(2);
     }
 
 }
