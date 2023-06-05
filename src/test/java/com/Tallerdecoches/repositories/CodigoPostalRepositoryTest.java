@@ -78,4 +78,17 @@ public class CodigoPostalRepositoryTest {
         assertThat(codigoPostalEncontrado.getLocalidad()).isEqualTo("Lucena");
     }
 
+    @DisplayName("Test para obtener una lista de codigos postales por provincia")
+    @Test
+    void obtenerCodigoPostalPorProvincia() {
+        CodigoPostal codigoPostalNuevo = CodigoPostal.builder()
+                .codigo("45111")
+                .localidad("Zuheros")
+                .provincia("Cordoba")
+                .build();
+        codigoPostalRepository.save(codigoPostalNuevo);
+        List<CodigoPostal> codigosPostales = codigoPostalRepository.findByProvincia(codigoPostal.getProvincia());
+        assertThat(codigosPostales.size()).isEqualTo(2);
+    }
+
 }
