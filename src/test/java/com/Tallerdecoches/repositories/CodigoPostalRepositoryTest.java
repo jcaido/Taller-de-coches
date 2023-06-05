@@ -113,4 +113,11 @@ public class CodigoPostalRepositoryTest {
         assertThat(codigoPostalEliminado).isEmpty();
     }
 
+    @DisplayName("Test para comprobar si existe un codigo postal por su codigo")
+    @Test
+    void existsCodigoPostalByCodigoTest() {
+        boolean isExists = codigoPostalRepository.existsByCodigo(codigoPostal.getCodigo());
+        assertThat(isExists).isTrue();
+    }
+
 }
