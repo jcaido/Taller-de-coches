@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -102,6 +103,14 @@ public class CodigoPostalRepositoryTest {
         assertThat(codigoPostalActualizado.getCodigo()).isEqualTo("33333");
         assertThat(codigoPostalActualizado.getLocalidad()).isEqualTo("Fuengirola");
         assertThat(codigoPostalActualizado.getProvincia()).isEqualTo("Malaga");
+    }
+
+    @DisplayName("Test para eliminar un codigo postal")
+    @Test
+    void eliminarEmpleadoTest() {
+        codigoPostalRepository.deleteById(codigoPostal.getId());
+        Optional<CodigoPostal> codigoPostalEliminado = codigoPostalRepository.findById(codigoPostal.getId());
+        assertThat(codigoPostalEliminado).isEmpty();
     }
 
 }
