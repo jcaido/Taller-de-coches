@@ -71,4 +71,11 @@ public class CodigoPostalRepositoryTest {
         assertThat(codigoPostalEncontrado.getCodigo()).isEqualTo("14500");
     }
 
+    @DisplayName("Test para obtener un codigo postal por su localidad")
+    @Test
+    void obtenerCodigoPostalPorLocalidad() {
+        CodigoPostal codigoPostalEncontrado = codigoPostalRepository.findByLocalidad(codigoPostal.getLocalidad()).get();
+        assertThat(codigoPostalEncontrado.getLocalidad()).isEqualTo("Lucena");
+    }
+
 }
