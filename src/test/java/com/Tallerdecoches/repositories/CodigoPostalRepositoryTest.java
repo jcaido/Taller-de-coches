@@ -48,7 +48,7 @@ public class CodigoPostalRepositoryTest {
 
     @DisplayName("Test para listar todos los codigos postales")
     @Test
-    void listarTodosLosEmpleadosTest() {
+    void listarTodosLosCodigosPostalesTest() {
         CodigoPostal codigoPostal2 = CodigoPostal.builder()
                 .codigo("23456")
                 .localidad("Maracena")
@@ -107,7 +107,7 @@ public class CodigoPostalRepositoryTest {
 
     @DisplayName("Test para eliminar un codigo postal")
     @Test
-    void eliminarEmpleadoTest() {
+    void eliminarCodigoPostalTest() {
         codigoPostalRepository.deleteById(codigoPostal.getId());
         Optional<CodigoPostal> codigoPostalEliminado = codigoPostalRepository.findById(codigoPostal.getId());
         assertThat(codigoPostalEliminado).isEmpty();
@@ -117,6 +117,13 @@ public class CodigoPostalRepositoryTest {
     @Test
     void existsCodigoPostalByCodigoTest() {
         boolean isExists = codigoPostalRepository.existsByCodigo(codigoPostal.getCodigo());
+        assertThat(isExists).isTrue();
+    }
+
+    @DisplayName("Test para comprobar si existe un codigo postal pr su localidad")
+    @Test
+    void existsCodigoPostalByLocalidad() {
+        boolean isExists = codigoPostalRepository.existsByLocalidad(codigoPostal.getLocalidad());
         assertThat(isExists).isTrue();
     }
 
