@@ -121,4 +121,17 @@ public class PropietarioRepositoryTest {
         List<Propietario> propietarios = propietarioRepository.findByNombreAndPrimerApellidoAndSegundoApellido("Antonio", "Perez", "Segundo");
         assertThat(propietarios.size()).isEqualTo(2);
     }
+
+    @DisplayName("Test para actualizar un propierario")
+    @Test
+    void actualizarPropietarioTest() {
+        Propietario propietarioAActualizar = propietarioRepository.findById(propietario.getId()).get();
+        propietarioAActualizar.setNombre("Jorge");
+        propietarioAActualizar.setPrimerApellido("Ramirez");
+        propietarioAActualizar.setSegundoApellido("Raya");
+        propietarioAActualizar.setDni("55665778E");
+        propietarioAActualizar.setDomicilio("Calle Moreno, 3");
+        Propietario propietarioActualizado = propietarioRepository.save(propietarioAActualizar);
+        assertThat(propietarioActualizado.getNombre()).isEqualTo("Jorge");
+    }
 }
