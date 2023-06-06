@@ -69,4 +69,11 @@ public class PropietarioRepositoryTest {
         Propietario propietarioEncontrado = propietarioRepository.findById(propietario.getId()).get();
         assertThat(propietarioEncontrado.getNombre()).isEqualTo("Antonio");
     }
+
+    @DisplayName("Test para obtener un propietario por su dni")
+    @Test
+    void obtenerPropietarioPorDniTest() {
+        Propietario propietarioEncontrado = propietarioRepository.findByDni(propietario.getDni()).get();
+        assertThat(propietario.getDni()).isEqualTo("44555666G");
+    }
 }
