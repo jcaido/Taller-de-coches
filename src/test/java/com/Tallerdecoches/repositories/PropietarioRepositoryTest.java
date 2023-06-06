@@ -76,4 +76,19 @@ public class PropietarioRepositoryTest {
         Propietario propietarioEncontrado = propietarioRepository.findByDni(propietario.getDni()).get();
         assertThat(propietario.getDni()).isEqualTo("44555666G");
     }
+
+    @DisplayName("Test para obtener una lista de propietarios filtrada por nombre")
+    @Test
+    void obtenerPropietariosPorNombre() {
+        Propietario propietarioNuevo = Propietario.builder()
+                .nombre("Antonio")
+                .primerApellido("jimenez")
+                .segundoApellido("Gomez")
+                .dni("99888777D")
+                .domicilio("Calle Empedrada, 5")
+                .build();
+        propietarioRepository.save(propietarioNuevo);
+        List<Propietario> propietarios = propietarioRepository.findByNombre("Antonio");
+        assertThat(propietarios.size()).isEqualTo(2);
+    }
 }
