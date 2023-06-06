@@ -62,4 +62,11 @@ public class PropietarioRepositoryTest {
         List<Propietario> propietarios = propietarioRepository.findAll();
         assertThat(propietarios.size()).isEqualTo(2);
     }
+
+    @DisplayName("Test para obtener un propietario por su id")
+    @Test
+    void obtenerPropietarioPorIdTest() {
+        Propietario propietarioEncontrado = propietarioRepository.findById(propietario.getId()).get();
+        assertThat(propietarioEncontrado.getNombre()).isEqualTo("Antonio");
+    }
 }
