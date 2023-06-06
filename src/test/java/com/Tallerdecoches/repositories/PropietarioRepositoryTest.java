@@ -150,4 +150,11 @@ public class PropietarioRepositoryTest {
         boolean isExists = propietarioRepository.existsById(propietario.getId());
         assertThat(isExists).isTrue();
     }
+
+    @DisplayName("Test para comprobar si existe un propietario por su dni")
+    @Test
+    void existsPropietarioPorDniTest() {
+        boolean isExists = propietarioRepository.existsByDni(propietario.getDni());
+        assertThat(isExists).isTrue();
+    }
 }
