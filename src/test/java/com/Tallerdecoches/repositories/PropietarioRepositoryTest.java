@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -133,5 +134,13 @@ public class PropietarioRepositoryTest {
         propietarioAActualizar.setDomicilio("Calle Moreno, 3");
         Propietario propietarioActualizado = propietarioRepository.save(propietarioAActualizar);
         assertThat(propietarioActualizado.getNombre()).isEqualTo("Jorge");
+    }
+
+    @DisplayName("Test para eliminar un propietario")
+    @Test
+    void eliminarPropietarioTest() {
+        propietarioRepository.deleteById(propietario.getId());
+        Optional<Propietario> propietarioBorrado = propietarioRepository.findById(propietario.getId());
+        assertThat(propietarioBorrado).isEmpty();
     }
 }
