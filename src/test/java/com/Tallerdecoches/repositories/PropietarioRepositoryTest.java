@@ -143,4 +143,11 @@ public class PropietarioRepositoryTest {
         Optional<Propietario> propietarioBorrado = propietarioRepository.findById(propietario.getId());
         assertThat(propietarioBorrado).isEmpty();
     }
+
+    @DisplayName("Test para comprobar si existe un propietario por su id")
+    @Test
+    void existsPropietarioPorIdTest() {
+        boolean isExists = propietarioRepository.existsById(propietario.getId());
+        assertThat(isExists).isTrue();
+    }
 }
