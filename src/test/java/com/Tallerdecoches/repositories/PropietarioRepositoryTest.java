@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -44,5 +46,20 @@ public class PropietarioRepositoryTest {
         Propietario propietarioGuardado = propietarioRepository.save(propietario1);
         assertThat(propietarioGuardado.getId()).isGreaterThan(0);
         assertThat(propietarioGuardado.getNombre()).isEqualTo("Jaime");
+    }
+
+    @DisplayName("Test para listar todos los propietarios")
+    @Test
+    void listarTodosLosPropietariosTest() {
+        Propietario propietario1 = Propietario.builder()
+                .nombre("Jaime")
+                .primerApellido("Rodriguez")
+                .segundoApellido("Jimenez")
+                .dni("55888999A")
+                .domicilio("Calle Fuentecita, 98")
+                .build();
+        propietarioRepository.save(propietario1);
+        List<Propietario> propietarios = propietarioRepository.findAll();
+        assertThat(propietarios.size()).isEqualTo(2);
     }
 }
