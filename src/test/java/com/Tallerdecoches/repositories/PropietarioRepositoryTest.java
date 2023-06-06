@@ -106,4 +106,19 @@ public class PropietarioRepositoryTest {
         List<Propietario> propietarios = propietarioRepository.findByPrimerApellido("Perez");
         assertThat(propietarios.size()).isEqualTo(2);
     }
+
+    @DisplayName("Test para obtener una lista de propietarios filtrada por nombre completo")
+    @Test
+    void obtenerPropietariosPorNombreCompleto() {
+        Propietario propietario1 = Propietario.builder()
+                .nombre("Antonio")
+                .primerApellido("Perez")
+                .segundoApellido("Segundo")
+                .dni("115556456H")
+                .domicilio("Calle Tercia, 6")
+                .build();
+        propietarioRepository.save(propietario1);
+        List<Propietario> propietarios = propietarioRepository.findByNombreAndPrimerApellidoAndSegundoApellido("Antonio", "Perez", "Segundo");
+        assertThat(propietarios.size()).isEqualTo(2);
+    }
 }
