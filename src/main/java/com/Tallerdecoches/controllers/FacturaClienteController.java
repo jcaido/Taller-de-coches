@@ -43,4 +43,11 @@ public class FacturaClienteController {
 
         return facturaClienteService.findById(id);
     }
+
+    //Obtener la ultima factura
+    @GetMapping("/ultima-factura")
+    public ResponseEntity<FacturaClientesBusquedasDTO> obtenerUltimaFactura() {
+
+        return facturaClienteService.obtenerUltimaFacturaCliente();
+    }
 }

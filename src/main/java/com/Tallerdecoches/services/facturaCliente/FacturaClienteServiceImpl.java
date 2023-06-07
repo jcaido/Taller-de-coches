@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,5 +95,14 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
             throw new ResourceNotFoundException("Factura de cliente", "id", String.valueOf(id));
 
         return new ResponseEntity<>(modelMapper.map(facturaCliente, FacturaClientesBusquedasDTO.class), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<FacturaClientesBusquedasDTO> obtenerUltimaFacturaCliente() {
+
+        Query query = entityManager.createNativeQuery("SELECT * FROM facturas_clientes ORDER BY id DESC LIMIT 1", FacturaCliente.class);
+        FacturaCliente ultimaFactura = (FacturaCliente) query.getSingleResult();
+
+        return new ResponseEntity<>(modelMapper.map(ultimaFactura, FacturaClientesBusquedasDTO.class), HttpStatus.OK);
     }
 }
