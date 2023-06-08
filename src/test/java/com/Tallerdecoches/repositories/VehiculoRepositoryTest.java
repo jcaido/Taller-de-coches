@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -42,5 +44,19 @@ public class VehiculoRepositoryTest {
         Vehiculo vehiculoGuardado = vehiculoRepository.save(vehiculo1);
         assertThat(vehiculoGuardado.getId()).isGreaterThan(0);
         assertThat(vehiculoGuardado.getMatricula()).isEqualTo("4444RRR");
+    }
+
+    @DisplayName("Test para listar todos los vehiculos")
+    @Test
+    void listarTodosLosVehiculosTest() {
+        Vehiculo vehiculo1 = Vehiculo.builder()
+                .matricula("6788UUU")
+                .marca("RENAULT")
+                .modelo("LAGUNA")
+                .color("rojo")
+                .build();
+        vehiculoRepository.save(vehiculo1);
+        List<Vehiculo> vehiculos = vehiculoRepository.findAll();
+        assertThat(vehiculos.size()).isEqualTo(2);
     }
 }
