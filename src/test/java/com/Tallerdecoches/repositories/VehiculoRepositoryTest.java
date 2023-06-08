@@ -59,4 +59,11 @@ public class VehiculoRepositoryTest {
         List<Vehiculo> vehiculos = vehiculoRepository.findAll();
         assertThat(vehiculos.size()).isEqualTo(2);
     }
+
+    @DisplayName("Test para obtener un vehiculo por su id")
+    @Test
+    void obtenerVehiculoPorIdTest() {
+        Vehiculo vehiculoEncontrado = vehiculoRepository.findById(vehiculo.getId()).get();
+        assertThat(vehiculoEncontrado.getMatricula()).isEqualTo("4455FGH");
+    }
 }
