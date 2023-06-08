@@ -132,4 +132,11 @@ public class VehiculoRepositoryTest {
         boolean isExists = vehiculoRepository.existsById(vehiculo.getId());
         assertThat(isExists).isTrue();
     }
+
+    @DisplayName("Test para comprobar si existe un vehiculo por su matricula")
+    @Test
+    void existeVehiculoPorMatriculaTest() {
+        boolean isExists = vehiculoRepository.existsByMatricula(vehiculo.getMatricula());
+        assertThat(isExists).isTrue();
+    }
 }
