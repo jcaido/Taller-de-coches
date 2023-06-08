@@ -101,4 +101,19 @@ public class VehiculoRepositoryTest {
         List<Vehiculo> vehiculos = vehiculoRepository.findByMarcaAndModelo(vehiculo.getMarca(), vehiculo.getModelo());
         assertThat(vehiculos.size()).isEqualTo(2);
     }
+
+    @DisplayName("Test para actualizar una vehiculo")
+    @Test
+    void actualizarVehiculoTest() {
+        Vehiculo vehiculoAActualizar = vehiculoRepository.findById(vehiculo.getId()).get();
+        vehiculoAActualizar.setMatricula("1122SSS");
+        vehiculoAActualizar.setMarca("FORD");
+        vehiculoAActualizar.setModelo("FOCUS");
+        vehiculoAActualizar.setColor("marron");
+        Vehiculo vehiculoActualizado = vehiculoRepository.save(vehiculoAActualizar);
+        assertThat(vehiculoActualizado.getMatricula()).isEqualTo("1122SSS");
+        assertThat(vehiculoActualizado.getMarca()).isEqualTo("FORD");
+        assertThat(vehiculoActualizado.getModelo()).isEqualTo("FOCUS");
+        assertThat(vehiculoActualizado.getColor()).isEqualTo("marron");
+    }
 }
