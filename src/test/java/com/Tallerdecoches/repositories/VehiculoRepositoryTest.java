@@ -125,4 +125,11 @@ public class VehiculoRepositoryTest {
         Optional<Vehiculo> vehiculoEliminado = vehiculoRepository.findById(vehiculo.getId());
         assertThat(vehiculoEliminado).isEmpty();
     }
+
+    @DisplayName("Test para comprobar si existe un vehiculo por su id")
+    @Test
+    void existeVehiculoPorIdTest() {
+        boolean isExists = vehiculoRepository.existsById(vehiculo.getId());
+        assertThat(isExists).isTrue();
+    }
 }
