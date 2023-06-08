@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -115,5 +116,13 @@ public class VehiculoRepositoryTest {
         assertThat(vehiculoActualizado.getMarca()).isEqualTo("FORD");
         assertThat(vehiculoActualizado.getModelo()).isEqualTo("FOCUS");
         assertThat(vehiculoActualizado.getColor()).isEqualTo("marron");
+    }
+
+    @DisplayName("Test para eliminar un vehiculo")
+    @Test
+    void eliminarVehiculoTest() {
+        vehiculoRepository.deleteById(vehiculo.getId());
+        Optional<Vehiculo> vehiculoEliminado = vehiculoRepository.findById(vehiculo.getId());
+        assertThat(vehiculoEliminado).isEmpty();
     }
 }
