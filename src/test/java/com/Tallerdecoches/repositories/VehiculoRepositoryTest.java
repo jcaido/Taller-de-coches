@@ -73,4 +73,18 @@ public class VehiculoRepositoryTest {
         Vehiculo vehiculoEncontrado = vehiculoRepository.findByMatricula(vehiculo.getMatricula()).get();
         assertThat(vehiculoEncontrado.getMatricula()).isEqualTo("4455FGH");
     }
+
+    @DisplayName("Test para obtener una lista de vehiculos por marca")
+    @Test
+    void obtenervehiculosPorMarcaTest() {
+        Vehiculo vehiculoNuevo = Vehiculo.builder()
+                .matricula("4465HGF")
+                .marca("PEUGEOT")
+                .modelo("BOXER")
+                .color("negro")
+                .build();
+        vehiculoRepository.save(vehiculoNuevo);
+        List<Vehiculo> vehiculos = vehiculoRepository.findByMarca(vehiculo.getMarca());
+        assertThat(vehiculos.size()).isEqualTo(2);
+    }
 }
