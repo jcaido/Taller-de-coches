@@ -66,4 +66,11 @@ public class VehiculoRepositoryTest {
         Vehiculo vehiculoEncontrado = vehiculoRepository.findById(vehiculo.getId()).get();
         assertThat(vehiculoEncontrado.getMatricula()).isEqualTo("4455FGH");
     }
+
+    @DisplayName("Test para obtener un vehiculo por su matricula")
+    @Test
+    void obtenerVehiculoPorMatriculaTest() {
+        Vehiculo vehiculoEncontrado = vehiculoRepository.findByMatricula(vehiculo.getMatricula()).get();
+        assertThat(vehiculoEncontrado.getMatricula()).isEqualTo("4455FGH");
+    }
 }
