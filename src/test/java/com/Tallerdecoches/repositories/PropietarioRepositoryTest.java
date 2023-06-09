@@ -1,5 +1,6 @@
 package com.Tallerdecoches.repositories;
 
+import com.Tallerdecoches.entities.CodigoPostal;
 import com.Tallerdecoches.entities.Propietario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,10 +21,20 @@ public class PropietarioRepositoryTest {
     @Autowired
     private PropietarioRepository propietarioRepository;
 
+    @Autowired
+    private CodigoPostalRepository codigoPostalRepository;
+
+    private CodigoPostal codigoPostal;
     private Propietario propietario;
 
     @BeforeEach
     void setUp() {
+        codigoPostal = CodigoPostal.builder()
+                .codigo("14920")
+                .localidad("Aguilar de la Frontera")
+                .provincia("Cordoba")
+                .build();
+        codigoPostalRepository.save(codigoPostal);
         propietario = Propietario.builder()
                 .nombre("Antonio")
                 .primerApellido("Perez")
@@ -37,16 +48,24 @@ public class PropietarioRepositoryTest {
     @DisplayName("Test para guardar un propietario")
     @Test
     void guardarPropietarioTest() {
+        CodigoPostal codigoPostal1 = CodigoPostal.builder()
+                .codigo("28700")
+                .localidad("Lucena")
+                .provincia("Cordoba")
+                .build();
+        codigoPostalRepository.save(codigoPostal1);
         Propietario propietario1 = Propietario.builder()
                 .nombre("Jaime")
                 .primerApellido("Rodriguez")
                 .segundoApellido("Jimenez")
                 .dni("55888999A")
                 .domicilio("Calle Fuentecita, 98")
+                .codigoPostal(codigoPostal1)
                 .build();
         Propietario propietarioGuardado = propietarioRepository.save(propietario1);
         assertThat(propietarioGuardado.getId()).isGreaterThan(0);
         assertThat(propietarioGuardado.getNombre()).isEqualTo("Jaime");
+        assertThat(propietarioGuardado.getCodigoPostal().getLocalidad()).isEqualTo("Lucena");
     }
 
     @DisplayName("Test para listar todos los propietarios")
