@@ -123,6 +123,7 @@ public class PropietarioRepositoryTest {
                 .segundoApellido("Gomez")
                 .dni("99888777D")
                 .domicilio("Calle Empedrada, 5")
+                .codigoPostal(codigoPostal)
                 .build();
         propietarioRepository.save(propietarioNuevo);
         List<Propietario> propietarios = propietarioRepository.findByPrimerApellido("Perez");
@@ -145,15 +146,21 @@ public class PropietarioRepositoryTest {
         assertThat(propietarios.size()).isEqualTo(2);
     }
 
-    @DisplayName("Test para actualizar un propierario")
+    @DisplayName("Test para actualizar un propietario")
     @Test
     void actualizarPropietarioTest() {
+        CodigoPostal codigoPostal1 = CodigoPostal.builder()
+                .codigo("23499")
+                .localidad("Zafra")
+                .provincia("Badajoz")
+                .build();
         Propietario propietarioAActualizar = propietarioRepository.findById(propietario.getId()).get();
         propietarioAActualizar.setNombre("Jorge");
         propietarioAActualizar.setPrimerApellido("Ramirez");
         propietarioAActualizar.setSegundoApellido("Raya");
         propietarioAActualizar.setDni("55665778E");
         propietarioAActualizar.setDomicilio("Calle Moreno, 3");
+        propietarioAActualizar.setCodigoPostal(codigoPostal1);
         Propietario propietarioActualizado = propietarioRepository.save(propietarioAActualizar);
         assertThat(propietarioActualizado.getNombre()).isEqualTo("Jorge");
     }
