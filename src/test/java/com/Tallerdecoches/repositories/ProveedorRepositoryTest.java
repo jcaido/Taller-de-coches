@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -63,5 +65,26 @@ public class ProveedorRepositoryTest {
         proveedorRepository.save(proveedor1);
         assertThat(proveedor1.getNombre()).isEqualTo("RECACOR SL");
         assertThat(proveedor1.getCodigoPostal().getLocalidad()).isEqualTo("Lucena");
+    }
+
+    @DisplayName("Test para listar todos los proveedores")
+    @Test
+    void listarTodosLosProveedoresTest() {
+        codigoPostal = CodigoPostal.builder()
+                .codigo("28700")
+                .localidad("Lucena")
+                .provincia("Cordoba")
+                .build();
+        codigoPostalRepository.save(codigoPostal);
+
+        proveedor = Proveedor.builder()
+                .nombre("RECACOR SL")
+                .dniCif("B22333444")
+                .domicilio("Calle Alta, 6")
+                .codigoPostal(codigoPostal)
+                .build();
+        proveedorRepository.save(proveedor);
+        List<Proveedor> proveedores = proveedorRepository.findAll();
+        assertThat(proveedores.size()).isEqualTo(2);
     }
 }
