@@ -87,4 +87,11 @@ public class ProveedorRepositoryTest {
         List<Proveedor> proveedores = proveedorRepository.findAll();
         assertThat(proveedores.size()).isEqualTo(2);
     }
+
+    @DisplayName("Test para obtener un proveedor por su id")
+    @Test
+    void obtenerProveedorPorIdTest() {
+        Proveedor proveedorEncontrado = proveedorRepository.findById(proveedor.getId()).get();
+        assertThat(proveedorEncontrado.getNombre()).isEqualTo("GRUPO PEÑA SA");
+    }
 }
