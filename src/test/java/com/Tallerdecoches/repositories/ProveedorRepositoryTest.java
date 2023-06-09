@@ -122,4 +122,25 @@ public class ProveedorRepositoryTest {
         List<Proveedor> proveedoresEncontrados = proveedorRepository.findByNombre(proveedor.getNombre());
         assertThat(proveedoresEncontrados.size()).isEqualTo(2);
     }
+
+    @DisplayName("Test para actualizar un proveedor")
+    @Test
+    void actualizarProveedorTest() {
+        CodigoPostal codigoPostal1 = CodigoPostal.builder()
+                .codigo("23499")
+                .localidad("Zafra")
+                .provincia("Badajoz")
+                .build();
+
+        Proveedor proveedorAActualizar = proveedorRepository.findById(proveedor.getId()).get();
+        proveedorAActualizar.setNombre("RECAMBIOS ELIAS");
+        proveedorAActualizar.setDniCif("W33222167");
+        proveedorAActualizar.setDomicilio("Calle Ancha, 34");
+        proveedorAActualizar.setCodigoPostal(codigoPostal1);
+        proveedorRepository.save(proveedorAActualizar);
+        assertThat(proveedorAActualizar.getNombre()).isEqualTo("RECAMBIOS ELIAS");
+        assertThat(proveedorAActualizar.getDniCif()).isEqualTo("W33222167");
+        assertThat(proveedorAActualizar.getDomicilio()).isEqualTo("Calle Ancha, 34");
+        assertThat(proveedorAActualizar.getCodigoPostal()).isEqualTo(codigoPostal1);
+    }
 }
