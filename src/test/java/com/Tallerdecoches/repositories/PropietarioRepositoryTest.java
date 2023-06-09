@@ -138,6 +138,7 @@ public class PropietarioRepositoryTest {
                 .segundoApellido("Segundo")
                 .dni("115556456H")
                 .domicilio("Calle Tercia, 6")
+                .codigoPostal(codigoPostal)
                 .build();
         propietarioRepository.save(propietario1);
         List<Propietario> propietarios = propietarioRepository.findByNombreAndPrimerApellidoAndSegundoApellido("Antonio", "Perez", "Segundo");
