@@ -94,4 +94,11 @@ public class ProveedorRepositoryTest {
         Proveedor proveedorEncontrado = proveedorRepository.findById(proveedor.getId()).get();
         assertThat(proveedorEncontrado.getNombre()).isEqualTo("GRUPO PEÑA SA");
     }
+
+    @DisplayName("Test para obtener un proveedor por su dni/cif")
+    @Test
+    void obtenerProveedorPorDniCifTest() {
+        Proveedor proveedorEncontrado = proveedorRepository.findByDniCif(proveedor.getDniCif()).get();
+        assertThat(proveedorEncontrado.getNombre()).isEqualTo("GRUPO PEÑA SA");
+    }
 }
