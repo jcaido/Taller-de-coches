@@ -152,4 +152,11 @@ public class ProveedorRepositoryTest {
         Optional<Proveedor> proveedorBuscado = proveedorRepository.findById(proveedor.getId());
         assertThat(proveedorBuscado).isEmpty();
     }
+
+    @DisplayName("Test para comprobar si existe un proveedor por su id")
+    @Test
+    void existeProveedorPorIdTest() {
+        boolean isExists = proveedorRepository.existsById(proveedor.getId());
+        assertThat(isExists).isTrue();
+    }
 }
