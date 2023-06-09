@@ -159,4 +159,11 @@ public class ProveedorRepositoryTest {
         boolean isExists = proveedorRepository.existsById(proveedor.getId());
         assertThat(isExists).isTrue();
     }
+
+    @DisplayName("Test para comprobar si existe un proveedor por su dni/cif")
+    @Test
+    void existeProveedorPorDniCifTest() {
+        boolean isExists = proveedorRepository.existsByDniCif(proveedor.getDniCif());
+        assertThat(isExists).isTrue();
+    }
 }
