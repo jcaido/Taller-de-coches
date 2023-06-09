@@ -101,4 +101,25 @@ public class ProveedorRepositoryTest {
         Proveedor proveedorEncontrado = proveedorRepository.findByDniCif(proveedor.getDniCif()).get();
         assertThat(proveedorEncontrado.getNombre()).isEqualTo("GRUPO PEÑA SA");
     }
+
+    @DisplayName("Test para obtener un proveedor por su nombre")
+    @Test
+    void obtenerProveedorPorNombreTest() {
+        CodigoPostal codigoPostal1 = CodigoPostal.builder()
+                .codigo("28700")
+                .localidad("Lucena")
+                .provincia("Cordoba")
+                .build();
+        codigoPostalRepository.save(codigoPostal1);
+
+        Proveedor proveedor1 = Proveedor.builder()
+                .nombre("GRUPO PEÑA SA")
+                .dniCif("B22333444")
+                .domicilio("Calle Alta, 6")
+                .codigoPostal(codigoPostal1)
+                .build();
+        proveedorRepository.save(proveedor1);
+        List<Proveedor> proveedoresEncontrados = proveedorRepository.findByNombre(proveedor.getNombre());
+        assertThat(proveedoresEncontrados.size()).isEqualTo(2);
+    }
 }
