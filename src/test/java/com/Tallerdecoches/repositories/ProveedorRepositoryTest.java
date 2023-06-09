@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -142,5 +143,13 @@ public class ProveedorRepositoryTest {
         assertThat(proveedorAActualizar.getDniCif()).isEqualTo("W33222167");
         assertThat(proveedorAActualizar.getDomicilio()).isEqualTo("Calle Ancha, 34");
         assertThat(proveedorAActualizar.getCodigoPostal()).isEqualTo(codigoPostal1);
+    }
+
+    @DisplayName("Test para eliminar un proveedor")
+    @Test
+    void eliminarProveedorTest() {
+        proveedorRepository.deleteById(proveedor.getId());
+        Optional<Proveedor> proveedorBuscado = proveedorRepository.findById(proveedor.getId());
+        assertThat(proveedorBuscado).isEmpty();
     }
 }
