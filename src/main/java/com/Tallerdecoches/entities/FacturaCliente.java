@@ -22,6 +22,8 @@ public class FacturaCliente implements Serializable {
     private Propietario propietario;
     @Column(name = "fecha_factura")
     private LocalDate fechaFactura;
+    @Column(name="serie_factura")
+    private String serie;
     @Column(name = "numero_factura")
     private Long numeroFactura;
     @Column(name = "tipo_iva")

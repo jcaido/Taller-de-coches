@@ -64,6 +64,7 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
         FacturaCliente facturaCliente = modelMapper.map(facturaClienteCrearDTO, FacturaCliente.class);
         facturaCliente.setPropietario(propietario);
         facturaCliente.setOrdenReparacion(ordenReparacion);
+        facturaCliente.setSerie("T" + Integer.toString(facturaClienteCrearDTO.getFechaFactura().getYear()));
         facturaCliente.getOrdenReparacion().setFacturada(true);
 
         if (facturaClienteConsultasService.obtenerFacturasClientesEntreFechas(facturaClienteCrearDTO).isEmpty()) {

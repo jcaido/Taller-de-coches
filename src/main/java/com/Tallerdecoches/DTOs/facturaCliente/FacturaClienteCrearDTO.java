@@ -17,6 +17,6 @@ public class FacturaClienteCrearDTO {
     @JsonFormat(pattern = "dd-MM-yyyy")
     @NotNull(message = "la fecha de la factura no puede ser nula")
     private LocalDate fechaFactura;
-    private Long numeroFactura;
+    //private Long numeroFactura;
     private Integer tipoIVA;
 }

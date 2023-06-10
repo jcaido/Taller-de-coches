@@ -17,6 +17,7 @@ public class FacturaClientesBusquedasDTO {
     private Long id;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate fechaFactura;
+    private String serie;
     private Long numeroFactura;
     private Integer tipoIVA;
     private OrdenReparacionBusquedasDTO ordenReparacion;
