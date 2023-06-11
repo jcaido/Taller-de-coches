@@ -23,7 +23,7 @@ public class FacturaClienteConsultasService {
                 "WHERE fecha_factura >= :fechaInicial " +
                 "AND fecha_factura <= :fechaFinal");
         query.setParameter("fechaInicial", LocalDate.of(facturaDTO.getFechaFactura().getYear(), 01, 01));
-        query.setParameter("fechaFinal", LocalDate.of(facturaDTO.getFechaFactura().getYear(), 12, 12));
+        query.setParameter("fechaFinal", LocalDate.of(facturaDTO.getFechaFactura().getYear(), 12, 31));
         List<FacturaCliente> facturasYear = query.getResultList();
 
         return facturasYear;
@@ -37,7 +37,7 @@ public class FacturaClienteConsultasService {
                 "AND numero_factura = (SELECT MAX(numero_factura) FROM facturas_clientes WHERE " +
                 " fecha_factura >= :fechaInicial AND fecha_factura <= :fechaFinal)", FacturaCliente.class);
         query.setParameter("fechaInicial", LocalDate.of(facturaDTO.getFechaFactura().getYear(), 01, 01));
-        query.setParameter("fechaFinal", LocalDate.of(facturaDTO.getFechaFactura().getYear(), 12, 12));
+        query.setParameter("fechaFinal", LocalDate.of(facturaDTO.getFechaFactura().getYear(), 12, 31));
         Object facturaNumero = query.getSingleResult();
         FacturaCliente factura = (FacturaCliente) facturaNumero;
 
