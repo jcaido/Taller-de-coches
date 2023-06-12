@@ -29,7 +29,7 @@ public class FacturaClienteConsultasService {
         return facturasYear;
     }
 
-    public FacturaCliente obtenerFacturaMaximoNumeroFacturaEntreFechas(FacturaClienteCrearDTO facturaDTO) {
+    public List<FacturaCliente> obtenerFacturaMaximoNumeroFacturaEntreFechas(FacturaClienteCrearDTO facturaDTO) {
 
         Query query = entityManager.createNativeQuery("SELECT * FROM facturas_clientes " +
                 "WHERE fecha_factura >= :fechaInicial " +
@@ -38,8 +38,7 @@ public class FacturaClienteConsultasService {
                 " fecha_factura >= :fechaInicial AND fecha_factura <= :fechaFinal)", FacturaCliente.class);
         query.setParameter("fechaInicial", LocalDate.of(facturaDTO.getFechaFactura().getYear(), 01, 01));
         query.setParameter("fechaFinal", LocalDate.of(facturaDTO.getFechaFactura().getYear(), 12, 31));
-        Object facturaNumero = query.getSingleResult();
-        FacturaCliente factura = (FacturaCliente) facturaNumero;
+        List<FacturaCliente> factura = query.getResultList();
 
         return factura;
     }

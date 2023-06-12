@@ -59,6 +59,12 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
         if (!facturaClienteValidacionesService.validacionOrdenReparacionFacturada(idOrdenReparacion))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "La orden de reparación ya está facturada");
 
+        if (!facturaClienteConsultasService.obtenerFacturaMaximoNumeroFacturaEntreFechas(facturaClienteCrearDTO).isEmpty()
+                && facturaClienteCrearDTO.getFechaFactura()
+                .isBefore(facturaClienteConsultasService
+                        .obtenerFacturaMaximoNumeroFacturaEntreFechas(facturaClienteCrearDTO).get(0).getFechaFactura()))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La fecha factura no puede ser inferior a la última factura de la serie");
+
         Propietario propietario = propietarioRepository.findById(idPropietario).get();
         OrdenReparacion ordenReparacion = ordenReparacionRepository.findById(idOrdenReparacion).get();
         FacturaCliente facturaCliente = modelMapper.map(facturaClienteCrearDTO, FacturaCliente.class);
@@ -73,7 +79,7 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
             facturaClienteRepository.save(facturaCliente);
         } else {
             facturaClienteRepository.save(facturaCliente);
-            facturaCliente.setNumeroFactura(facturaClienteConsultasService.obtenerFacturaMaximoNumeroFacturaEntreFechas(facturaClienteCrearDTO).getNumeroFactura() + 1);
+            facturaCliente.setNumeroFactura(facturaClienteConsultasService.obtenerFacturaMaximoNumeroFacturaEntreFechas(facturaClienteCrearDTO).get(0).getNumeroFactura() + 1);
             facturaClienteRepository.save(facturaCliente);
         }
 
