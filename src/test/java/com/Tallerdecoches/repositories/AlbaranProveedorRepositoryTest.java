@@ -4,11 +4,15 @@ import com.Tallerdecoches.entities.AlbaranProveedor;
 import com.Tallerdecoches.entities.CodigoPostal;
 import com.Tallerdecoches.entities.Proveedor;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
@@ -48,5 +52,19 @@ public class AlbaranProveedorRepositoryTest {
                 .facturado(false)
                 .build();
         albaranProveedorRepository.save(albaranProveedor);
+    }
+
+    @DisplayName("Test para guardar un albaran de proveedo")
+    @Test
+    void guardarAlbaranProveedorTest() {
+        AlbaranProveedor albaranProveedor1 = AlbaranProveedor.builder()
+                .proveedor(proveedor)
+                .fechaAlbaran(LocalDate.of(2023, 5,12))
+                .numeroAlbaran("45TR")
+                .facturado(false)
+                .build();
+        AlbaranProveedor albaranProveedorGuardado = albaranProveedorRepository.save(albaranProveedor1);
+        assertThat(albaranProveedorGuardado.getId()).isGreaterThan(0);
+        assertThat(albaranProveedorGuardado.getNumeroAlbaran()).isEqualTo("45TR");
     }
 }
