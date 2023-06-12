@@ -83,4 +83,11 @@ public class AlbaranProveedorRepositoryTest {
         List<AlbaranProveedor> albaranes = albaranProveedorRepository.findAll();
         assertEquals(2, albaranes.size());
     }
+
+    @DisplayName("Test para obtener un albaran de proveedor por su id")
+    @Test
+    void obtenerAlbaranProveedorPorIdTest() {
+        AlbaranProveedor albaran = albaranProveedorRepository.findById(albaranProveedor.getId()).get();
+        assertEquals("123E", albaranProveedor.getNumeroAlbaran());
+    }
 }
