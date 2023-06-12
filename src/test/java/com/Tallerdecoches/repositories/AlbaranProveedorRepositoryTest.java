@@ -90,4 +90,18 @@ public class AlbaranProveedorRepositoryTest {
         AlbaranProveedor albaran = albaranProveedorRepository.findById(albaranProveedor.getId()).get();
         assertEquals("123E", albaranProveedor.getNumeroAlbaran());
     }
+
+    @DisplayName("Test para obtener una lista de albaranes de proveedor por numero de albaran")
+    @Test
+    void obtenerAlbaranesProveedorPorNumeroAlbaranTest() {
+        AlbaranProveedor albaranProveedor1 = AlbaranProveedor.builder()
+                .proveedor(proveedor)
+                .fechaAlbaran(LocalDate.of(2023, 5,12))
+                .numeroAlbaran("123E")
+                .facturado(false)
+                .build();
+        albaranProveedorRepository.save(albaranProveedor1);
+        List<AlbaranProveedor> albaranes = albaranProveedorRepository.findByNumeroAlbaran(albaranProveedor.getNumeroAlbaran());
+        assertThat(albaranes.size()).isEqualTo(2);
+    }
 }
