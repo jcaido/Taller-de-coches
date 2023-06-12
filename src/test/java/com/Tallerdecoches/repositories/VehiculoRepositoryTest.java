@@ -1,5 +1,7 @@
 package com.Tallerdecoches.repositories;
 
+import com.Tallerdecoches.entities.CodigoPostal;
+import com.Tallerdecoches.entities.Propietario;
 import com.Tallerdecoches.entities.Vehiculo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,16 +21,38 @@ public class VehiculoRepositoryTest {
 
     @Autowired
     private VehiculoRepository vehiculoRepository;
+    @Autowired
+    private CodigoPostalRepository codigoPostalRepository;
+    @Autowired
+    private PropietarioRepository propietarioRepository;
 
+    private CodigoPostal codigoPostal;
     private Vehiculo vehiculo;
+    private Propietario propietario;
 
     @BeforeEach
     void setUp() {
+        codigoPostal = CodigoPostal.builder()
+                .codigo("14920")
+                .localidad("Aguilar de la Frontera")
+                .provincia("Cordoba")
+                .build();
+        codigoPostalRepository.save(codigoPostal);
+        propietario = Propietario.builder()
+                .nombre("Antonio")
+                .primerApellido("Perez")
+                .segundoApellido("Segundo")
+                .dni("44555666G")
+                .domicilio("Calle Larga, 56")
+                .codigoPostal(codigoPostal)
+                .build();
+        propietarioRepository.save(propietario);
         vehiculo = Vehiculo.builder()
                 .matricula("4455FGH")
                 .marca("PEUGEOT")
                 .modelo("407")
                 .color("blanco")
+                .propietario(propietario)
                 .build();
         vehiculoRepository.save(vehiculo);
     }
