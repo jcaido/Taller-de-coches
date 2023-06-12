@@ -16,6 +16,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
@@ -123,5 +124,12 @@ public class AlbaranProveedorRepositoryTest {
         albaranProveedorRepository.deleteById(albaranProveedor.getId());
         Optional<AlbaranProveedor> albaranEliminado = albaranProveedorRepository.findById(albaranProveedor.getId());
         assertThat(albaranEliminado).isEmpty();
+    }
+
+    @DisplayName("Test para comprobar si existe un albaran de proveedor por su id")
+    @Test
+    void existeAlbaranProveedorPorIdTest() {
+        boolean isExists = albaranProveedorRepository.existsById(albaranProveedor.getId());
+        assertTrue(isExists);
     }
 }
