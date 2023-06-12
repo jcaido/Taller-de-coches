@@ -80,6 +80,7 @@ public class VehiculoRepositoryTest {
                 .marca("RENAULT")
                 .modelo("LAGUNA")
                 .color("rojo")
+                .propietario(propietario)
                 .build();
         vehiculoRepository.save(vehiculo1);
         List<Vehiculo> vehiculos = vehiculoRepository.findAll();
