@@ -104,4 +104,15 @@ public class AlbaranProveedorRepositoryTest {
         List<AlbaranProveedor> albaranes = albaranProveedorRepository.findByNumeroAlbaran(albaranProveedor.getNumeroAlbaran());
         assertThat(albaranes.size()).isEqualTo(2);
     }
+
+    @DisplayName("Test para actualizar un albaran de proveedor")
+    @Test
+    void actualizarAlbaranProveedorTest() {
+        AlbaranProveedor albaranProveedorAActualizar = albaranProveedorRepository.findById(albaranProveedor.getId()).get();
+        albaranProveedorAActualizar.setProveedor(proveedor);
+        albaranProveedorAActualizar.setFechaAlbaran(LocalDate.of(2023, 4,12));
+        albaranProveedorAActualizar.setNumeroAlbaran("WWW");
+        albaranProveedorRepository.save(albaranProveedorAActualizar);
+        assertEquals("WWW", albaranProveedorAActualizar.getNumeroAlbaran());
+    }
 }
