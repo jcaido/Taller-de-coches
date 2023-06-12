@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -114,5 +115,13 @@ public class AlbaranProveedorRepositoryTest {
         albaranProveedorAActualizar.setNumeroAlbaran("WWW");
         albaranProveedorRepository.save(albaranProveedorAActualizar);
         assertEquals("WWW", albaranProveedorAActualizar.getNumeroAlbaran());
+    }
+
+    @DisplayName("Test para eliminar un albaran de proveedor")
+    @Test
+    void eliminarAlbaranProveedorTest() {
+        albaranProveedorRepository.deleteById(albaranProveedor.getId());
+        Optional<AlbaranProveedor> albaranEliminado = albaranProveedorRepository.findById(albaranProveedor.getId());
+        assertThat(albaranEliminado).isEmpty();
     }
 }
