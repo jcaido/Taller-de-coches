@@ -139,6 +139,7 @@ public class VehiculoRepositoryTest {
         vehiculoAActualizar.setMarca("FORD");
         vehiculoAActualizar.setModelo("FOCUS");
         vehiculoAActualizar.setColor("marron");
+        vehiculoAActualizar.setPropietario(propietario);
         Vehiculo vehiculoActualizado = vehiculoRepository.save(vehiculoAActualizar);
         assertThat(vehiculoActualizado.getMatricula()).isEqualTo("1122SSS");
         assertThat(vehiculoActualizado.getMarca()).isEqualTo("FORD");
