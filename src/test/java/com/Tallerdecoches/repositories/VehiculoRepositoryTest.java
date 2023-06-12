@@ -65,6 +65,7 @@ public class VehiculoRepositoryTest {
                 .marca("RENAULT")
                 .modelo("CLIO")
                 .color("azul")
+                .propietario(propietario)
                 .build();
         Vehiculo vehiculoGuardado = vehiculoRepository.save(vehiculo1);
         assertThat(vehiculoGuardado.getId()).isGreaterThan(0);
