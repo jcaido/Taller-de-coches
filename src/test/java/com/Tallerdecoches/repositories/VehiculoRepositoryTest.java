@@ -124,6 +124,7 @@ public class VehiculoRepositoryTest {
                 .marca("PEUGEOT")
                 .modelo("407")
                 .color("negro")
+                .propietario(propietario)
                 .build();
         vehiculoRepository.save(vehiculoNuevo);
         List<Vehiculo> vehiculos = vehiculoRepository.findByMarcaAndModelo(vehiculo.getMarca(), vehiculo.getModelo());
