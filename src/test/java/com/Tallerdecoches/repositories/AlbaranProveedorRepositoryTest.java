@@ -11,8 +11,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
@@ -66,5 +68,19 @@ public class AlbaranProveedorRepositoryTest {
         AlbaranProveedor albaranProveedorGuardado = albaranProveedorRepository.save(albaranProveedor1);
         assertThat(albaranProveedorGuardado.getId()).isGreaterThan(0);
         assertThat(albaranProveedorGuardado.getNumeroAlbaran()).isEqualTo("45TR");
+    }
+
+    @DisplayName("Test para listar todos los albaranes de proveedores")
+    @Test
+    void listarTodosLosAlbaranesProveedorTest() {
+        AlbaranProveedor albaranProveedor1 = AlbaranProveedor.builder()
+                .proveedor(proveedor)
+                .fechaAlbaran(LocalDate.of(2023, 5,12))
+                .numeroAlbaran("45TR")
+                .facturado(false)
+                .build();
+        albaranProveedorRepository.save(albaranProveedor1);
+        List<AlbaranProveedor> albaranes = albaranProveedorRepository.findAll();
+        assertEquals(2, albaranes.size());
     }
 }
