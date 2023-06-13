@@ -127,4 +127,11 @@ public class PiezaRepositoryTest {
         boolean isExists = piezaRepository.existsByReferencia(pieza.getReferencia());
         assertTrue(isExists);
     }
+
+    @DisplayName("Test para comprobar si existe una pieza por su nombre")
+    @Test
+    void existePiezaPorNombreTest() {
+        boolean isExists = piezaRepository.existsByNombre(pieza.getNombre());
+        assertTrue(isExists);
+    }
 }
