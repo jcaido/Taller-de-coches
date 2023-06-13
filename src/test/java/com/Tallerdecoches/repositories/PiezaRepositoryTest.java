@@ -86,4 +86,17 @@ public class PiezaRepositoryTest {
         Pieza piezaEncontrada = piezaRepository.findByReferencia(pieza.getReferencia()).get();
         assertEquals("AAAA", piezaEncontrada.getReferencia());
     }
+
+    @DisplayName("Test para obtener una lista de piezas por nombre")
+    @Test
+    void obtenerPiezasPorNombreTest() {
+        Pieza pieza1 = Pieza.builder()
+                .referencia("BBBB")
+                .nombre("Arandela")
+                .precio(0.65)
+                .build();
+        piezaRepository.save(pieza1);
+        List<Pieza> piezas = piezaRepository.findByNombre(pieza.getNombre());
+        assertEquals(2, piezas.size());
+    }
 }
