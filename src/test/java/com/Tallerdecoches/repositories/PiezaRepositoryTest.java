@@ -120,4 +120,11 @@ public class PiezaRepositoryTest {
         Optional<Pieza> piezaEliminada = piezaRepository.findById(pieza.getId());
         assertTrue(piezaEliminada.isEmpty());
     }
+
+    @DisplayName("Test para comprobar si existe una pieza por su referencia")
+    @Test
+    void existePiezaPorReferenciaTest() {
+        boolean isExists = piezaRepository.existsByReferencia(pieza.getReferencia());
+        assertTrue(isExists);
+    }
 }
