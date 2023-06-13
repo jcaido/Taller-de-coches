@@ -10,10 +10,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
@@ -111,5 +111,13 @@ public class PiezaRepositoryTest {
         assertEquals("CCCC", piezaActualizada.getReferencia());
         assertEquals("motor", piezaActualizada.getNombre());
         assertEquals(4.87, piezaActualizada.getPrecio());
+    }
+
+    @DisplayName("Test para eliminar una pieza")
+    @Test
+    void eliminarPiezaTest() {
+        piezaRepository.deleteById(pieza.getId());
+        Optional<Pieza> piezaEliminada = piezaRepository.findById(pieza.getId());
+        assertTrue(piezaEliminada.isEmpty());
     }
 }
