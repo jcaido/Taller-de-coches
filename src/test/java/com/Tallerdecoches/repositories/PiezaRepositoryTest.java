@@ -9,7 +9,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DataJpaTest
@@ -55,5 +58,18 @@ public class PiezaRepositoryTest {
         assertThrows(DataIntegrityViolationException.class, () -> {
             piezaRepository.save(pieza1);
         });
+    }
+
+    @DisplayName("Test para listar todas las piezas")
+    @Test
+    void listarTodasLasPiezasTest() {
+        Pieza pieza1 = Pieza.builder()
+                .referencia("BBBB")
+                .nombre("tornillo")
+                .precio(0.65)
+                .build();
+        piezaRepository.save(pieza1);
+        List<Pieza> piezas = piezaRepository.findAll();
+        assertEquals(2, piezas.size());
     }
 }
