@@ -99,4 +99,17 @@ public class PiezaRepositoryTest {
         List<Pieza> piezas = piezaRepository.findByNombre(pieza.getNombre());
         assertEquals(2, piezas.size());
     }
+
+    @DisplayName("Test para actualizar una pieza")
+    @Test
+    void actualizarPiezaTest() {
+        Pieza piezaAActualizar = piezaRepository.findById(pieza.getId()).get();
+        piezaAActualizar.setReferencia("CCCC");
+        piezaAActualizar.setNombre("motor");
+        piezaAActualizar.setPrecio(4.87);
+        Pieza piezaActualizada = piezaRepository.save(piezaAActualizar);
+        assertEquals("CCCC", piezaActualizada.getReferencia());
+        assertEquals("motor", piezaActualizada.getNombre());
+        assertEquals(4.87, piezaActualizada.getPrecio());
+    }
 }
