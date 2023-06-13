@@ -79,4 +79,11 @@ public class PiezaRepositoryTest {
         Pieza piezaEncontrada = piezaRepository.findById(pieza.getId()).get();
         assertEquals("AAAA", piezaEncontrada.getReferencia());
     }
+
+    @DisplayName("Test para obtener una pieza por su referencia")
+    @Test
+    void obtenerPiezaPorReferenciaTest() {
+        Pieza piezaEncontrada = piezaRepository.findByReferencia(pieza.getReferencia()).get();
+        assertEquals("AAAA", piezaEncontrada.getReferencia());
+    }
 }
