@@ -93,4 +93,11 @@ public class ManoDeObraRepositoryTest {
         Optional<ManoDeObra> manoDeObraEliminada = manoDeObraRepository.findById(manoDeObra.getId());
         assertThat(manoDeObraEliminada).isEmpty();
     }
+
+    @DisplayName("Test para comprobar si existe una mano de obra por su precio Hora")
+    @Test
+    void existeManoDeObraPorPrecioHoraTest() {
+        boolean isExists = manoDeObraRepository.existsByprecioHoraClienteTaller(manoDeObra.getPrecioHoraClienteTaller());
+        assertThat(isExists).isTrue();
+    }
 }
