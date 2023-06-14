@@ -72,4 +72,16 @@ public class ManoDeObraRepositoryTest {
         ManoDeObra manoDeObraActual = manoDeObraRepository.findByPrecioHoraClienteTallerActual(true).get();
         assertThat(manoDeObraActual.getPrecioHoraClienteTallerActual()).isTrue();
     }
+
+    @DisplayName("Test para actualizar una mano de obra")
+    @Test
+    void actualizarManoDeObraTest() {
+        ManoDeObra manoDeObraAActualizar = manoDeObraRepository.findById(manoDeObra.getId()).get();
+        manoDeObraAActualizar.setFechaNuevoPrecio(LocalDate.of(2023, 06, 15));
+        manoDeObraAActualizar.setPrecioHoraClienteTaller(56.8);
+        manoDeObraAActualizar.setPrecioHoraClienteTallerActual(false);
+        assertThat(manoDeObraAActualizar.getFechaNuevoPrecio()).isEqualTo(LocalDate.of(2023, 06, 15));
+        assertThat(manoDeObraAActualizar.getPrecioHoraClienteTaller()).isEqualTo(56.8);
+        assertThat(manoDeObraAActualizar.getPrecioHoraClienteTallerActual()).isFalse();
+    }
 }
