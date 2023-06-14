@@ -58,4 +58,11 @@ public class ManoDeObraRepositoryTest {
         List<ManoDeObra> listaManoDeObra = manoDeObraRepository.findAll();
         assertThat(listaManoDeObra.size()).isEqualTo(2);
     }
+
+    @DisplayName("Test para obtener una mano de obra por su id")
+    @Test
+    void obtenerManoDeObraPorIdTest() {
+        ManoDeObra manoDeObraEncontrada = manoDeObraRepository.findById(manoDeObra.getId()).get();
+        assertThat(manoDeObraEncontrada.getPrecioHoraClienteTaller()).isEqualTo(25.65);
+    }
 }
