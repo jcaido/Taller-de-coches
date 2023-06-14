@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -43,5 +44,18 @@ public class ManoDeObraRepositoryTest {
         assertThat(manoDeObraGuardada).isNotNull();
         assertThat(manoDeObraGuardada.getId()).isGreaterThan(0);
         assertThat(manoDeObraGuardada.getPrecioHoraClienteTaller()).isEqualTo(22.98);
+    }
+
+    @DisplayName("Test para listar todas las mano de obra")
+    @Test
+    void listarTodasLasManoDeObraTest() {
+        ManoDeObra manoDeObra1 = ManoDeObra.builder()
+                .fechaNuevoPrecio(LocalDate.of(2023, 06, 13))
+                .precioHoraClienteTaller(22.98)
+                .precioHoraClienteTallerActual(false)
+                .build();
+        ManoDeObra manoDeObraGuardada = manoDeObraRepository.save(manoDeObra1);
+        List<ManoDeObra> listaManoDeObra = manoDeObraRepository.findAll();
+        assertThat(listaManoDeObra.size()).isEqualTo(2);
     }
 }
