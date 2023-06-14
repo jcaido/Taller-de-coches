@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -83,5 +84,13 @@ public class ManoDeObraRepositoryTest {
         assertThat(manoDeObraAActualizar.getFechaNuevoPrecio()).isEqualTo(LocalDate.of(2023, 06, 15));
         assertThat(manoDeObraAActualizar.getPrecioHoraClienteTaller()).isEqualTo(56.8);
         assertThat(manoDeObraAActualizar.getPrecioHoraClienteTallerActual()).isFalse();
+    }
+
+    @DisplayName("Test para eliminar una mano de obra")
+    @Test
+    void eliminarManoDeObraTest() {
+        manoDeObraRepository.deleteById(manoDeObra.getId());
+        Optional<ManoDeObra> manoDeObraEliminada = manoDeObraRepository.findById(manoDeObra.getId());
+        assertThat(manoDeObraEliminada).isEmpty();
     }
 }
