@@ -65,4 +65,11 @@ public class ManoDeObraRepositoryTest {
         ManoDeObra manoDeObraEncontrada = manoDeObraRepository.findById(manoDeObra.getId()).get();
         assertThat(manoDeObraEncontrada.getPrecioHoraClienteTaller()).isEqualTo(25.65);
     }
+
+    @DisplayName("Test para obtener la mano de obra actual")
+    @Test
+    void obtenerManoDeObraActualTest() {
+        ManoDeObra manoDeObraActual = manoDeObraRepository.findByPrecioHoraClienteTallerActual(true).get();
+        assertThat(manoDeObraActual.getPrecioHoraClienteTallerActual()).isTrue();
+    }
 }
