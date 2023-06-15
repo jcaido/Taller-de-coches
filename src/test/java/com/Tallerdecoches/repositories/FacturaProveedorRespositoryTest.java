@@ -1,0 +1,56 @@
+package com.Tallerdecoches.repositories;
+
+import com.Tallerdecoches.entities.CodigoPostal;
+import com.Tallerdecoches.entities.FacturaProveedor;
+import com.Tallerdecoches.entities.Proveedor;
+import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import java.time.LocalDate;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@DataJpaTest
+@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
+public class FacturaProveedorRespositoryTest {
+
+    @Autowired
+    FacturaProveedorRepository facturaProveedorRepository;
+
+    @Autowired
+    CodigoPostalRepository codigoPostalRepository;
+
+    @Autowired
+    ProveedorRepository proveedorRepository;
+
+    private FacturaProveedor facturaProveedor;
+    private CodigoPostal codigoPostal;
+    private Proveedor proveedor;
+
+    @BeforeEach
+    void setUp() {
+        codigoPostal = CodigoPostal.builder()
+                .codigo("14920")
+                .localidad("Aguilar de la Frontera")
+                .provincia("Cordoba")
+                .build();
+        codigoPostalRepository.save(codigoPostal);
+        proveedor = Proveedor.builder()
+                .nombre("GRUPO PEÑA SA")
+                .dniCif("B14567876")
+                .domicilio("Calle Grande, 6")
+                .codigoPostal(codigoPostal)
+                .build();
+        proveedorRepository.save(proveedor);
+        facturaProveedor = FacturaProveedor.builder()
+                .fechaFactura(LocalDate.of(2023, 06, 10))
+                .numeroFactura("AAAA")
+                .tipoIVA(21)
+                .contabilizada(false)
+                .proveedor(proveedor)
+                .build();
+        facturaProveedorRepository.save(facturaProveedor);
+    }
+}
