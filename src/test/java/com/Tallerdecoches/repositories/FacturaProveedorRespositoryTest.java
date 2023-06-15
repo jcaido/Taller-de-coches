@@ -100,4 +100,17 @@ public class FacturaProveedorRespositoryTest {
         FacturaProveedor factura = facturaProveedorRepository.findByNumeroFactura(facturaProveedor.getNumeroFactura());
         assertThat(factura.getNumeroFactura()).isEqualTo("AAAA");
     }
+
+    @DisplayName("Test para actualizar una factura de proveedor")
+    @Test
+    void actualizarFacturaProveedorTest() {
+        FacturaProveedor facturaAActualizar = facturaProveedorRepository.findById(facturaProveedor.getId()).get();
+        facturaAActualizar.setFechaFactura(LocalDate.of(2023, 06, 01));
+        facturaAActualizar.setNumeroFactura("SSSS");
+        facturaAActualizar.setTipoIVA(12);
+        facturaAActualizar.setContabilizada(false);
+        facturaAActualizar.setProveedor(proveedor);
+        FacturaProveedor facturaProveedorActualizada = facturaProveedorRepository.save(facturaAActualizar);
+        assertThat(facturaProveedorActualizada.getNumeroFactura()).isEqualTo("SSSS");
+    }
 }
