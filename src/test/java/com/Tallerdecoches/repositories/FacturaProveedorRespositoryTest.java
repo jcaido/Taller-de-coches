@@ -86,4 +86,11 @@ public class FacturaProveedorRespositoryTest {
         List<FacturaProveedor> facturas = facturaProveedorRepository.findAll();
         assertThat(facturas.size()).isEqualTo(2);
     }
+
+    @DisplayName("Test para obtener una factura de proveedor por su id")
+    @Test
+    void obtenerFacturaProveedorPorIdTest() {
+        FacturaProveedor factura = facturaProveedorRepository.findById(facturaProveedor.getId()).get();
+        assertThat(factura.getNumeroFactura()).isEqualTo("AAAA");
+    }
 }
