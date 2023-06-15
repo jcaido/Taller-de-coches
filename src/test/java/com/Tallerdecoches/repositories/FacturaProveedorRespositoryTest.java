@@ -122,4 +122,11 @@ public class FacturaProveedorRespositoryTest {
         Optional<FacturaProveedor> facturaProveedorEliminada = facturaProveedorRepository.findById(facturaProveedor.getId());
         assertThat(facturaProveedorEliminada).isEmpty();
     }
+
+    @DisplayName("Test para comprobar si existe una factura de proveedor por su id")
+    @Test
+    void existeFacturaProveedorPorIdTest() {
+        boolean isExists = facturaProveedorRepository.existsById(facturaProveedor.getId());
+        assertThat(isExists).isTrue();
+    }
 }
