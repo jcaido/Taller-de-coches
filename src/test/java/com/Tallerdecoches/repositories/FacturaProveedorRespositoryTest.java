@@ -4,6 +4,8 @@ import com.Tallerdecoches.entities.CodigoPostal;
 import com.Tallerdecoches.entities.FacturaProveedor;
 import com.Tallerdecoches.entities.Proveedor;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -52,5 +54,20 @@ public class FacturaProveedorRespositoryTest {
                 .proveedor(proveedor)
                 .build();
         facturaProveedorRepository.save(facturaProveedor);
+    }
+
+    @DisplayName("Test para guardar una factura de proveedor")
+    @Test
+    void guardarFacturaProveedorTest() {
+        FacturaProveedor facturaProveedor1 = FacturaProveedor.builder()
+                .fechaFactura(LocalDate.of(2023, 06, 14))
+                .numeroFactura("BBBB")
+                .tipoIVA(21)
+                .contabilizada(false)
+                .proveedor(proveedor)
+                .build();
+        FacturaProveedor facturaProveedorGuardada = facturaProveedorRepository.save(facturaProveedor1);
+        assertThat(facturaProveedorGuardada.getId()).isGreaterThan(0);
+        assertThat(facturaProveedorGuardada.getNumeroFactura()).isEqualTo("BBBB");
     }
 }
