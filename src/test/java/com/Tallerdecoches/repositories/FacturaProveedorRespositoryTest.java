@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -112,5 +113,13 @@ public class FacturaProveedorRespositoryTest {
         facturaAActualizar.setProveedor(proveedor);
         FacturaProveedor facturaProveedorActualizada = facturaProveedorRepository.save(facturaAActualizar);
         assertThat(facturaProveedorActualizada.getNumeroFactura()).isEqualTo("SSSS");
+    }
+
+    @DisplayName("Test para eliminar una factura de proveedor")
+    @Test
+    void eliminarFacturaProveedorTest() {
+        facturaProveedorRepository.deleteById(facturaProveedor.getId());
+        Optional<FacturaProveedor> facturaProveedorEliminada = facturaProveedorRepository.findById(facturaProveedor.getId());
+        assertThat(facturaProveedorEliminada).isEmpty();
     }
 }
