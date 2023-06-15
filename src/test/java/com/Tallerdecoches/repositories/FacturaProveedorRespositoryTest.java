@@ -93,4 +93,11 @@ public class FacturaProveedorRespositoryTest {
         FacturaProveedor factura = facturaProveedorRepository.findById(facturaProveedor.getId()).get();
         assertThat(factura.getNumeroFactura()).isEqualTo("AAAA");
     }
+
+    @DisplayName("Test para obtener una factura de proveedor por el numero de factura")
+    @Test
+    void obtenerFacturasProveedorPorNumeroFacturaTest() {
+        FacturaProveedor factura = facturaProveedorRepository.findByNumeroFactura(facturaProveedor.getNumeroFactura());
+        assertThat(factura.getNumeroFactura()).isEqualTo("AAAA");
+    }
 }
