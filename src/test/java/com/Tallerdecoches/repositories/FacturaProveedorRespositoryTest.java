@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -69,5 +70,20 @@ public class FacturaProveedorRespositoryTest {
         FacturaProveedor facturaProveedorGuardada = facturaProveedorRepository.save(facturaProveedor1);
         assertThat(facturaProveedorGuardada.getId()).isGreaterThan(0);
         assertThat(facturaProveedorGuardada.getNumeroFactura()).isEqualTo("BBBB");
+    }
+
+    @DisplayName("Test para listar todas las facturas de proveedores")
+    @Test
+    void ListarTodasFacturasProveedoresTest() {
+        FacturaProveedor facturaProveedor1 = FacturaProveedor.builder()
+                .fechaFactura(LocalDate.of(2023, 06, 14))
+                .numeroFactura("BBBB")
+                .tipoIVA(21)
+                .contabilizada(false)
+                .proveedor(proveedor)
+                .build();
+        FacturaProveedor facturaProveedorGuardada = facturaProveedorRepository.save(facturaProveedor1);
+        List<FacturaProveedor> facturas = facturaProveedorRepository.findAll();
+        assertThat(facturas.size()).isEqualTo(2);
     }
 }
