@@ -103,4 +103,11 @@ public class EntradaPiezaRepositoryTest {
         List<EntradaPieza> litaEntradaPiezas = entradaPiezaRepository.findAll();
         assertEquals(2, litaEntradaPiezas.size());
     }
+
+    @DisplayName("Test para obtener una entrada de pieza por su id")
+    @Test
+    void obtenerEntradaPiezaPorIdTest() {
+        EntradaPieza entradaPiezaEncontrada = entradaPiezaRepository.findById(entradaPieza.getId()).get();
+        assertEquals(5, entradaPiezaEncontrada.getCantidad());
+    }
 }
