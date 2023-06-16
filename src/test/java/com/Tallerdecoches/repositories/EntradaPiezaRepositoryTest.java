@@ -2,6 +2,8 @@ package com.Tallerdecoches.repositories;
 
 import com.Tallerdecoches.entities.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -71,5 +73,19 @@ public class EntradaPiezaRepositoryTest {
                 .albaranProveedor(albaranProveedor)
                 .build();
         entradaPiezaRepository.save(entradaPieza);
+    }
+
+    @DisplayName("Test para guardar una entrada de una pieza")
+    @Test
+    void guardarEntradaPiezaTest() {
+        EntradaPieza entradaPieza1 = EntradaPieza.builder()
+                .pieza(pieza)
+                .cantidad(2)
+                .precioEntrada(3.56)
+                .albaranProveedor(albaranProveedor)
+                .build();
+        EntradaPieza entradaPiezaGuardada = entradaPiezaRepository.save(entradaPieza1);
+        assertThat(entradaPiezaGuardada.getId()).isGreaterThan(0);
+        assertThat(entradaPiezaGuardada.getCantidad()).isEqualTo(2);
     }
 }
