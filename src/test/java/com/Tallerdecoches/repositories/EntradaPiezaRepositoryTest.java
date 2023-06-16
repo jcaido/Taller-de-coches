@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -87,5 +88,19 @@ public class EntradaPiezaRepositoryTest {
         EntradaPieza entradaPiezaGuardada = entradaPiezaRepository.save(entradaPieza1);
         assertThat(entradaPiezaGuardada.getId()).isGreaterThan(0);
         assertThat(entradaPiezaGuardada.getCantidad()).isEqualTo(2);
+    }
+
+    @DisplayName("Test para listar todas las entradas de piezas")
+    @Test
+    void listarTodasEntradaPiezasTest() {
+        EntradaPieza entradaPieza1 = EntradaPieza.builder()
+                .pieza(pieza)
+                .cantidad(2)
+                .precioEntrada(3.56)
+                .albaranProveedor(albaranProveedor)
+                .build();
+        EntradaPieza entradaPiezaGuardada = entradaPiezaRepository.save(entradaPieza1);
+        List<EntradaPieza> litaEntradaPiezas = entradaPiezaRepository.findAll();
+        assertEquals(2, litaEntradaPiezas.size());
     }
 }
