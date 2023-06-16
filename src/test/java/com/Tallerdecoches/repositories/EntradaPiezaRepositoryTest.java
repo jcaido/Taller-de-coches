@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -121,5 +122,13 @@ public class EntradaPiezaRepositoryTest {
         entradaPiezaAActualizar.setAlbaranProveedor(albaranProveedor);
         assertEquals(2, entradaPiezaAActualizar.getCantidad());
         assertEquals(1.45, entradaPiezaAActualizar.getPrecioEntrada());
+    }
+
+    @DisplayName("Test para eliminar una entrada de pieza")
+    @Test
+    void eliminarEntradaPiezaTest() {
+        entradaPiezaRepository.deleteById(entradaPieza.getId());
+        Optional<EntradaPieza> entradaPiezaEliminada = entradaPiezaRepository.findById(entradaPieza.getId());
+        assertTrue(entradaPiezaEliminada.isEmpty());
     }
 }
