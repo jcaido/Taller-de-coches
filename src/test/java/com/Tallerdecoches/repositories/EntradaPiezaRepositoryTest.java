@@ -110,4 +110,16 @@ public class EntradaPiezaRepositoryTest {
         EntradaPieza entradaPiezaEncontrada = entradaPiezaRepository.findById(entradaPieza.getId()).get();
         assertEquals(5, entradaPiezaEncontrada.getCantidad());
     }
+
+    @DisplayName("Test para actualizar una entrada de pieza")
+    @Test
+    void actualizarEntradaPiezaTest() {
+        EntradaPieza entradaPiezaAActualizar = entradaPiezaRepository.findById(entradaPieza.getId()).get();
+        entradaPiezaAActualizar.setCantidad(2);
+        entradaPiezaAActualizar.setPrecioEntrada(1.45);
+        entradaPiezaAActualizar.setPieza(pieza);
+        entradaPiezaAActualizar.setAlbaranProveedor(albaranProveedor);
+        assertEquals(2, entradaPiezaAActualizar.getCantidad());
+        assertEquals(1.45, entradaPiezaAActualizar.getPrecioEntrada());
+    }
 }
