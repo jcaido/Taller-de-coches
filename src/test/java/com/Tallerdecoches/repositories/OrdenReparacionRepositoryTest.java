@@ -124,4 +124,23 @@ public class OrdenReparacionRepositoryTest {
         OrdenReparacion ordenReparacionEncontrada = ordenReparacionRepository.findById(ordenReparacion.getId()).get();
         assertEquals("FALLO MOTOR", ordenReparacionEncontrada.getDescripcion());
     }
+
+    @DisplayName("Test para obtener una lista con ordenes de reparacion por fecha de apertura")
+    @Test
+    void obtenerOrdenesReparacionPorFechaAperturaTest() {
+        OrdenReparacion ordenReparacion1 = OrdenReparacion.builder()
+                .fechaApertura(LocalDate.of(2023, 06, 01))
+                .fechaCierre(LocalDate.of(2023, 06, 06))
+                .descripcion("REVISION CAUDALIMETRO")
+                .kilometros(50987L)
+                .horas(1D)
+                .manoDeObra(manoDeObra)
+                .cerrada(false)
+                .facturada(false)
+                .vehiculo(vehiculo)
+                .build();
+        ordenReparacionRepository.save(ordenReparacion1);
+        List<OrdenReparacion> ordenes = ordenReparacionRepository.findByFechaApertura(ordenReparacion.getFechaApertura());
+        assertEquals(2, ordenes.size());
+    }
 }
