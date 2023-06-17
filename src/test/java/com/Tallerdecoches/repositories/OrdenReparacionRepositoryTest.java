@@ -117,4 +117,11 @@ public class OrdenReparacionRepositoryTest {
         List<OrdenReparacion> ordenes = ordenReparacionRepository.findAll();
         assertEquals(2, ordenes.size());
     }
+
+    @DisplayName("Test para obtener una orden de reparacio por su id")
+    @Test
+    void obtenerOrdenReparacionPorIdTest() {
+        OrdenReparacion ordenReparacionEncontrada = ordenReparacionRepository.findById(ordenReparacion.getId()).get();
+        assertEquals("FALLO MOTOR", ordenReparacionEncontrada.getDescripcion());
+    }
 }
