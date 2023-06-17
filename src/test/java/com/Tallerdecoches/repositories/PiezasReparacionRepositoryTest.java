@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -150,5 +151,13 @@ public class PiezasReparacionRepositoryTest {
         piezaReparacionAActualizar.setCantidad(6);
         PiezasReparacion piezaReparacionActualizada = piezasReparacionRepository.save(piezaReparacionAActualizar);
         assertEquals(6, piezaReparacionActualizada.getCantidad());
+    }
+
+    @DisplayName("Test para eliminar una pieza reparacion")
+    @Test
+    void eliminarPiezaReparacionTest() {
+        piezasReparacionRepository.deleteById(piezasReparacion.getId());
+        Optional<PiezasReparacion> piezasReparacionEliminada = piezasReparacionRepository.findById(piezasReparacion.getId());
+        assertTrue(piezasReparacionEliminada.isEmpty());
     }
 }
