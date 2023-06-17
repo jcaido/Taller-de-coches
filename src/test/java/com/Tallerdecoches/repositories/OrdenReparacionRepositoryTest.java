@@ -181,4 +181,21 @@ public class OrdenReparacionRepositoryTest {
         List<OrdenReparacion> ordenes =ordenReparacionRepository.findByCerrada(ordenReparacion1.getCerrada());
         assertEquals(2, ordenes.size());
     }
+
+    @DisplayName("Test para actualizar una orden de reparacion")
+    @Test
+    void actualizarOrdenReparacionTest() {
+        OrdenReparacion ordenReparacionAActualizar = ordenReparacionRepository.findById(ordenReparacion.getId()).get();
+        ordenReparacionAActualizar.setFechaApertura(LocalDate.of(2023, 06, 10));
+        ordenReparacionAActualizar.setFechaCierre(LocalDate.of(2023, 06, 11));
+        ordenReparacionAActualizar.setDescripcion("AVERIA EMBRAGUE");
+        ordenReparacionAActualizar.setKilometros(12988L);
+        ordenReparacionAActualizar.setHoras(4D);
+        ordenReparacionAActualizar.setCerrada(true);
+        ordenReparacionAActualizar.setFacturada(true);
+        OrdenReparacion ordenReparacionActualizada = ordenReparacionRepository.save(ordenReparacionAActualizar);
+        assertEquals("AVERIA EMBRAGUE", ordenReparacionActualizada.getDescripcion());
+        assertEquals(12988L, ordenReparacionActualizada.getKilometros());
+    }
+
 }
