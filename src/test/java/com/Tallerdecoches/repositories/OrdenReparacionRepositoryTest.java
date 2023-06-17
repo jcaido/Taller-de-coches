@@ -207,4 +207,11 @@ public class OrdenReparacionRepositoryTest {
         assertTrue(ordenReparacionEliminada.isEmpty());
     }
 
+    @DisplayName("Test para comprobar si existe una orden de reparacion por su id")
+    @Test
+    void existeOrdenReparacionPorIdTest() {
+        boolean isExists = ordenReparacionRepository.existsById(ordenReparacion.getId());
+        assertTrue(isExists);
+    }
+
 }
