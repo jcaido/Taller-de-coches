@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -196,6 +197,14 @@ public class OrdenReparacionRepositoryTest {
         OrdenReparacion ordenReparacionActualizada = ordenReparacionRepository.save(ordenReparacionAActualizar);
         assertEquals("AVERIA EMBRAGUE", ordenReparacionActualizada.getDescripcion());
         assertEquals(12988L, ordenReparacionActualizada.getKilometros());
+    }
+
+    @DisplayName("Test para eliminar una orden de reparacion")
+    @Test
+    void eliminarOrdenReparacionTest() {
+        ordenReparacionRepository.deleteById(ordenReparacion.getId());
+        Optional<OrdenReparacion> ordenReparacionEliminada = ordenReparacionRepository.findById(ordenReparacion.getId());
+        assertTrue(ordenReparacionEliminada.isEmpty());
     }
 
 }
