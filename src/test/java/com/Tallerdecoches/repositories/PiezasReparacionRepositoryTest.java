@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -114,5 +115,24 @@ public class PiezasReparacionRepositoryTest {
         piezasReparacionRepository.save(piezasReparacion1);
         assertThat(piezasReparacion1.getId()).isGreaterThan(0);
         assertEquals(2, piezasReparacion1.getCantidad());
+    }
+
+    @DisplayName("Test para obtener una lista con todas la piezas imputadas a ordenes de reparacion")
+    @Test
+    void obtenerTodasPiezasReparacionTest() {
+        Pieza pieza1 = Pieza.builder()
+                .referencia("BBBB")
+                .nombre("manguito")
+                .precio(2.5)
+                .build();
+        piezasRepository.save(pieza1);
+        PiezasReparacion piezasReparacion1 = PiezasReparacion.builder()
+                .pieza(pieza1)
+                .cantidad(2)
+                .ordenReparacion(ordenReparacion)
+                .build();
+        piezasReparacionRepository.save(piezasReparacion1);
+        List<PiezasReparacion> piezasReparacionEncontradas = piezasReparacionRepository.findAll();
+        assertEquals(2, piezasReparacionEncontradas.size());
     }
 }
