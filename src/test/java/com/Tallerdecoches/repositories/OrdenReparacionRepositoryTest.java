@@ -2,6 +2,8 @@ package com.Tallerdecoches.repositories;
 
 import com.Tallerdecoches.entities.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -75,5 +77,24 @@ public class OrdenReparacionRepositoryTest {
                 .vehiculo(vehiculo)
                 .build();
         ordenReparacionRepository.save(ordenReparacion);
+    }
+
+    @DisplayName("Test para guardar una orden de reparacion")
+    @Test
+    void guardarOrdenReparacionTest() {
+        OrdenReparacion ordenReparacion1 = OrdenReparacion.builder()
+                .fechaApertura(LocalDate.of(2023, 06, 05))
+                .fechaCierre(LocalDate.of(2023, 06, 06))
+                .descripcion("REVISION CAUDALIMETRO")
+                .kilometros(50987L)
+                .horas(1D)
+                .manoDeObra(manoDeObra)
+                .cerrada(false)
+                .facturada(false)
+                .vehiculo(vehiculo)
+                .build();
+        ordenReparacionRepository.save(ordenReparacion1);
+        assertThat(ordenReparacion1.getId()).isGreaterThan(0);
+        assertThat(ordenReparacion1.getDescripcion()).isEqualTo("REVISION CAUDALIMETRO");
     }
 }
