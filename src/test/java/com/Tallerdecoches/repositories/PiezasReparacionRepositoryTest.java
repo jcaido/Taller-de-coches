@@ -2,6 +2,8 @@ package com.Tallerdecoches.repositories;
 
 import com.Tallerdecoches.entities.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -93,5 +95,24 @@ public class PiezasReparacionRepositoryTest {
                 .ordenReparacion(ordenReparacion)
                 .build();
         piezasReparacionRepository.save(piezasReparacion);
+    }
+
+    @DisplayName("Test para imputar una pieza a una orden de reparacion")
+    @Test
+    void imputarPiezaOrdenReparacionTest() {
+        Pieza pieza1 = Pieza.builder()
+                .referencia("BBBB")
+                .nombre("manguito")
+                .precio(2.5)
+                .build();
+        piezasRepository.save(pieza1);
+        PiezasReparacion piezasReparacion1 = PiezasReparacion.builder()
+                .pieza(pieza1)
+                .cantidad(2)
+                .ordenReparacion(ordenReparacion)
+                .build();
+        piezasReparacionRepository.save(piezasReparacion1);
+        assertThat(piezasReparacion1.getId()).isGreaterThan(0);
+        assertEquals(2, piezasReparacion1.getCantidad());
     }
 }
