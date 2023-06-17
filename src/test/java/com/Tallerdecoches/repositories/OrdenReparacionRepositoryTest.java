@@ -162,4 +162,23 @@ public class OrdenReparacionRepositoryTest {
         List<OrdenReparacion> ordenes = ordenReparacionRepository.findByFechaCierre(ordenReparacion.getFechaCierre());
         assertEquals(2, ordenes.size());
     }
+
+    @DisplayName("Test para obtener una lista de ordenes de reparacion por estado")
+    @Test
+    void obtenerOrdenesReparacionPorEstadoTest() {
+        OrdenReparacion ordenReparacion1 = OrdenReparacion.builder()
+                .fechaApertura(LocalDate.of(2023, 06, 05))
+                .fechaCierre(LocalDate.of(2023, 06, 06))
+                .descripcion("REVISION CAUDALIMETRO")
+                .kilometros(50987L)
+                .horas(1D)
+                .manoDeObra(manoDeObra)
+                .cerrada(false)
+                .facturada(false)
+                .vehiculo(vehiculo)
+                .build();
+        ordenReparacionRepository.save(ordenReparacion1);
+        List<OrdenReparacion> ordenes =ordenReparacionRepository.findByCerrada(ordenReparacion1.getCerrada());
+        assertEquals(2, ordenes.size());
+    }
 }
