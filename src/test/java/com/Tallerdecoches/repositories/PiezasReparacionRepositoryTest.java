@@ -135,4 +135,11 @@ public class PiezasReparacionRepositoryTest {
         List<PiezasReparacion> piezasReparacionEncontradas = piezasReparacionRepository.findAll();
         assertEquals(2, piezasReparacionEncontradas.size());
     }
+
+    @DisplayName("Test para obtener una pieza reparacion por su id")
+    @Test
+    void obtenerPiezaReparacionPorIdTest() {
+        PiezasReparacion piezaReparacionEncontrada = piezasReparacionRepository.findById(piezasReparacion.getId()).get();
+        assertEquals(3, piezaReparacionEncontrada.getCantidad());
+    }
 }
