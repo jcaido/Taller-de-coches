@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -96,5 +97,24 @@ public class OrdenReparacionRepositoryTest {
         ordenReparacionRepository.save(ordenReparacion1);
         assertThat(ordenReparacion1.getId()).isGreaterThan(0);
         assertThat(ordenReparacion1.getDescripcion()).isEqualTo("REVISION CAUDALIMETRO");
+    }
+
+    @DisplayName("Test para ortener una lista con todas las ordenes de reparacion")
+    @Test
+    void listarTodasOrdenesReparacionTest() {
+        OrdenReparacion ordenReparacion1 = OrdenReparacion.builder()
+                .fechaApertura(LocalDate.of(2023, 06, 05))
+                .fechaCierre(LocalDate.of(2023, 06, 06))
+                .descripcion("REVISION CAUDALIMETRO")
+                .kilometros(50987L)
+                .horas(1D)
+                .manoDeObra(manoDeObra)
+                .cerrada(false)
+                .facturada(false)
+                .vehiculo(vehiculo)
+                .build();
+        ordenReparacionRepository.save(ordenReparacion1);
+        List<OrdenReparacion> ordenes = ordenReparacionRepository.findAll();
+        assertEquals(2, ordenes.size());
     }
 }
