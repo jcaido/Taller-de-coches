@@ -6,6 +6,7 @@ import com.Tallerdecoches.DTOs.facturaCliente.FacturaClientesBusquedasDTO;
 import com.Tallerdecoches.entities.FacturaCliente;
 import com.Tallerdecoches.entities.OrdenReparacion;
 import com.Tallerdecoches.entities.Propietario;
+import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.FacturaClienteRepository;
 import com.Tallerdecoches.repositories.OrdenReparacionRepository;
@@ -111,5 +112,32 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
         FacturaCliente ultimaFactura = (FacturaCliente) query.getSingleResult();
 
         return new ResponseEntity<>(modelMapper.map(ultimaFactura, FacturaClientesBusquedasDTO.class), HttpStatus.OK);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<FacturaClienteDTO> modificarFacturaCliente(FacturaClienteDTO facturaClienteDTO, Long idOrdenReparacion) {
+
+        if (facturaClienteDTO.getId() ==  null)
+            throw new BadRequestModificacionException("Factura de cliente", "id");
+
+        if (!facturaClienteValidacionesService.validacionOrdenReparacion(idOrdenReparacion))
+            throw new ResourceNotFoundException("Orden de reparacion", "id", String.valueOf(idOrdenReparacion));
+
+        if (!facturaClienteValidacionesService.validacionOrdenReparacionFacturada(idOrdenReparacion))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La orden de reparación ya está facturada");
+
+
+        OrdenReparacion ordenReparacion = ordenReparacionRepository.findById(idOrdenReparacion).get();
+        FacturaCliente facturaCliente = modelMapper.map(facturaClienteDTO, FacturaCliente.class);
+        facturaCliente.setOrdenReparacion(ordenReparacion);
+        facturaCliente.getOrdenReparacion().setFacturada(true);
+        facturaCliente.setTipoIVA(facturaClienteDTO.getTipoIVA());
+
+
+        //TODO: validar la modificacion de la fecha de la factura
+        //TODO: cambiar el estado de la orden de reparacion anterior a no facturada
+
+        return new ResponseEntity<>(modelMapper.map(facturaCliente, FacturaClienteDTO.class), HttpStatus.OK);
     }
 }
