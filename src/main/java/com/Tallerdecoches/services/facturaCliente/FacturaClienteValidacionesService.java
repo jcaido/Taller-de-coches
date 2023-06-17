@@ -1,5 +1,6 @@
 package com.Tallerdecoches.services.facturaCliente;
 
+import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteCrearDTO;
 import com.Tallerdecoches.entities.OrdenReparacion;
 import com.Tallerdecoches.entities.Propietario;
 import com.Tallerdecoches.repositories.OrdenReparacionRepository;
@@ -14,10 +15,12 @@ public class FacturaClienteValidacionesService {
 
     private final EntityManager entityManager;
     private final OrdenReparacionRepository ordenReparacionRepository;
+    private final FacturaClienteConsultasService facturaClienteConsultasService;
 
-    public FacturaClienteValidacionesService(EntityManager entityManager, OrdenReparacionRepository ordenReparacionRepository) {
+    public FacturaClienteValidacionesService(EntityManager entityManager, OrdenReparacionRepository ordenReparacionRepository, FacturaClienteConsultasService facturaClienteConsultasService) {
         this.entityManager = entityManager;
         this.ordenReparacionRepository = ordenReparacionRepository;
+        this.facturaClienteConsultasService = facturaClienteConsultasService;
     }
 
     public boolean validacionPropietario(Long idPropietario) {
@@ -55,6 +58,16 @@ public class FacturaClienteValidacionesService {
         OrdenReparacion ordenReparacion = ordenReparacionRepository.findById(idOrdenReparacion).get();
 
         if (ordenReparacion.getFacturada().equals(true))
+            return false;
+
+        return true;
+    }
+
+    public boolean validacionFechaFacturaClienteCrear(FacturaClienteCrearDTO facturaClienteCrearDTO) {
+        if (!facturaClienteConsultasService.obtenerFacturaMaximoNumeroFacturaEntreFechas(facturaClienteCrearDTO).isEmpty()
+            && facturaClienteCrearDTO.getFechaFactura()
+                .isBefore(facturaClienteConsultasService
+                        .obtenerFacturaMaximoNumeroFacturaEntreFechas(facturaClienteCrearDTO).get(0).getFechaFactura()))
             return false;
 
         return true;
