@@ -142,4 +142,13 @@ public class PiezasReparacionRepositoryTest {
         PiezasReparacion piezaReparacionEncontrada = piezasReparacionRepository.findById(piezasReparacion.getId()).get();
         assertEquals(3, piezaReparacionEncontrada.getCantidad());
     }
+
+    @DisplayName("Test para actualizar una pieza reparacion")
+    @Test
+    void actualizarPiezaReparacionTest() {
+        PiezasReparacion piezaReparacionAActualizar = piezasReparacionRepository.findById(piezasReparacion.getId()).get();
+        piezaReparacionAActualizar.setCantidad(6);
+        PiezasReparacion piezaReparacionActualizada = piezasReparacionRepository.save(piezaReparacionAActualizar);
+        assertEquals(6, piezaReparacionActualizada.getCantidad());
+    }
 }
