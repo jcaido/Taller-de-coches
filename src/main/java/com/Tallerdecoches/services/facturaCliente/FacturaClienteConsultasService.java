@@ -1,6 +1,7 @@
 package com.Tallerdecoches.services.facturaCliente;
 
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteCrearDTO;
+import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteDTO;
 import com.Tallerdecoches.entities.FacturaCliente;
 import com.Tallerdecoches.repositories.FacturaClienteRepository;
 import org.springframework.stereotype.Service;
@@ -58,18 +59,45 @@ public class FacturaClienteConsultasService {
         }
     }
 
-    public List<FacturaCliente> ObtenerUltimaFacturaEntreFechas(LocalDate fechaIncial, LocalDate fechaFinal) {
+    public FacturaCliente obtenerUltimaFacturaEntreFechas(FacturaClienteDTO facturaClienteDTO) {
         Query query = entityManager.createNativeQuery("SELECT * FROM facturas_clientes " +
                 "WHERE fecha_factura >= :fechaInicial " +
                 "AND fecha_factura <= :fechaFinal " +
                 "AND numero_factura = (SELECT MAX(numero_factura) FROM facturas_clientes WHERE " +
                 " fecha_factura >= :fechaInicial AND fecha_factura <= :fechaFinal)", FacturaCliente.class);
-        query.setParameter("fechaInicial", fechaIncial);
-        query.setParameter("fechaFinal", fechaFinal);
+        query.setParameter("fechaInicial", LocalDate.of(facturaClienteDTO.getFechaFactura().getYear(), 01, 01));
+        query.setParameter("fechaFinal", LocalDate.of(facturaClienteDTO.getFechaFactura().getYear(), 12, 31));
         List<FacturaCliente> factura = query.getResultList();
 
-        return factura;
+        return factura.get(0);
     }
 
+    public FacturaCliente obtenerFacturaAnterior(FacturaClienteDTO facturaClienteDTO) {
+        Query query = entityManager.createNativeQuery("SELECT * FROM facturas_clientes " +
+                "WHERE serie_factura = :serie " +
+                "AND numero_factura = :numero", FacturaCliente.class);
+        query.setParameter("serie", facturaClienteRepository.findById(facturaClienteDTO.getId()).get().getSerie());
+        query.setParameter("numero", facturaClienteRepository.findById(facturaClienteDTO.getId()).get().getNumeroFactura() - 1);
+        List<FacturaCliente> factura = query.getResultList();
+
+        if (factura.isEmpty())
+            return null;
+
+        return factura.get(0);
+    }
+
+    public FacturaCliente obtenerFacturaPosterior(FacturaClienteDTO facturaClienteDTO) {
+        Query query = entityManager.createNativeQuery("SELECT * FROM facturas_clientes " +
+                "WHERE serie_factura = :serie " +
+                "AND numero_factura = :numero", FacturaCliente.class);
+        query.setParameter("serie", facturaClienteRepository.findById(facturaClienteDTO.getId()).get().getSerie());
+        query.setParameter("numero", facturaClienteRepository.findById(facturaClienteDTO.getId()).get().getNumeroFactura() + 1);
+        List<FacturaCliente> factura = query.getResultList();
+
+        if (factura.isEmpty())
+            return null;
+
+        return factura.get(0);
+    }
 
 }
