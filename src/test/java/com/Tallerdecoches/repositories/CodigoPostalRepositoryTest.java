@@ -35,12 +35,7 @@ public class CodigoPostalRepositoryTest {
     @DisplayName("Test para guardar un codigo postal")
     @Test
     void guardarCodigoPostalTest() {
-        CodigoPostal codigoPostal1 = CodigoPostal.builder()
-                .codigo("14920")
-                .localidad("Aguilar de la Frontera")
-                .provincia("Cordoba")
-                .build();
-        CodigoPostal codigoPostalGuardado = codigoPostalRepository.save(codigoPostal1);
+        CodigoPostal codigoPostalGuardado = codigoPostalRepository.save(Datos.CODIGO_POSTAL_1);
         assertThat(codigoPostalGuardado).isNotNull();
         assertThat(codigoPostalGuardado.getId()).isGreaterThan(0);
         assertThat(codigoPostalGuardado.getCodigo()).isEqualTo("14920");
@@ -49,12 +44,7 @@ public class CodigoPostalRepositoryTest {
     @DisplayName("Test para listar todos los codigos postales")
     @Test
     void listarTodosLosCodigosPostalesTest() {
-        CodigoPostal codigoPostal2 = CodigoPostal.builder()
-                .codigo("23456")
-                .localidad("Maracena")
-                .provincia("Granada")
-                .build();
-        codigoPostalRepository.save(codigoPostal2);
+        codigoPostalRepository.save(Datos.CODIGO_POSTAL_1);
         List<CodigoPostal> codigosPostales = codigoPostalRepository.findAll();
         assertThat(codigosPostales.size()).isEqualTo(2);
     }
@@ -82,12 +72,7 @@ public class CodigoPostalRepositoryTest {
     @DisplayName("Test para obtener una lista de codigos postales por provincia")
     @Test
     void obtenerCodigoPostalPorProvincia() {
-        CodigoPostal codigoPostalNuevo = CodigoPostal.builder()
-                .codigo("45111")
-                .localidad("Zuheros")
-                .provincia("Cordoba")
-                .build();
-        codigoPostalRepository.save(codigoPostalNuevo);
+        codigoPostalRepository.save(Datos.CODIGO_POSTAL_2);
         List<CodigoPostal> codigosPostales = codigoPostalRepository.findByProvincia(codigoPostal.getProvincia());
         assertThat(codigosPostales.size()).isEqualTo(2);
     }
@@ -95,6 +80,7 @@ public class CodigoPostalRepositoryTest {
     @DisplayName("Test para actualizar un codigo postal")
     @Test
     void actualizarCodigoPostalTest() {
+        //CodigoPostal codigoPostalAActualizar = codigoPostalRepository.findById(codigoPostal.getId()).get();
         CodigoPostal codigoPostalAActualizar = codigoPostalRepository.findById(codigoPostal.getId()).get();
         codigoPostalAActualizar.setCodigo("33333");
         codigoPostalAActualizar.setLocalidad("Fuengirola");
