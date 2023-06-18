@@ -44,10 +44,17 @@ public class FacturaClienteController {
         return facturaClienteService.findById(id);
     }
 
-    //Obtener la ultima factura
+    //Obtener la ultima factura de cliente
     @GetMapping("/ultima-factura")
     public ResponseEntity<FacturaClientesBusquedasDTO> obtenerUltimaFactura() {
 
         return facturaClienteService.obtenerUltimaFacturaCliente();
+    }
+
+    //Modificar una factura de cliente
+    @PutMapping("/modificarFactura/{idOrdenReparacion}")
+    public ResponseEntity<FacturaClienteDTO> modificarFacturaCliente(@Valid @RequestBody FacturaClienteDTO facturaClienteDTO,
+                                                                     @PathVariable Long idOrdenReparacion) {
+        return facturaClienteService.modificarFacturaCliente(facturaClienteDTO, idOrdenReparacion);
     }
 }

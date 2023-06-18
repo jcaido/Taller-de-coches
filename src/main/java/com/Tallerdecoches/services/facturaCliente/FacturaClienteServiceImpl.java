@@ -57,13 +57,13 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
         if (!facturaClienteValidacionesService.validacionOrdenReparacionPerteneceAPropietario(idPropietario, idOrdenReparacion))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "La orden de reparación no pertenece al propietario");
 
+        if (facturaClienteValidacionesService.validacionOrdenReparacionCerrada(idOrdenReparacion))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La orden de reparación no está cerrada");
+
         if (!facturaClienteValidacionesService.validacionOrdenReparacionFacturada(idOrdenReparacion))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "La orden de reparación ya está facturada");
 
-        if (!facturaClienteConsultasService.obtenerFacturaMaximoNumeroFacturaEntreFechas(facturaClienteCrearDTO).isEmpty()
-                && facturaClienteCrearDTO.getFechaFactura()
-                .isBefore(facturaClienteConsultasService
-                        .obtenerFacturaMaximoNumeroFacturaEntreFechas(facturaClienteCrearDTO).get(0).getFechaFactura()))
+        if (!facturaClienteValidacionesService.validacionFechaFacturaClienteCrear(facturaClienteCrearDTO))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "La fecha factura no puede ser inferior a la última factura de la serie");
 
         Propietario propietario = propietarioRepository.findById(idPropietario).get();
@@ -73,16 +73,7 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
         facturaCliente.setOrdenReparacion(ordenReparacion);
         facturaCliente.setSerie("T" + Integer.toString(facturaClienteCrearDTO.getFechaFactura().getYear()));
         facturaCliente.getOrdenReparacion().setFacturada(true);
-
-        if (facturaClienteConsultasService.obtenerFacturasClientesEntreFechas(facturaClienteCrearDTO).isEmpty()) {
-            facturaClienteRepository.save(facturaCliente);
-            facturaCliente.setNumeroFactura(1L);
-            facturaClienteRepository.save(facturaCliente);
-        } else {
-            facturaClienteRepository.save(facturaCliente);
-            facturaCliente.setNumeroFactura(facturaClienteConsultasService.obtenerFacturaMaximoNumeroFacturaEntreFechas(facturaClienteCrearDTO).get(0).getNumeroFactura() + 1);
-            facturaClienteRepository.save(facturaCliente);
-        }
+        facturaClienteConsultasService.asignarNumeroFacturaCrearFactura(facturaCliente, facturaClienteCrearDTO);
 
         return new ResponseEntity<>(modelMapper.map(facturaCliente, FacturaClienteDTO.class), HttpStatus.CREATED);
     }
@@ -124,19 +115,44 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
         if (!facturaClienteValidacionesService.validacionOrdenReparacion(idOrdenReparacion))
             throw new ResourceNotFoundException("Orden de reparacion", "id", String.valueOf(idOrdenReparacion));
 
-        if (!facturaClienteValidacionesService.validacionOrdenReparacionFacturada(idOrdenReparacion))
+        if (facturaClienteValidacionesService.validacionOrdenReparacionCerrada(idOrdenReparacion))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La orden de reparación no está cerrada");
+
+        if (!facturaClienteValidacionesService.validacionOrdenReparacionFacturadaModificar(idOrdenReparacion, facturaClienteDTO))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "La orden de reparación ya está facturada");
 
+        if (!facturaClienteValidacionesService.facturaAnterior(facturaClienteDTO)
+                && facturaClienteValidacionesService.facturaPosterior(facturaClienteDTO)
+                && facturaClienteDTO.getFechaFactura().isAfter(facturaClienteConsultasService.obtenerFacturaPosterior(facturaClienteDTO).getFechaFactura()))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La fecha debe ser igual o inferior a la de la factura posterior");
 
+        if (!facturaClienteValidacionesService.facturaPosterior(facturaClienteDTO)
+                && facturaClienteValidacionesService.facturaAnterior(facturaClienteDTO)
+                && facturaClienteDTO.getFechaFactura().isBefore(facturaClienteConsultasService.obtenerFacturaAnterior(facturaClienteDTO).getFechaFactura()))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La fecha debe ser igual o superior a la de la factura anterior");
+
+        if (facturaClienteValidacionesService.facturaAnterior(facturaClienteDTO)
+                && facturaClienteValidacionesService.facturaPosterior(facturaClienteDTO))
+            if (facturaClienteDTO.getFechaFactura().isAfter(facturaClienteConsultasService.obtenerFacturaPosterior(facturaClienteDTO).getFechaFactura())
+                    || facturaClienteDTO.getFechaFactura().isBefore(facturaClienteConsultasService.obtenerFacturaAnterior(facturaClienteDTO).getFechaFactura()))
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "La fecha debe ser igual o inferior a la de la factura posterior e igual o superior a la de la fecha anterior");
+
+        FacturaCliente facturaAModificar = facturaClienteRepository.findById(facturaClienteDTO.getId()).get();
         OrdenReparacion ordenReparacion = ordenReparacionRepository.findById(idOrdenReparacion).get();
         FacturaCliente facturaCliente = modelMapper.map(facturaClienteDTO, FacturaCliente.class);
+
+        OrdenReparacion ordenReparacionAnterior = facturaAModificar.getOrdenReparacion();
+        ordenReparacionAnterior.setFacturada(false);
+        ordenReparacionRepository.save(ordenReparacionAnterior);
+
         facturaCliente.setOrdenReparacion(ordenReparacion);
         facturaCliente.getOrdenReparacion().setFacturada(true);
         facturaCliente.setTipoIVA(facturaClienteDTO.getTipoIVA());
+        facturaCliente.setSerie(facturaAModificar.getSerie());
+        facturaCliente.setNumeroFactura(facturaAModificar.getNumeroFactura());
+        facturaCliente.setFechaFactura(facturaClienteDTO.getFechaFactura());
 
-
-        //TODO: validar la modificacion de la fecha de la factura
-        //TODO: cambiar el estado de la orden de reparacion anterior a no facturada
+        facturaClienteRepository.save(facturaCliente);
 
         return new ResponseEntity<>(modelMapper.map(facturaCliente, FacturaClienteDTO.class), HttpStatus.OK);
     }

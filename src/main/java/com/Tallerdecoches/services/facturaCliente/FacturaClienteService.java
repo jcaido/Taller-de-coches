@@ -14,4 +14,6 @@ public interface FacturaClienteService {
     List<FacturaClientesBusquedasDTO> findAll();
     ResponseEntity<FacturaClientesBusquedasDTO> findById(Long id);
     ResponseEntity<FacturaClientesBusquedasDTO> obtenerUltimaFacturaCliente();
+    ResponseEntity<FacturaClienteDTO> modificarFacturaCliente(FacturaClienteDTO facturaClienteDTO, Long idOrdenReparacion);
+
 }
