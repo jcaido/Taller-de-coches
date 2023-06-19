@@ -53,13 +53,15 @@ public class CodigoPostalServiceImpl implements CodigoPostalService {
     }
 
     @Override
-    public ResponseEntity<CodigoPostalDTO> findById(Long id) {
+    public CodigoPostalDTO findById(Long id) {
         Optional<CodigoPostal> codigoPostal = codigoPostalRepository.findById(id);
 
         if (!codigoPostal.isPresent())
             throw new ResourceNotFoundException("Codigo Postal", "id", String.valueOf(id));
 
-        return new ResponseEntity<>(modelMapper.map(codigoPostal, CodigoPostalDTO.class), HttpStatus.OK);
+        CodigoPostalDTO codigoPostalEncontrado = modelMapper.map(codigoPostal, CodigoPostalDTO.class);
+
+        return codigoPostalEncontrado;
     }
 
     @Override

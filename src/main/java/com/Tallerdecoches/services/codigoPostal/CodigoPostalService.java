@@ -8,7 +8,7 @@ public interface CodigoPostalService {
 
     CodigoPostalDTO crearCodigoPostal(CodigoPostalCrearDTO codigoPostalCrearDTO);
     List<CodigoPostalDTO> findAll();
-    ResponseEntity<CodigoPostalDTO> findById(Long id);
+    CodigoPostalDTO findById(Long id);
     ResponseEntity<CodigoPostalDTO> findByCodigo(String codigo);
     List<CodigoPostalDTO> findByProvincia (String provincia);
     ResponseEntity<CodigoPostalDTO> findByLocalidad(String localidad);

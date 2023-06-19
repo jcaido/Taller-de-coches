@@ -78,7 +78,7 @@ public class CodigoPostalController {
     public ResponseEntity<CodigoPostalDTO> obtenerCodigoPostalPorId(@Parameter(description = "id del código postal a buscar",
             required = true) @PathVariable Long id) {
 
-        return codigoPostalService.findById(id);
+        return new ResponseEntity<>(codigoPostalService.findById(id), HttpStatus.OK);
     }
 
     //TODO: pasar esto al controlador PropietarioController
