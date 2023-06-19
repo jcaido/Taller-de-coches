@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface PropietarioService {
-    ResponseEntity<PropietarioDTO> crearPropietario(PropietarioCrearDTO propietarioCrearDTO, Long id_codigoPostal);
+    PropietarioDTO crearPropietario(PropietarioCrearDTO propietarioCrearDTO, Long id_codigoPostal);
     List<PropietarioBusquedasDTO> findAll();
     List<PropietarioBusquedasParcialDTO> findAllPartial();
     ResponseEntity<PropietarioBusquedasDTO> findById(Long id);

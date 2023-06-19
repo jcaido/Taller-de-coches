@@ -43,7 +43,7 @@ public class PropietarioServiceImpl implements PropietarioService {
     }
 
     @Override
-    public ResponseEntity<PropietarioDTO> crearPropietario(PropietarioCrearDTO propietarioCrearDTO, Long id_codigoPostal) {
+    public PropietarioDTO crearPropietario(PropietarioCrearDTO propietarioCrearDTO, Long id_codigoPostal) {
 
         if (propietarioRepository.existsByDni(propietarioCrearDTO. getDni()))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El DNI del propietario ya existe");
@@ -56,7 +56,9 @@ public class PropietarioServiceImpl implements PropietarioService {
         propietario.setCodigoPostal(codigoPostal);
         propietarioRepository.save(propietario);
 
-        return new ResponseEntity<>(modelMapper.map(propietario, PropietarioDTO.class), HttpStatus.CREATED);
+        PropietarioDTO propietarioRespuesta = modelMapper.map(propietario, PropietarioDTO.class);
+
+        return propietarioRespuesta;
     }
 
     @Override

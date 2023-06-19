@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -48,7 +49,7 @@ public class PropietarioController {
     public ResponseEntity<PropietarioDTO> crearPropietario(@Valid @RequestBody PropietarioCrearDTO propietarioCrearDTO
             , @Parameter(description = "id del código postal del propietario", required = true) @PathVariable Long id_codigoPostal) {
 
-        return propietarioService.crearPropietario(propietarioCrearDTO, id_codigoPostal);
+        return new ResponseEntity<>(propietarioService.crearPropietario(propietarioCrearDTO, id_codigoPostal), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Obtener todos los Propietarios", description = "Obtener todos los Propietarios")
