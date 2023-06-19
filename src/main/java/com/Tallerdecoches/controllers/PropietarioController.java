@@ -231,7 +231,7 @@ public class PropietarioController {
     public ResponseEntity<PropietarioDTO> modificarPropietario(@Valid @RequestBody PropietarioDTO propietarioDTO
             , @Parameter(description = "id del codigo postal", required = true) @PathVariable Long id_codigoPostal) {
 
-        return propietarioService.modificarPropietario(propietarioDTO, id_codigoPostal);
+        return new ResponseEntity<>(propietarioService.modificarPropietario(propietarioDTO, id_codigoPostal), HttpStatus.OK);
     }
 
     @Operation(summary = "Eliminar un Propietario", description = "Eliminar un Propietario")

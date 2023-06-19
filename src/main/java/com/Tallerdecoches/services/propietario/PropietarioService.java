@@ -22,6 +22,6 @@ public interface PropietarioService {
     String deleteById(Long  id);
     List<PropietarioBusquedasDTO> obtenerPropietariosPorCodigoPostalSQL(Long id_codigo_postal);
     List<PropietarioBusquedasDTO> obtenerPropietariosPorCodigoPostalHQL(Long id_codigo_postal);
-    ResponseEntity<PropietarioDTO> modificarPropietario(PropietarioDTO propietarioDTO, Long id_codigoPostal);
+    PropietarioDTO modificarPropietario(PropietarioDTO propietarioDTO, Long id_codigoPostal);
 
 }

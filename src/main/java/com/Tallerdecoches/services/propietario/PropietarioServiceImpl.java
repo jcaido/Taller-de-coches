@@ -189,7 +189,7 @@ public class PropietarioServiceImpl implements PropietarioService {
     }
 
     @Override
-    public ResponseEntity<PropietarioDTO> modificarPropietario(PropietarioDTO propietarioDTO, Long id_codigoPostal) {
+    public PropietarioDTO modificarPropietario(PropietarioDTO propietarioDTO, Long id_codigoPostal) {
 
         if (propietarioDTO.getId() == null)
             throw new BadRequestModificacionException("Propietario", "id");
@@ -213,7 +213,8 @@ public class PropietarioServiceImpl implements PropietarioService {
         propietario.setCodigoPostal(codigoPostal);
 
         Propietario propietarioModificado = propietarioRepository.save(propietario);
+        PropietarioDTO propietarioModificadoDTO = modelMapper.map(propietarioModificado, PropietarioDTO.class);
 
-        return new ResponseEntity<>(modelMapper.map(propietario, PropietarioDTO.class), HttpStatus.OK);
+        return propietarioModificadoDTO;
     }
 }
