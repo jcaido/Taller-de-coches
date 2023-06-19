@@ -152,7 +152,7 @@ public class CodigoPostalController {
     @PutMapping()
     public ResponseEntity<CodigoPostalDTO> modificarCodigoPostal(@Valid @RequestBody CodigoPostalDTO codigoPostalDTO) {
 
-        return codigoPostalService.modificarCodigoPostal(codigoPostalDTO);
+        return new ResponseEntity<>(codigoPostalService.modificarCodigoPostal(codigoPostalDTO), HttpStatus.OK);
     }
 
     @Operation(summary = "Eliminar un Código Postal", description = "Eliminar un Código Postal")

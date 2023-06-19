@@ -112,7 +112,7 @@ public class CodigoPostalServiceImpl implements CodigoPostalService {
     }
 
     @Override
-    public ResponseEntity<CodigoPostalDTO> modificarCodigoPostal(CodigoPostalDTO codigoPostalDTO) {
+    public CodigoPostalDTO modificarCodigoPostal(CodigoPostalDTO codigoPostalDTO) {
 
         if (codigoPostalDTO.getId() == null)
             throw new BadRequestModificacionException("Codigo Postal", "id");
@@ -132,8 +132,9 @@ public class CodigoPostalServiceImpl implements CodigoPostalService {
         codigoPostal.setProvincia(codigoPostalDTO.getProvincia());
 
         CodigoPostal codigoPostalModificado = codigoPostalRepository.save(codigoPostal);
+        CodigoPostalDTO codigoPostalModificadoDTO = modelMapper.map(codigoPostalModificado, CodigoPostalDTO.class);
 
-        return new ResponseEntity<>(modelMapper.map(codigoPostal, CodigoPostalDTO.class), HttpStatus.OK);
+        return codigoPostalModificadoDTO;
     }
 }
 

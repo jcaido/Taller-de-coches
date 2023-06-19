@@ -13,6 +13,6 @@ public interface CodigoPostalService {
     List<CodigoPostalDTO> findByProvincia (String provincia);
     CodigoPostalDTO findByLocalidad(String localidad);
     String deleteById(Long id);
-    ResponseEntity<CodigoPostalDTO> modificarCodigoPostal(CodigoPostalDTO codigoPostalDTO);
+    CodigoPostalDTO modificarCodigoPostal(CodigoPostalDTO codigoPostalDTO);
 
 }
