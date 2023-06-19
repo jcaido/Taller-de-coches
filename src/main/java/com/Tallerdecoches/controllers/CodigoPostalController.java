@@ -102,7 +102,7 @@ public class CodigoPostalController {
     public ResponseEntity<CodigoPostalDTO> obtenerCodigoPostalPorCodigo(@Parameter(description = "número del código postal a buscar",
             required = true) @PathVariable String codigo) {
 
-        return codigoPostalService.findByCodigo(codigo);
+        return new ResponseEntity<>(codigoPostalService.findByCodigo(codigo), HttpStatus.OK);
     }
 
     @Operation(summary = "Obtener Códigos Postales por provincia", description = "Obtener Códigos Postales por provincia")

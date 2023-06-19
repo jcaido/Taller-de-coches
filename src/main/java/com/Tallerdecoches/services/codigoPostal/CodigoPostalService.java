@@ -9,7 +9,7 @@ public interface CodigoPostalService {
     CodigoPostalDTO crearCodigoPostal(CodigoPostalCrearDTO codigoPostalCrearDTO);
     List<CodigoPostalDTO> findAll();
     CodigoPostalDTO findById(Long id);
-    ResponseEntity<CodigoPostalDTO> findByCodigo(String codigo);
+    CodigoPostalDTO findByCodigo(String codigo);
     List<CodigoPostalDTO> findByProvincia (String provincia);
     ResponseEntity<CodigoPostalDTO> findByLocalidad(String localidad);
     ResponseEntity<String> deleteById(Long id);
