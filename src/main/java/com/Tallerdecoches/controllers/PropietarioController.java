@@ -112,7 +112,7 @@ public class PropietarioController {
     public ResponseEntity<PropietarioBusquedasDTO> obtenerPropietarioPorDni(@Parameter(description = "dni del propietario a buscar",
             required = true) @PathVariable String dni) {
 
-        return propietarioService.findByDni(dni);
+        return new ResponseEntity<>(propietarioService.findByDni(dni), HttpStatus.OK);
     }
 
     @Operation(summary = "Obtener Propietarios por nombre", description = "Obtener Propietarios por nombre")

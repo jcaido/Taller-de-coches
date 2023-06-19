@@ -88,13 +88,15 @@ public class PropietarioServiceImpl implements PropietarioService {
     }
 
     @Override
-    public ResponseEntity<PropietarioBusquedasDTO> findByDni(String dni) {
+    public PropietarioBusquedasDTO findByDni(String dni) {
         Optional<Propietario> propietario = propietarioRepository.findByDni(dni);
 
         if (!propietario.isPresent())
             throw new ResourceNotFoundException("Propietario", "dni", dni);
 
-        return new ResponseEntity<>(modelMapper.map(propietario, PropietarioBusquedasDTO.class), HttpStatus.OK);
+        PropietarioBusquedasDTO propietarioEncontrado = modelMapper.map(propietario, PropietarioBusquedasDTO.class);
+
+        return propietarioEncontrado;
     }
 
     @Override

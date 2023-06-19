@@ -12,7 +12,7 @@ public interface PropietarioService {
     List<PropietarioBusquedasDTO> findAll();
     List<PropietarioBusquedasParcialDTO> findAllPartial();
     PropietarioBusquedasDTO findById(Long id);
-    ResponseEntity<PropietarioBusquedasDTO> findByDni(String dni);
+    PropietarioBusquedasDTO findByDni(String dni);
     List<PropietarioBusquedasDTO> findByNombre(String nombre);
     List<PropietarioBusquedasDTO> findByPrimerApellido(String primerApellido);
     List<PropietarioBusquedasParcialDTO> findByPrimerApellidoPartial(String primerApellido);
