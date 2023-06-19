@@ -134,7 +134,7 @@ public class CodigoPostalController {
     public ResponseEntity<CodigoPostalDTO> obtenerCodigoPostalPorLocalidad(@Parameter(description = "localidad del código postal a buscar",
             required = true) @PathVariable String localidad) {
 
-        return codigoPostalService.findByLocalidad(localidad);
+        return new ResponseEntity<>(codigoPostalService.findByLocalidad(localidad), HttpStatus.OK);
     }
 
     @Operation(summary = "Modificar un Código Postal", description = "Modificar un Código Postal")

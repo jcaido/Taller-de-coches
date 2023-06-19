@@ -84,13 +84,15 @@ public class CodigoPostalServiceImpl implements CodigoPostalService {
     }
 
     @Override
-    public ResponseEntity<CodigoPostalDTO> findByLocalidad(String localidad) {
+    public CodigoPostalDTO findByLocalidad(String localidad) {
         Optional<CodigoPostal> codigoPostal = codigoPostalRepository.findByLocalidad(localidad);
 
         if (!codigoPostal.isPresent())
             throw new ResourceNotFoundException("Codigo Postal", "localidad", localidad);
 
-        return new ResponseEntity<>(modelMapper.map(codigoPostal, CodigoPostalDTO.class), HttpStatus.OK);
+        CodigoPostalDTO codigoPostalEncontrado = modelMapper.map(codigoPostal, CodigoPostalDTO.class);
+
+        return codigoPostalEncontrado;
     }
 
     @Override

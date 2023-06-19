@@ -11,7 +11,7 @@ public interface CodigoPostalService {
     CodigoPostalDTO findById(Long id);
     CodigoPostalDTO findByCodigo(String codigo);
     List<CodigoPostalDTO> findByProvincia (String provincia);
-    ResponseEntity<CodigoPostalDTO> findByLocalidad(String localidad);
+    CodigoPostalDTO findByLocalidad(String localidad);
     ResponseEntity<String> deleteById(Long id);
     ResponseEntity<CodigoPostalDTO> modificarCodigoPostal(CodigoPostalDTO codigoPostalDTO);
 
