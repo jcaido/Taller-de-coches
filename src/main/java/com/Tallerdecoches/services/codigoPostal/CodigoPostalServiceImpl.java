@@ -31,7 +31,7 @@ public class CodigoPostalServiceImpl implements CodigoPostalService {
     }
 
     @Override
-    public ResponseEntity<CodigoPostalDTO> crearCodigoPostal(CodigoPostalCrearDTO codigoPostalCrearDTO) {
+    public CodigoPostalDTO crearCodigoPostal(CodigoPostalCrearDTO codigoPostalCrearDTO) {
 
         if (codigoPostalRepository.existsByCodigo(codigoPostalCrearDTO.getCodigo()))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El numero del codigo postal ya existe");
@@ -42,7 +42,7 @@ public class CodigoPostalServiceImpl implements CodigoPostalService {
         CodigoPostal codigoPostal = modelMapper.map(codigoPostalCrearDTO, CodigoPostal.class);
         CodigoPostal nuevoCodigoPostal = codigoPostalRepository.save(codigoPostal);
         CodigoPostalDTO codigoPostalRespuesta = modelMapper.map(nuevoCodigoPostal, CodigoPostalDTO.class);
-        return new ResponseEntity<>(codigoPostalRespuesta, HttpStatus.CREATED);
+        return codigoPostalRespuesta;
     }
 
     @Override

@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 public interface CodigoPostalService {
 
-    ResponseEntity<CodigoPostalDTO> crearCodigoPostal(CodigoPostalCrearDTO codigoPostalCrearDTO);
+    CodigoPostalDTO crearCodigoPostal(CodigoPostalCrearDTO codigoPostalCrearDTO);
     List<CodigoPostalDTO> findAll();
     ResponseEntity<CodigoPostalDTO> findById(Long id);
     ResponseEntity<CodigoPostalDTO> findByCodigo(String codigo);

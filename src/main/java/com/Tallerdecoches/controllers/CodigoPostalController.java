@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -46,7 +47,7 @@ public class CodigoPostalController {
     @PostMapping()
     public ResponseEntity<CodigoPostalDTO> crearCodigoPostal(@Valid @RequestBody CodigoPostalCrearDTO codigoPostalCrearDTO) {
 
-        return codigoPostalService.crearCodigoPostal(codigoPostalCrearDTO);
+        return new ResponseEntity<>(codigoPostalService.crearCodigoPostal(codigoPostalCrearDTO), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Obtener todos los Códigos Postales", description = "Obtener todos los Códigos Postales")
