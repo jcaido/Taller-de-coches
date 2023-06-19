@@ -246,7 +246,7 @@ public class PropietarioController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarPropietario(@Parameter(description = "id del propietario", required = true) @PathVariable Long id) {
 
-        return propietarioService.deleteById(id);
+        return new ResponseEntity<>(propietarioService.deleteById(id), HttpStatus.OK);
     }
 
 }

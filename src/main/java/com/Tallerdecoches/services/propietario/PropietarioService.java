@@ -19,7 +19,7 @@ public interface PropietarioService {
     List<PropietarioBusquedasDTO> findByNombreAndPrimerApellidoAndSegundoApellido(String nombre, String primerApellido, String segundoApellido);
     List<PropietarioBusquedasDTO> ObtenerPropietariosPorCodigoPostal(Long id);
     List<PropietarioBusquedasParcialDTO> obtenerPropietariosPorCodigoPostalParcial(Long id);
-    ResponseEntity<String> deleteById(Long  id);
+    String deleteById(Long  id);
     List<PropietarioBusquedasDTO> obtenerPropietariosPorCodigoPostalSQL(Long id_codigo_postal);
     List<PropietarioBusquedasDTO> obtenerPropietariosPorCodigoPostalHQL(Long id_codigo_postal);
     ResponseEntity<PropietarioDTO> modificarPropietario(PropietarioDTO propietarioDTO, Long id_codigoPostal);

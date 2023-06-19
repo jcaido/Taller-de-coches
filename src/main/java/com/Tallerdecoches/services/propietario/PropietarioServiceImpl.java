@@ -152,7 +152,7 @@ public class PropietarioServiceImpl implements PropietarioService {
     }
 
     @Override
-    public ResponseEntity<String> deleteById(Long id) {
+    public String deleteById(Long id) {
 
         if (!propietarioRepository.existsById(id))
             throw new ResourceNotFoundException("Propietario", "id", String.valueOf(id));
@@ -162,7 +162,9 @@ public class PropietarioServiceImpl implements PropietarioService {
 
         propietarioRepository.deleteById(id);
 
-        return new ResponseEntity<>("Propietario eliminado con exito", HttpStatus.OK);
+        String respuesta = "Propietario eliminado con exito";
+
+        return respuesta;
     }
 
     @Override
