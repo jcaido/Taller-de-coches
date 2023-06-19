@@ -12,7 +12,7 @@ public interface CodigoPostalService {
     CodigoPostalDTO findByCodigo(String codigo);
     List<CodigoPostalDTO> findByProvincia (String provincia);
     CodigoPostalDTO findByLocalidad(String localidad);
-    ResponseEntity<String> deleteById(Long id);
+    String deleteById(Long id);
     ResponseEntity<CodigoPostalDTO> modificarCodigoPostal(CodigoPostalDTO codigoPostalDTO);
 
 }

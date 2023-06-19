@@ -168,7 +168,7 @@ public class CodigoPostalController {
     public ResponseEntity<String> eliminarCodigoPostal(@Parameter(description = "id del código postal a eliminar",
             required = true) @PathVariable Long id) {
 
-        return codigoPostalService.deleteById(id);
+        return new ResponseEntity<>(codigoPostalService.deleteById(id), HttpStatus.OK);
     }
 
 }

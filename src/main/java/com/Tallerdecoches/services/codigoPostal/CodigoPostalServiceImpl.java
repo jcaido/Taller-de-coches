@@ -96,7 +96,7 @@ public class CodigoPostalServiceImpl implements CodigoPostalService {
     }
 
     @Override
-    public ResponseEntity<String> deleteById(Long id) {
+    public String deleteById(Long id) {
 
         if (!codigoPostalRepository.existsById(id))
             throw new ResourceNotFoundException("Codigo Postal", "id", String.valueOf(id));
@@ -106,7 +106,9 @@ public class CodigoPostalServiceImpl implements CodigoPostalService {
 
         codigoPostalRepository.deleteById(id);
 
-        return new ResponseEntity<>("Codigo Postal eliminado con exito", HttpStatus.OK);
+        String respuesta = "Codigo Postal eliminado con exito";
+
+        return respuesta;
     }
 
     @Override
