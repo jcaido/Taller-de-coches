@@ -95,7 +95,7 @@ public class PropietarioController {
     public ResponseEntity<PropietarioBusquedasDTO> obtenerPropietarioPorId(@Parameter(description = "id del propietario a buscar",
             required = true) @PathVariable Long id) {
 
-        return propietarioService.findById(id);
+        return new ResponseEntity<>(propietarioService.findById(id), HttpStatus.OK);
     }
 
     @Operation(summary = "Obtener Propietario por dni", description = "Obtener Propietario por dni")

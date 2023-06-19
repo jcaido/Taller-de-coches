@@ -11,7 +11,7 @@ public interface PropietarioService {
     PropietarioDTO crearPropietario(PropietarioCrearDTO propietarioCrearDTO, Long id_codigoPostal);
     List<PropietarioBusquedasDTO> findAll();
     List<PropietarioBusquedasParcialDTO> findAllPartial();
-    ResponseEntity<PropietarioBusquedasDTO> findById(Long id);
+    PropietarioBusquedasDTO findById(Long id);
     ResponseEntity<PropietarioBusquedasDTO> findByDni(String dni);
     List<PropietarioBusquedasDTO> findByNombre(String nombre);
     List<PropietarioBusquedasDTO> findByPrimerApellido(String primerApellido);
