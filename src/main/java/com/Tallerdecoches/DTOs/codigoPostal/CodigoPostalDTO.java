@@ -1,9 +1,6 @@
 package com.Tallerdecoches.DTOs.codigoPostal;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 
@@ -11,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class CodigoPostalDTO {
 
     private Long id;
