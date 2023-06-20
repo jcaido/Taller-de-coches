@@ -95,7 +95,7 @@ public class VehiculoController {
     public ResponseEntity<VehiculoBusquedasDTO> obtenerVehiculoPorId (@Parameter(description = "id del vehiculo a buscar",
             required = true) @PathVariable Long id) {
 
-        return vehiculoService.findById(id);
+        return new ResponseEntity<>(vehiculoService.findById(id), HttpStatus.OK);
     }
 
     @Operation(summary = "Obtener Vehiculo por matricula", description = "Obtener Vehiculo por matricula")

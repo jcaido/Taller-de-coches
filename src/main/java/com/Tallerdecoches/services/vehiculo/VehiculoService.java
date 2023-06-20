@@ -11,7 +11,7 @@ public interface VehiculoService {
     VehiculoDTO crearVehiculo(VehiculoCrearDTO vehiculoCrearDTO, Long id_propietario);
     List<VehiculoBusquedasDTO> findAll();
     List<VehiculoBusquedasParcialDTO> findAllPartial();
-    ResponseEntity<VehiculoBusquedasDTO> findById(Long id);
+    VehiculoBusquedasDTO findById(Long id);
     ResponseEntity<VehiculoBusquedasDTO> findByMatricula(String matricula);
     List<VehiculoBusquedasDTO> findByMarca(String marca);
     List<VehiculoBusquedasDTO> findByMarcaAndModelo(String marca, String modelo);

@@ -76,13 +76,15 @@ public class VehiculoServiceImpl implements VehiculoService {
     }
 
     @Override
-    public ResponseEntity<VehiculoBusquedasDTO> findById(Long id) {
+    public VehiculoBusquedasDTO findById(Long id) {
         Optional<Vehiculo> vehiculo = vehiculoRepository.findById(id);
 
         if (!vehiculo.isPresent())
             throw new ResourceNotFoundException("Vehiculo", "id", String.valueOf(id));
 
-        return new ResponseEntity<>(modelMapper.map(vehiculo, VehiculoBusquedasDTO.class), HttpStatus.OK);
+        VehiculoBusquedasDTO vehiculoEncontrado = modelMapper.map(vehiculo, VehiculoBusquedasDTO.class);
+
+        return vehiculoEncontrado;
     }
 
     @Override
