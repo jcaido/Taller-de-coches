@@ -57,4 +57,10 @@ public class FacturaClienteController {
                                                                      @PathVariable Long idOrdenReparacion) {
         return facturaClienteService.modificarFacturaCliente(facturaClienteDTO, idOrdenReparacion);
     }
+
+    //Modificar una factura de cliente sin cambiar la asignacion de la orden de reparacion
+    @PutMapping("/modificarFactura")
+    public ResponseEntity<FacturaClienteDTO> modificarFacturaCliente(@Valid @RequestBody FacturaClienteDTO facturaClienteDTO) {
+        return facturaClienteService.modificarFacturaClienteNoOR(facturaClienteDTO);
+    }
 }

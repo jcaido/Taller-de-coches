@@ -156,4 +156,42 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
 
         return new ResponseEntity<>(modelMapper.map(facturaCliente, FacturaClienteDTO.class), HttpStatus.OK);
     }
+
+    @Override
+    @Transactional
+    public ResponseEntity<FacturaClienteDTO> modificarFacturaClienteNoOR(FacturaClienteDTO facturaClienteDTO) {
+
+        if (facturaClienteDTO.getId() ==  null)
+            throw new BadRequestModificacionException("Factura de cliente", "id");
+
+        if (!facturaClienteValidacionesService.facturaAnterior(facturaClienteDTO)
+                && facturaClienteValidacionesService.facturaPosterior(facturaClienteDTO)
+                && facturaClienteDTO.getFechaFactura().isAfter(facturaClienteConsultasService.obtenerFacturaPosterior(facturaClienteDTO).getFechaFactura()))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La fecha debe ser igual o inferior a la de la factura posterior");
+
+        if (!facturaClienteValidacionesService.facturaPosterior(facturaClienteDTO)
+                && facturaClienteValidacionesService.facturaAnterior(facturaClienteDTO)
+                && facturaClienteDTO.getFechaFactura().isBefore(facturaClienteConsultasService.obtenerFacturaAnterior(facturaClienteDTO).getFechaFactura()))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La fecha debe ser igual o superior a la de la factura anterior");
+
+        if (facturaClienteValidacionesService.facturaAnterior(facturaClienteDTO)
+                && facturaClienteValidacionesService.facturaPosterior(facturaClienteDTO))
+            if (facturaClienteDTO.getFechaFactura().isAfter(facturaClienteConsultasService.obtenerFacturaPosterior(facturaClienteDTO).getFechaFactura())
+                    || facturaClienteDTO.getFechaFactura().isBefore(facturaClienteConsultasService.obtenerFacturaAnterior(facturaClienteDTO).getFechaFactura()))
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "La fecha debe ser igual o inferior a la de la factura posterior e igual o superior a la de la fecha anterior");
+
+        FacturaCliente facturaAModificar = facturaClienteRepository.findById(facturaClienteDTO.getId()).get();
+        OrdenReparacion ordenReparacion = facturaAModificar.getOrdenReparacion();
+        FacturaCliente facturaCliente = modelMapper.map(facturaClienteDTO, FacturaCliente.class);
+
+        facturaCliente.setOrdenReparacion(ordenReparacion);
+        facturaCliente.setTipoIVA(facturaClienteDTO.getTipoIVA());
+        facturaCliente.setSerie(facturaAModificar.getSerie());
+        facturaCliente.setNumeroFactura(facturaAModificar.getNumeroFactura());
+        facturaCliente.setFechaFactura(facturaClienteDTO.getFechaFactura());
+
+        facturaClienteRepository.save(facturaCliente);
+
+        return new ResponseEntity<>(modelMapper.map(facturaCliente, FacturaClienteDTO.class), HttpStatus.OK);
+    }
 }
