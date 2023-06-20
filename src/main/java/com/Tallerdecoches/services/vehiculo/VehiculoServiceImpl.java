@@ -43,7 +43,7 @@ public class VehiculoServiceImpl implements VehiculoService {
     }
 
     @Override
-    public ResponseEntity<VehiculoDTO> crearVehiculo(VehiculoCrearDTO vehiculoCrearDTO, Long id_propietario) {
+    public VehiculoDTO crearVehiculo(VehiculoCrearDTO vehiculoCrearDTO, Long id_propietario) {
 
         if (vehiculoRepository.existsByMatricula(vehiculoCrearDTO.getMatricula()))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "la matricula ya existe");
@@ -56,7 +56,9 @@ public class VehiculoServiceImpl implements VehiculoService {
         vehiculo.setPropietario(propietario);
         vehiculoRepository.save(vehiculo);
 
-        return new ResponseEntity<>(modelMapper.map(vehiculo, VehiculoDTO.class), HttpStatus.CREATED);
+        VehiculoDTO vehiculoRespuesta = modelMapper.map(vehiculo, VehiculoDTO.class);
+
+        return vehiculoRespuesta;
     }
 
     @Override

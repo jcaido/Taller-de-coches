@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -48,7 +49,7 @@ public class VehiculoController {
     public ResponseEntity<VehiculoDTO> crearVehiculo(@Valid @RequestBody VehiculoCrearDTO vehiculoCrearDTO, @Parameter(
             description = "id del propietario del vehiculo", required = true) @PathVariable Long id_propietario) {
 
-        return vehiculoService.crearVehiculo(vehiculoCrearDTO, id_propietario);
+        return new ResponseEntity<>(vehiculoService.crearVehiculo(vehiculoCrearDTO, id_propietario), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Obtener todos los Vehiculos", description = "Obtener todos los Vehiculos")

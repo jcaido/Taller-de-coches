@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface VehiculoService {
-    ResponseEntity<VehiculoDTO> crearVehiculo(VehiculoCrearDTO vehiculoCrearDTO, Long id_propietario);
+    VehiculoDTO crearVehiculo(VehiculoCrearDTO vehiculoCrearDTO, Long id_propietario);
     List<VehiculoBusquedasDTO> findAll();
     List<VehiculoBusquedasParcialDTO> findAllPartial();
     ResponseEntity<VehiculoBusquedasDTO> findById(Long id);
