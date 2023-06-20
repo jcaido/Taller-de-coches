@@ -41,7 +41,7 @@ public class ProveedorServiceImpl implements ProveedorService{
     }
 
     @Override
-    public ResponseEntity<ProveedorDTO> crearProveedor(ProveedorCrearDTO proveedorCrearDTO, Long idCodigoPostal) {
+    public ProveedorDTO crearProveedor(ProveedorCrearDTO proveedorCrearDTO, Long idCodigoPostal) {
 
         if (proveedorRepository.existsByDniCif(proveedorCrearDTO.getDniCif()))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El DNI/CIF del proveedor ya existe");
@@ -54,7 +54,9 @@ public class ProveedorServiceImpl implements ProveedorService{
         proveedor.setCodigoPostal(codigoPostal);
         proveedorRepository.save(proveedor);
 
-        return new ResponseEntity<>(modelMapper.map(proveedor, ProveedorDTO.class), HttpStatus.CREATED);
+        ProveedorDTO proveedorRespuesta = modelMapper.map(proveedor, ProveedorDTO.class);
+
+        return proveedorRespuesta;
     }
 
     @Override

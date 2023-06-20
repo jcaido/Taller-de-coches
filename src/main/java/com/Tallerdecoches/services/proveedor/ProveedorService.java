@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface ProveedorService {
 
-    ResponseEntity<ProveedorDTO> crearProveedor(ProveedorCrearDTO proveedorCrearDTO, Long idCodigoPostal);
+    ProveedorDTO crearProveedor(ProveedorCrearDTO proveedorCrearDTO, Long idCodigoPostal);
     List<ProveedorBusquedasDTO> findAll();
     List<ProveedorBusquedasParcialDTO> findAllParcial();
     ResponseEntity<ProveedorBusquedasDTO> findById(Long id);
