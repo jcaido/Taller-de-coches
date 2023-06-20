@@ -121,7 +121,7 @@ public class VehiculoServiceImpl implements VehiculoService {
     }
 
     @Override
-    public ResponseEntity<String> deleteById(Long id) {
+    public String deleteById(Long id) {
 
         if (!vehiculoRepository.existsById(id))
             throw new ResourceNotFoundException("Vehiculo", "id", String.valueOf(id));
@@ -131,7 +131,9 @@ public class VehiculoServiceImpl implements VehiculoService {
 
         vehiculoRepository.deleteById(id);
 
-        return new ResponseEntity<>("Vehiculo eliminado con exito", HttpStatus.OK);
+        String respuesta = "Vehiculo eliminado con exito";
+
+        return respuesta;
     }
 
     @Override

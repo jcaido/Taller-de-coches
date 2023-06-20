@@ -16,7 +16,7 @@ public interface VehiculoService {
     List<VehiculoBusquedasDTO> findByMarca(String marca);
     List<VehiculoBusquedasDTO> findByMarcaAndModelo(String marca, String modelo);
     List<VehiculoBusquedasParcialDTO> findByMarcaModeloPartial(String marca, String modelo);
-    ResponseEntity<String> deleteById(Long  id);
+    String deleteById(Long  id);
     List<VehiculoBusquedasDTO> obtenerVehiculosPorPropietarioSQL(Long id_propietario);
     List<VehiculoBusquedasDTO> obtenerVehiculosPorPropietarioHQL(Long id_propietario);
     List<VehiculoBusquedasParcialDTO> obtenerVehiculosPorPropietarioHQLParcial(Long id_propietario);

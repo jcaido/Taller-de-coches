@@ -232,6 +232,6 @@ public class VehiculoController {
     public ResponseEntity<String> eliminarVehiculo(@Parameter(description = "id del vehiculo a eliminar",
             required = true) @PathVariable Long id) {
 
-        return vehiculoService.deleteById(id);
+        return new ResponseEntity<>(vehiculoService.deleteById(id), HttpStatus.OK);
     }
 }
