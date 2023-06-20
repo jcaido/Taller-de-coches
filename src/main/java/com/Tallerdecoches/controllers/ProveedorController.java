@@ -110,7 +110,7 @@ public class ProveedorController {
     public ResponseEntity<ProveedorBusquedasDTO> obtenerProveedorPorDniCif(@Parameter(description = "dni/cif del proveedor a buscar",
             required = true) @PathVariable String dniCif) {
 
-        return proveedorService.findByDniCif(dniCif);
+        return new ResponseEntity<>(proveedorService.findByDniCif(dniCif), HttpStatus.OK);
     }
 
     @Operation(summary = "Obtener Proveedores por nombre", description = "Obtener Proveedores por nombre")

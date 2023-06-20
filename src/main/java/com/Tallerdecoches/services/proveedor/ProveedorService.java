@@ -16,7 +16,7 @@ public interface ProveedorService {
     List<ProveedorBusquedasDTO> findAll();
     List<ProveedorBusquedasParcialDTO> findAllParcial();
     ProveedorBusquedasDTO findById(Long id);
-    ResponseEntity<ProveedorBusquedasDTO> findByDniCif(String dniCif);
+    ProveedorBusquedasDTO findByDniCif(String dniCif);
     List<ProveedorBusquedasDTO> findByNombre(String nombre);
     List<ProveedorBusquedasParcialDTO> findByNombreParcial(String nombre);
     ResponseEntity<ProveedorDTO> modificarProveedor(ProveedorDTO proveedorDTO, Long idCodigoPostal);
