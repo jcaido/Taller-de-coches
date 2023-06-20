@@ -13,10 +13,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -44,5 +45,16 @@ public class CodigoPostalServiceTest {
         assertTrue(codigosPostales.stream().anyMatch(codigoPostalDTO -> codigoPostalDTO.getCodigo().equals("14920")));
         assertTrue(codigosPostales.stream().anyMatch(codigoPostalDTO -> codigoPostalDTO.getCodigo().equals("45111")));
         assertTrue(codigosPostales.stream().anyMatch(codigoPostalDTO -> codigoPostalDTO.getLocalidad().equals("Zuheros")));
+    }
+
+    @DisplayName("Test para obtener un codigo postal por su id (service)")
+    @Test
+    void obtenerCodigoPostalPorId() {
+        when(codigoPostalRespository.findById(anyLong())).thenReturn(Optional.of(Datos.CODIGO_POSTAL_1));
+        when(modelMapper.map(any(), eq(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_1);
+
+        CodigoPostalDTO codigoPostalEncontrado = codigoPostalService.findById(2L);
+
+        assertEquals("14920", codigoPostalEncontrado.getCodigo());
     }
 }
