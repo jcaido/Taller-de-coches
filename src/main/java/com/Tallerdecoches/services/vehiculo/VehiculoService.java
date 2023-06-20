@@ -20,5 +20,5 @@ public interface VehiculoService {
     List<VehiculoBusquedasDTO> obtenerVehiculosPorPropietarioSQL(Long id_propietario);
     List<VehiculoBusquedasDTO> obtenerVehiculosPorPropietarioHQL(Long id_propietario);
     List<VehiculoBusquedasParcialDTO> obtenerVehiculosPorPropietarioHQLParcial(Long id_propietario);
-    ResponseEntity<VehiculoDTO> modificarVehiculo(VehiculoDTO vehiculoDTO, Long id_propietario);
+    VehiculoDTO modificarVehiculo(VehiculoDTO vehiculoDTO, Long id_propietario);
 }

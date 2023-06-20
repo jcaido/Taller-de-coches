@@ -216,7 +216,7 @@ public class VehiculoController {
     public ResponseEntity<VehiculoDTO> modificarVehiculo(@Valid @RequestBody VehiculoDTO vehiculoDTO, @Parameter(
             description = "id del propietario del vehiculo a modificar", required = true) @PathVariable Long id_propietario) {
 
-        return vehiculoService.modificarVehiculo(vehiculoDTO, id_propietario);
+        return new ResponseEntity<>(vehiculoService.modificarVehiculo(vehiculoDTO, id_propietario), HttpStatus.OK);
     }
 
     @Operation(summary = "Eliminar un Vehiculo", description = "Eliminar un Vehiculo")

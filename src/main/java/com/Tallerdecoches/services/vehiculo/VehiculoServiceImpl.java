@@ -167,7 +167,7 @@ public class VehiculoServiceImpl implements VehiculoService {
     }
 
     @Override
-    public ResponseEntity<VehiculoDTO> modificarVehiculo(VehiculoDTO vehiculoDTO, Long id_propietario) {
+    public VehiculoDTO modificarVehiculo(VehiculoDTO vehiculoDTO, Long id_propietario) {
 
         if (vehiculoDTO.getId() == null)
             throw new BadRequestModificacionException("Vehiculo", "id");
@@ -190,7 +190,8 @@ public class VehiculoServiceImpl implements VehiculoService {
         vehiculo.setPropietario(propietario);
 
         Vehiculo vehiculoModificado = vehiculoRepository.save(vehiculo);
+        VehiculoDTO vehiculoModificadoDTO = modelMapper.map(vehiculo, VehiculoDTO.class);
 
-        return new ResponseEntity<>(modelMapper.map(vehiculo, VehiculoDTO.class), HttpStatus.OK);
+        return vehiculoModificadoDTO;
     }
 }
