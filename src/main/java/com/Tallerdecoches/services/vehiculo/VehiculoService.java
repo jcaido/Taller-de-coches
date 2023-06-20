@@ -12,7 +12,7 @@ public interface VehiculoService {
     List<VehiculoBusquedasDTO> findAll();
     List<VehiculoBusquedasParcialDTO> findAllPartial();
     VehiculoBusquedasDTO findById(Long id);
-    ResponseEntity<VehiculoBusquedasDTO> findByMatricula(String matricula);
+    VehiculoBusquedasDTO findByMatricula(String matricula);
     List<VehiculoBusquedasDTO> findByMarca(String marca);
     List<VehiculoBusquedasDTO> findByMarcaAndModelo(String marca, String modelo);
     List<VehiculoBusquedasParcialDTO> findByMarcaModeloPartial(String marca, String modelo);

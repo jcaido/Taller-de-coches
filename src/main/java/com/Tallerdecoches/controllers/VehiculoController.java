@@ -112,7 +112,7 @@ public class VehiculoController {
     public ResponseEntity<VehiculoBusquedasDTO> obtenerVehiculoPorMatricula(@Parameter(description = "matricula del vehiculo a buscar",
             required = true) @PathVariable String matricula) {
 
-        return vehiculoService.findByMatricula(matricula);
+        return new ResponseEntity<>(vehiculoService.findByMatricula(matricula), HttpStatus.OK);
     }
 
     @Operation(summary = "Obtener Vehiculos por marca", description = "Obtener Vehiculos por marca")

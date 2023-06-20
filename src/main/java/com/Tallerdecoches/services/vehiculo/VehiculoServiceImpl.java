@@ -88,13 +88,15 @@ public class VehiculoServiceImpl implements VehiculoService {
     }
 
     @Override
-    public ResponseEntity<VehiculoBusquedasDTO> findByMatricula(String matricula) {
+    public VehiculoBusquedasDTO findByMatricula(String matricula) {
         Optional<Vehiculo> vehiculo = vehiculoRepository.findByMatricula(matricula);
 
         if (!vehiculo.isPresent())
             throw new ResourceNotFoundException("Vehiculo", "matricula", matricula);
 
-        return new ResponseEntity<>(modelMapper.map(vehiculo, VehiculoBusquedasDTO.class), HttpStatus.OK);
+        VehiculoBusquedasDTO vehiculoEncontrado = modelMapper.map(vehiculo, VehiculoBusquedasDTO.class);
+
+        return vehiculoEncontrado;
     }
 
     @Override
