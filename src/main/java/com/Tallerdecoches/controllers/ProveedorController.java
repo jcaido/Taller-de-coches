@@ -93,7 +93,7 @@ public class ProveedorController {
     public ResponseEntity<ProveedorBusquedasDTO> obtenerProveedorPorId(@Parameter(description = "id del proveedor a buscar",
             required = true) @PathVariable Long id) {
 
-        return proveedorService.findById(id);
+        return new ResponseEntity<>(proveedorService.findById(id), HttpStatus.OK);
     }
 
     @Operation(summary = "Obtener Proveedor por dni/cif", description = "Obtener Proveedor por dni/cif")

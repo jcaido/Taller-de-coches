@@ -74,13 +74,15 @@ public class ProveedorServiceImpl implements ProveedorService{
     }
 
     @Override
-    public ResponseEntity<ProveedorBusquedasDTO> findById(Long id) {
+    public ProveedorBusquedasDTO findById(Long id) {
         Optional<Proveedor> proveedor = proveedorRepository.findById(id);
 
         if (!proveedor.isPresent())
             throw new ResourceNotFoundException("Proveedor", "id", String.valueOf(id));
 
-        return new ResponseEntity<>(modelMapper.map(proveedor, ProveedorBusquedasDTO.class), HttpStatus.OK);
+        ProveedorBusquedasDTO proveedorEncontrado = modelMapper.map(proveedor, ProveedorBusquedasDTO.class);
+
+        return proveedorEncontrado;
     }
 
     @Override
