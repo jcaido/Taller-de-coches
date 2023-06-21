@@ -49,11 +49,11 @@ public class CodigoPostalServiceTest {
 
     @DisplayName("Test para obtener un codigo postal por su id (service)")
     @Test
-    void obtenerCodigoPostalPorId() {
+    void obtenerCodigoPostalPorIdTest() {
         when(codigoPostalRespository.findById(anyLong())).thenReturn(Optional.of(Datos.CODIGO_POSTAL_1));
         when(modelMapper.map(any(), eq(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_1);
 
-        CodigoPostalDTO codigoPostalEncontrado = codigoPostalService.findById(2L);
+        CodigoPostalDTO codigoPostalEncontrado = codigoPostalService.findById(Datos.CODIGO_POSTAL_1.getId());
 
         assertEquals("14920", codigoPostalEncontrado.getCodigo());
     }
@@ -68,5 +68,16 @@ public class CodigoPostalServiceTest {
         });
 
         assertTrue(codigoPostalRespository.findById(Datos.CODIGO_POSTAL_DTO_1.getId()).isEmpty());
+    }
+
+    @DisplayName("Test para obtener un codigo postal por su codigo (service)")
+    @Test
+    void obtenerCodigoPostalPorCodigoTest() {
+        when(codigoPostalRespository.findByCodigo(anyString())).thenReturn(Optional.of(Datos.CODIGO_POSTAL_1));
+        when(modelMapper.map(any(), eq(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_1);
+
+        CodigoPostalDTO codigoPostalEncontrado = codigoPostalService.findByCodigo(Datos.CODIGO_POSTAL_1.getCodigo());
+
+        assertEquals("Aguilar de la Frontera", codigoPostalEncontrado.getLocalidad());
     }
 }

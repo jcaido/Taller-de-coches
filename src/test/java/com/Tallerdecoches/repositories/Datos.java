@@ -8,12 +8,14 @@ import java.util.List;
 
 public class Datos {
     public final static CodigoPostal CODIGO_POSTAL_1 = CodigoPostal.builder()
+            .id(2L)
             .codigo("14920")
             .localidad("Aguilar de la Frontera")
             .provincia("Cordoba")
             .build();
 
     public final static CodigoPostal CODIGO_POSTAL_2 = CodigoPostal.builder()
+            .id(3L)
             .codigo("45111")
             .localidad("Zuheros")
             .provincia("Cordoba")
