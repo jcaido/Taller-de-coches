@@ -109,4 +109,14 @@ public class FacturaClienteValidacionesService {
 
         return true;
     }
+
+    public boolean validacionUltimaFacturaAño(Long id_factura) {
+        FacturaCliente facturaAValidar = facturaClienteRepository.findById(id_factura).get();
+        FacturaCliente ultimaFacturaAñoCliente = facturaClienteConsultasService.obtenerUltimaFacturaAño(id_factura);
+
+        if (facturaAValidar.getId().equals(ultimaFacturaAñoCliente.getId()))
+            return true;
+
+        return false;
+    }
 }
