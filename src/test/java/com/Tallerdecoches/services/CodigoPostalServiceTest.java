@@ -58,6 +58,18 @@ public class CodigoPostalServiceTest {
         assertEquals("409 CONFLICT \"El numero del codigo postal ya existe\"", exception.getMessage());
     }
 
+    @DisplayName("Test para guardar un codigo postal (service), la localidad ya existe")
+    @Test
+    void guardarCodigoPostalLocalidadYaExisteTest() {
+        when(codigoPostalRespository.existsByLocalidad(Datos.CODIGO_POSTAL_CREAR_DTO_1.getLocalidad())).thenReturn(true);
+
+        Exception exception = assertThrows(ResponseStatusException.class, ()-> {
+            codigoPostalService.crearCodigoPostal(Datos.CODIGO_POSTAL_CREAR_DTO_1);
+        });
+
+        assertEquals("409 CONFLICT \"la localidad del codigo postal ya existe\"", exception.getMessage());
+    }
+
     @DisplayName("Test para obtener una lista de codigos postales (service)")
     @Test
     void obtenerCodigosPostalesTodosTest() {
@@ -89,11 +101,12 @@ public class CodigoPostalServiceTest {
     void codigoPostalNoEncontradoTest() {
         when(codigoPostalRespository.findById(Datos.CODIGO_POSTAL_1.getId())).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> {
+        Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
             codigoPostalService.findById(Datos.CODIGO_POSTAL_1.getId());
         });
 
         assertTrue(codigoPostalRespository.findById(Datos.CODIGO_POSTAL_DTO_1.getId()).isEmpty());
+        assertEquals("Codigo Postal con id " + Datos.CODIGO_POSTAL_DTO_1.getId() + " no se encuentra", exception.getMessage());
     }
 
     @DisplayName("Test para obtener un codigo postal por su codigo (service)")
@@ -112,11 +125,12 @@ public class CodigoPostalServiceTest {
     void obtenerCodigoPostalPorCodigoCodigoPostalNoEncontradoTest() {
         when(codigoPostalRespository.findByCodigo(Datos.CODIGO_POSTAL_1.getCodigo())).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> {
+        Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
             codigoPostalService.findByCodigo(Datos.CODIGO_POSTAL_1.getCodigo());
         });
 
         assertTrue(codigoPostalRespository.findByCodigo(Datos.CODIGO_POSTAL_DTO_1.getCodigo()).isEmpty());
+        assertEquals("Codigo Postal con codigo " + Datos.CODIGO_POSTAL_DTO_1.getCodigo() + " no se encuentra", exception.getMessage());
     }
 
     @DisplayName("Test para obtener una lista de codigos postales por Provincia (service)")
@@ -151,10 +165,11 @@ public class CodigoPostalServiceTest {
     void obtenerCodigoPostalPorLocalidadCodigoPostalNoEncontradoTest() {
         when(codigoPostalRespository.findByLocalidad(Datos.CODIGO_POSTAL_1.getLocalidad())).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> {
+        Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
             codigoPostalService.findByLocalidad(Datos.CODIGO_POSTAL_1.getLocalidad());
         });
 
         assertTrue(codigoPostalRespository.findByLocalidad(Datos.CODIGO_POSTAL_DTO_1.getLocalidad()).isEmpty());
+        assertEquals("Codigo Postal con localidad " + Datos.CODIGO_POSTAL_DTO_1.getLocalidad() + " no se encuentra", exception.getMessage());
     }
 }
