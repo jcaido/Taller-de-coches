@@ -63,4 +63,10 @@ public class FacturaClienteController {
     public ResponseEntity<FacturaClienteDTO> modificarFacturaCliente(@Valid @RequestBody FacturaClienteDTO facturaClienteDTO) {
         return facturaClienteService.modificarFacturaClienteNoOR(facturaClienteDTO);
     }
+
+    //Eliminar una factura de cliente
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarFacturaCliente(@PathVariable Long id) {
+        return facturaClienteService.eliminarFacturaCliente(id);
+    }
 }

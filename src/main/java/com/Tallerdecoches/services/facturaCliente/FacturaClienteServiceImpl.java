@@ -194,4 +194,23 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
 
         return new ResponseEntity<>(modelMapper.map(facturaCliente, FacturaClienteDTO.class), HttpStatus.OK);
     }
+
+    @Override
+    @Transactional
+    public ResponseEntity<String> eliminarFacturaCliente(Long id) {
+
+        if (!facturaClienteRepository.existsById(id))
+            throw new ResourceNotFoundException("Factura", "id", String.valueOf(id));
+
+        if (!facturaClienteValidacionesService.validacionUltimaFacturaAño(id))
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Solo se puede eliminar la ultima factura del año");
+
+        OrdenReparacion ordenReparacionAsociada = facturaClienteRepository.findById(id).get().getOrdenReparacion();
+        ordenReparacionAsociada.setFacturada(false);
+        ordenReparacionRepository.save(ordenReparacionAsociada);
+
+        facturaClienteRepository.deleteById(id);
+
+        return new ResponseEntity<>("Factura de cliente eliminada con exito", HttpStatus.OK);
+    }
 }
