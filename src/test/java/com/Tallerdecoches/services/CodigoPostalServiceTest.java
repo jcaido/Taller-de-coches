@@ -1,6 +1,7 @@
 package com.Tallerdecoches.services;
 
 import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalDTO;
+import com.Tallerdecoches.entities.CodigoPostal;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.CodigoPostalRepository;
 import com.Tallerdecoches.repositories.Datos;
@@ -31,6 +32,18 @@ public class CodigoPostalServiceTest {
 
     @InjectMocks
     private CodigoPostalServiceImpl codigoPostalService;
+
+    @DisplayName("Test para guardar un codigo postal (service)")
+    @Test
+    void guardarCodigoPostalTest() {
+        when(modelMapper.map(eq(Datos.CODIGO_POSTAL_CREAR_DTO_1), eq(CodigoPostal.class))).thenReturn(Datos.CODIGO_POSTAL_1);
+        when(modelMapper.map(eq(Datos.CODIGO_POSTAL_1), eq(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_1);
+        when(codigoPostalRespository.save(Datos.CODIGO_POSTAL_1)).thenReturn(Datos.CODIGO_POSTAL_1);
+
+        CodigoPostalDTO codigoPostalGuardado = codigoPostalService.crearCodigoPostal(Datos.CODIGO_POSTAL_CREAR_DTO_1);
+
+        assertEquals("14920", codigoPostalGuardado.getCodigo());
+    }
 
     @DisplayName("Test para obtener una lista de codigos postales (service)")
     @Test

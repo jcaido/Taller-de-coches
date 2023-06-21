@@ -1,5 +1,6 @@
 package com.Tallerdecoches.repositories;
 
+import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalCrearDTO;
 import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalDTO;
 import com.Tallerdecoches.entities.CodigoPostal;
 
@@ -56,5 +57,11 @@ public class Datos {
             .codigo("98776")
             .localidad("Carmona")
             .provincia("Sevilla")
+            .build();
+
+    public final static CodigoPostalCrearDTO CODIGO_POSTAL_CREAR_DTO_1 = CodigoPostalCrearDTO.builder()
+            .codigo("14920")
+            .localidad("Aguilar de la Frontera")
+            .provincia("Cordoba")
             .build();
 }
