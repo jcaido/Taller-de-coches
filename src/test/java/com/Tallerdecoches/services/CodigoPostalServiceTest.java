@@ -92,4 +92,20 @@ public class CodigoPostalServiceTest {
 
         assertTrue(codigoPostalRespository.findByCodigo(Datos.CODIGO_POSTAL_DTO_1.getCodigo()).isEmpty());
     }
+
+    @DisplayName("Test para obtener una lista de codigos postales por Provincia")
+    @Test
+    void obtenerCodigosPostalesPorProvinciaTest() {
+        when(codigoPostalRespository.findByProvincia(anyString())).thenReturn(Datos.CODIGOS_POSTALES_1);
+        when(modelMapper.map(eq(Datos.CODIGO_POSTAL_1), eq(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_1);
+        when(modelMapper.map(eq(Datos.CODIGO_POSTAL_2), eq(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_2);
+        when(modelMapper.map(eq(Datos.CODIGO_POSTAL_3), eq(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_3);
+
+        List<CodigoPostalDTO> codigosPostales = codigoPostalService.findByProvincia(Datos.CODIGO_POSTAL_1.getProvincia());
+
+        assertEquals(3, codigosPostales.size());
+        assertTrue(codigosPostales.stream().anyMatch(codigoPostalDTO -> codigoPostalDTO.getCodigo().equals("14920")));
+        assertTrue(codigosPostales.stream().anyMatch(codigoPostalDTO -> codigoPostalDTO.getCodigo().equals("45111")));
+        assertTrue(codigosPostales.stream().anyMatch(codigoPostalDTO -> codigoPostalDTO.getLocalidad().equals("Zuheros")));
+    }
 }
