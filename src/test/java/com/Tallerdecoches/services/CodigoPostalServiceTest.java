@@ -119,4 +119,16 @@ public class CodigoPostalServiceTest {
 
         assertEquals("Aguilar de la Frontera", codigoPostalEncontrado.getLocalidad());
     }
+
+    @DisplayName("Test para obtener un codigo postal por su localidad (service), codigo postal no encontrado")
+    @Test
+    void obtenerCodigoPostalPorLocalidadCodigoPostalNoEncontradoTest() {
+        when(codigoPostalRespository.findByLocalidad(Datos.CODIGO_POSTAL_1.getLocalidad())).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> {
+            codigoPostalService.findByLocalidad(Datos.CODIGO_POSTAL_1.getLocalidad());
+        });
+
+        assertTrue(codigoPostalRespository.findByLocalidad(Datos.CODIGO_POSTAL_DTO_1.getLocalidad()).isEmpty());
+    }
 }
