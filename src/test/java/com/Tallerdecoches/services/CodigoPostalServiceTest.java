@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +44,18 @@ public class CodigoPostalServiceTest {
         CodigoPostalDTO codigoPostalGuardado = codigoPostalService.crearCodigoPostal(Datos.CODIGO_POSTAL_CREAR_DTO_1);
 
         assertEquals("14920", codigoPostalGuardado.getCodigo());
+    }
+
+    @DisplayName("Test para guardar un codigo postal (service), el numero del codigo postal ya existe")
+    @Test
+    void guardarCodigoPostalNumeroCodigoPostalYaExisteTest() {
+        when(codigoPostalRespository.existsByCodigo(Datos.CODIGO_POSTAL_CREAR_DTO_1.getCodigo())).thenReturn(true);
+
+        Exception exception = assertThrows(ResponseStatusException.class, ()-> {
+            codigoPostalService.crearCodigoPostal(Datos.CODIGO_POSTAL_CREAR_DTO_1);
+        });
+
+        assertEquals("409 CONFLICT \"El numero del codigo postal ya existe\"", exception.getMessage());
     }
 
     @DisplayName("Test para obtener una lista de codigos postales (service)")
