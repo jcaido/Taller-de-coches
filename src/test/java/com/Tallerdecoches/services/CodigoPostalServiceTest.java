@@ -1,6 +1,7 @@
 package com.Tallerdecoches.services;
 
 import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalDTO;
+import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.CodigoPostalRepository;
 import com.Tallerdecoches.repositories.Datos;
 import com.Tallerdecoches.services.codigoPostal.CodigoPostalServiceImpl;
@@ -15,8 +16,7 @@ import org.modelmapper.ModelMapper;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
@@ -56,5 +56,17 @@ public class CodigoPostalServiceTest {
         CodigoPostalDTO codigoPostalEncontrado = codigoPostalService.findById(2L);
 
         assertEquals("14920", codigoPostalEncontrado.getCodigo());
+    }
+
+    @DisplayName("Test para obtener un codigo postal por su id (service), codigo postal no encontrado")
+    @Test
+    void codigoPostalNoEncontradoTest() {
+        when(codigoPostalRespository.findById(Datos.CODIGO_POSTAL_1.getId())).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> {
+            codigoPostalService.findById(Datos.CODIGO_POSTAL_1.getId());
+        });
+
+        assertTrue(codigoPostalRespository.findById(Datos.CODIGO_POSTAL_DTO_1.getId()).isEmpty());
     }
 }
