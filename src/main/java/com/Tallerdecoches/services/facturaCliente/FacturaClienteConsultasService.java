@@ -72,6 +72,21 @@ public class FacturaClienteConsultasService {
         return factura.get(0);
     }
 
+    public FacturaCliente obtenerUltimaFacturaAño(Long id) {
+        FacturaCliente facturaCliente = facturaClienteRepository.findById(id).get();
+
+        Query query = entityManager.createNativeQuery("SELECT * FROM facturas_clientes " +
+                "WHERE fecha_factura >= :fechaInicial " +
+                "AND fecha_factura <= :fechaFinal " +
+                "AND numero_factura = (SELECT MAX(numero_factura) FROM facturas_clientes WHERE " +
+                " fecha_factura >= :fechaInicial AND fecha_factura <= :fechaFinal)", FacturaCliente.class);
+        query.setParameter("fechaInicial", LocalDate.of(facturaCliente.getFechaFactura().getYear(), 01, 01));
+        query.setParameter("fechaFinal", LocalDate.of(facturaCliente.getFechaFactura().getYear(), 12, 31));
+        List<FacturaCliente> factura = query.getResultList();
+
+        return factura.get(0);
+    }
+
     public FacturaCliente obtenerFacturaAnterior(FacturaClienteDTO facturaClienteDTO) {
         Query query = entityManager.createNativeQuery("SELECT * FROM facturas_clientes " +
                 "WHERE serie_factura = :serie " +
