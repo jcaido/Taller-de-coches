@@ -68,13 +68,15 @@ public class PiezaServiceImpl implements PiezaService {
     }
 
     @Override
-    public ResponseEntity<PiezaDTO> findByReferencia(String referencia) {
+    public PiezaDTO findByReferencia(String referencia) {
         Optional<Pieza> pieza = piezaRepository.findByReferencia(referencia);
 
         if (!pieza.isPresent())
             throw new ResourceNotFoundException("Pieza", "referencia", referencia);
 
-        return new ResponseEntity<>(modelMapper.map(pieza, PiezaDTO.class), HttpStatus.OK);
+        PiezaDTO piezaEncontrada = modelMapper.map(pieza, PiezaDTO.class);
+
+        return piezaEncontrada;
     }
 
     @Override

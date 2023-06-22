@@ -91,7 +91,7 @@ public class PiezaController {
     public ResponseEntity<PiezaDTO> obtenerPiezaPorReferencia(@Parameter(description = "referencia de la pieza a buscar",
             required = true) @PathVariable String referencia) {
 
-        return piezaService.findByReferencia(referencia);
+        return new ResponseEntity<>(piezaService.findByReferencia(referencia), HttpStatus.OK);
     }
 
     @Operation(summary = "Obtener Piezas por nombre", description = "Obtener Piezas por nombre")
