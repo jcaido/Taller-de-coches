@@ -140,7 +140,7 @@ public class ProveedorServiceImpl implements ProveedorService{
     }
 
     @Override
-    public ResponseEntity<String> deleteById(Long id) {
+    public String deleteById(Long id) {
 
         if (!proveedorRepository.existsById(id))
             throw new ResourceNotFoundException("Proveedor", "id", String.valueOf(id));
@@ -150,6 +150,8 @@ public class ProveedorServiceImpl implements ProveedorService{
 
         proveedorRepository.deleteById(id);
 
-        return new ResponseEntity<>("Proveedor eliminado con exito", HttpStatus.OK);
+        String respuesta = "Proveedor eliminado con exito";
+
+        return respuesta;
     }
 }

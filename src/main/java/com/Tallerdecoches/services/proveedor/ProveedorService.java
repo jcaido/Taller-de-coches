@@ -20,5 +20,5 @@ public interface ProveedorService {
     List<ProveedorBusquedasDTO> findByNombre(String nombre);
     List<ProveedorBusquedasParcialDTO> findByNombreParcial(String nombre);
     ProveedorDTO modificarProveedor(ProveedorDTO proveedorDTO, Long idCodigoPostal);
-    ResponseEntity<String> deleteById(Long  id);
+    String deleteById(Long  id);
 }
