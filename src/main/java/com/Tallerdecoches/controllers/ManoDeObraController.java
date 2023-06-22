@@ -43,6 +43,6 @@ public class ManoDeObraController {
     @GetMapping("/precio-actual/{precioActual}")
     public ResponseEntity<ManoDeObraDTO> obtenerPrecioActualManoDeObra(@PathVariable Boolean precioActual) {
 
-        return manoDeObraService.findByPrecioHoraClienteTallerActual(precioActual);
+        return new ResponseEntity<>(manoDeObraService.findByPrecioHoraClienteTallerActual(precioActual), HttpStatus.OK);
     }
 }

@@ -59,12 +59,14 @@ public class ManoDeObraServiceImpl implements ManoDeObraService {
     }
 
     @Override
-    public ResponseEntity<ManoDeObraDTO> findByPrecioHoraClienteTallerActual(Boolean precioHoraClienteTallerActual) {
+    public ManoDeObraDTO findByPrecioHoraClienteTallerActual(Boolean precioHoraClienteTallerActual) {
         Optional<ManoDeObra> manoDeObra = manoDeObraRepository.findByPrecioHoraClienteTallerActual(precioHoraClienteTallerActual);
 
         if (!manoDeObra.isPresent())
             throw new ResourceNotFoundException("precio de la mano de obra", "id", String.valueOf(precioHoraClienteTallerActual));
 
-        return new ResponseEntity<>(modelMapper.map(manoDeObra, ManoDeObraDTO.class), HttpStatus.OK);
+        ManoDeObraDTO manoDeObraEncontrada = modelMapper.map(manoDeObra, ManoDeObraDTO.class);
+
+        return manoDeObraEncontrada;
     }
 }

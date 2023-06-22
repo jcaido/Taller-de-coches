@@ -11,5 +11,5 @@ import java.util.List;
 public interface ManoDeObraService {
     ManoDeObraDTO crearManoDeObra(ManoDeObraCrearDTO manoDeObraCrearDTO);
     List<ManoDeObraDTO> findAll();
-    ResponseEntity<ManoDeObraDTO> findByPrecioHoraClienteTallerActual(Boolean precioHoraClienteTallerActual);
+    ManoDeObraDTO findByPrecioHoraClienteTallerActual(Boolean precioHoraClienteTallerActual);
 }
