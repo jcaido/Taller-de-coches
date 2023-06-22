@@ -6,6 +6,7 @@ import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.CodigoPostalRepository;
 import com.Tallerdecoches.repositories.Datos;
 import com.Tallerdecoches.services.codigoPostal.CodigoPostalServiceImpl;
+import com.Tallerdecoches.services.propietario.PropietarioService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,21 +16,27 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class CodigoPostalServiceTest {
 
     @Mock
-    private CodigoPostalRepository codigoPostalRespository;
+    private CodigoPostalRepository codigoPostalRepository;
 
     @Mock
     private ModelMapper modelMapper;
+
+    @Mock
+    private PropietarioService propietarioService;
 
     @InjectMocks
     private CodigoPostalServiceImpl codigoPostalService;
@@ -39,7 +46,7 @@ public class CodigoPostalServiceTest {
     void guardarCodigoPostalTest() {
         when(modelMapper.map(eq(Datos.CODIGO_POSTAL_CREAR_DTO_1), eq(CodigoPostal.class))).thenReturn(Datos.CODIGO_POSTAL_1);
         when(modelMapper.map(eq(Datos.CODIGO_POSTAL_1), eq(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_1);
-        when(codigoPostalRespository.save(Datos.CODIGO_POSTAL_1)).thenReturn(Datos.CODIGO_POSTAL_1);
+        when(codigoPostalRepository.save(Datos.CODIGO_POSTAL_1)).thenReturn(Datos.CODIGO_POSTAL_1);
 
         CodigoPostalDTO codigoPostalGuardado = codigoPostalService.crearCodigoPostal(Datos.CODIGO_POSTAL_CREAR_DTO_1);
 
@@ -49,7 +56,7 @@ public class CodigoPostalServiceTest {
     @DisplayName("Test para guardar un codigo postal (service), el numero del codigo postal ya existe")
     @Test
     void guardarCodigoPostalNumeroCodigoPostalYaExisteTest() {
-        when(codigoPostalRespository.existsByCodigo(Datos.CODIGO_POSTAL_CREAR_DTO_1.getCodigo())).thenReturn(true);
+        when(codigoPostalRepository.existsByCodigo(Datos.CODIGO_POSTAL_CREAR_DTO_1.getCodigo())).thenReturn(true);
 
         Exception exception = assertThrows(ResponseStatusException.class, ()-> {
             codigoPostalService.crearCodigoPostal(Datos.CODIGO_POSTAL_CREAR_DTO_1);
@@ -61,7 +68,7 @@ public class CodigoPostalServiceTest {
     @DisplayName("Test para guardar un codigo postal (service), la localidad ya existe")
     @Test
     void guardarCodigoPostalLocalidadYaExisteTest() {
-        when(codigoPostalRespository.existsByLocalidad(Datos.CODIGO_POSTAL_CREAR_DTO_1.getLocalidad())).thenReturn(true);
+        when(codigoPostalRepository.existsByLocalidad(Datos.CODIGO_POSTAL_CREAR_DTO_1.getLocalidad())).thenReturn(true);
 
         Exception exception = assertThrows(ResponseStatusException.class, ()-> {
             codigoPostalService.crearCodigoPostal(Datos.CODIGO_POSTAL_CREAR_DTO_1);
@@ -73,7 +80,7 @@ public class CodigoPostalServiceTest {
     @DisplayName("Test para obtener una lista de codigos postales (service)")
     @Test
     void obtenerCodigosPostalesTodosTest() {
-        when(codigoPostalRespository.findAll()).thenReturn(Datos.CODIGOS_POSTALES);
+        when(codigoPostalRepository.findAll()).thenReturn(Datos.CODIGOS_POSTALES);
         when(modelMapper.map(eq(Datos.CODIGO_POSTAL_1), eq(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_1);
         when(modelMapper.map(eq(Datos.CODIGO_POSTAL_2), eq(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_2);
 
@@ -88,7 +95,7 @@ public class CodigoPostalServiceTest {
     @DisplayName("Test para obtener un codigo postal por su id (service)")
     @Test
     void obtenerCodigoPostalPorIdTest() {
-        when(codigoPostalRespository.findById(anyLong())).thenReturn(Optional.of(Datos.CODIGO_POSTAL_1));
+        when(codigoPostalRepository.findById(anyLong())).thenReturn(Optional.of(Datos.CODIGO_POSTAL_1));
         when(modelMapper.map(any(), eq(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_1);
 
         CodigoPostalDTO codigoPostalEncontrado = codigoPostalService.findById(Datos.CODIGO_POSTAL_1.getId());
@@ -99,20 +106,20 @@ public class CodigoPostalServiceTest {
     @DisplayName("Test para obtener un codigo postal por su id (service), codigo postal no encontrado")
     @Test
     void codigoPostalNoEncontradoTest() {
-        when(codigoPostalRespository.findById(Datos.CODIGO_POSTAL_1.getId())).thenReturn(Optional.empty());
+        when(codigoPostalRepository.findById(Datos.CODIGO_POSTAL_1.getId())).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
             codigoPostalService.findById(Datos.CODIGO_POSTAL_1.getId());
         });
 
-        assertTrue(codigoPostalRespository.findById(Datos.CODIGO_POSTAL_DTO_1.getId()).isEmpty());
+        assertTrue(codigoPostalRepository.findById(Datos.CODIGO_POSTAL_DTO_1.getId()).isEmpty());
         assertEquals("Codigo Postal con id " + Datos.CODIGO_POSTAL_DTO_1.getId() + " no se encuentra", exception.getMessage());
     }
 
     @DisplayName("Test para obtener un codigo postal por su codigo (service)")
     @Test
     void obtenerCodigoPostalPorCodigoTest() {
-        when(codigoPostalRespository.findByCodigo(anyString())).thenReturn(Optional.of(Datos.CODIGO_POSTAL_1));
+        when(codigoPostalRepository.findByCodigo(anyString())).thenReturn(Optional.of(Datos.CODIGO_POSTAL_1));
         when(modelMapper.map(any(), eq(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_1);
 
         CodigoPostalDTO codigoPostalEncontrado = codigoPostalService.findByCodigo(Datos.CODIGO_POSTAL_1.getCodigo());
@@ -123,20 +130,20 @@ public class CodigoPostalServiceTest {
     @DisplayName("Test para obtener un codigo postal por su codigo (service), codigo postal no encontrado")
     @Test
     void obtenerCodigoPostalPorCodigoCodigoPostalNoEncontradoTest() {
-        when(codigoPostalRespository.findByCodigo(Datos.CODIGO_POSTAL_1.getCodigo())).thenReturn(Optional.empty());
+        when(codigoPostalRepository.findByCodigo(Datos.CODIGO_POSTAL_1.getCodigo())).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
             codigoPostalService.findByCodigo(Datos.CODIGO_POSTAL_1.getCodigo());
         });
 
-        assertTrue(codigoPostalRespository.findByCodigo(Datos.CODIGO_POSTAL_DTO_1.getCodigo()).isEmpty());
+        assertTrue(codigoPostalRepository.findByCodigo(Datos.CODIGO_POSTAL_DTO_1.getCodigo()).isEmpty());
         assertEquals("Codigo Postal con codigo " + Datos.CODIGO_POSTAL_DTO_1.getCodigo() + " no se encuentra", exception.getMessage());
     }
 
     @DisplayName("Test para obtener una lista de codigos postales por Provincia (service)")
     @Test
     void obtenerCodigosPostalesPorProvinciaTest() {
-        when(codigoPostalRespository.findByProvincia(anyString())).thenReturn(Datos.CODIGOS_POSTALES_1);
+        when(codigoPostalRepository.findByProvincia(anyString())).thenReturn(Datos.CODIGOS_POSTALES_1);
         when(modelMapper.map(eq(Datos.CODIGO_POSTAL_1), eq(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_1);
         when(modelMapper.map(eq(Datos.CODIGO_POSTAL_2), eq(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_2);
         when(modelMapper.map(eq(Datos.CODIGO_POSTAL_3), eq(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_3);
@@ -152,7 +159,7 @@ public class CodigoPostalServiceTest {
     @DisplayName("Test para obtener un codigo postal por su localidad (service)")
     @Test
     void obtenerCodigoPostalPorLocalidadTest() {
-        when(codigoPostalRespository.findByLocalidad(anyString())).thenReturn(Optional.of(Datos.CODIGO_POSTAL_1));
+        when(codigoPostalRepository.findByLocalidad(anyString())).thenReturn(Optional.of(Datos.CODIGO_POSTAL_1));
         when(modelMapper.map(any(), eq(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_1);
 
         CodigoPostalDTO codigoPostalEncontrado = codigoPostalService.findByLocalidad(Datos.CODIGO_POSTAL_1.getLocalidad());
@@ -163,13 +170,26 @@ public class CodigoPostalServiceTest {
     @DisplayName("Test para obtener un codigo postal por su localidad (service), codigo postal no encontrado")
     @Test
     void obtenerCodigoPostalPorLocalidadCodigoPostalNoEncontradoTest() {
-        when(codigoPostalRespository.findByLocalidad(Datos.CODIGO_POSTAL_1.getLocalidad())).thenReturn(Optional.empty());
+        when(codigoPostalRepository.findByLocalidad(Datos.CODIGO_POSTAL_1.getLocalidad())).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
             codigoPostalService.findByLocalidad(Datos.CODIGO_POSTAL_1.getLocalidad());
         });
 
-        assertTrue(codigoPostalRespository.findByLocalidad(Datos.CODIGO_POSTAL_DTO_1.getLocalidad()).isEmpty());
+        assertTrue(codigoPostalRepository.findByLocalidad(Datos.CODIGO_POSTAL_DTO_1.getLocalidad()).isEmpty());
         assertEquals("Codigo Postal con localidad " + Datos.CODIGO_POSTAL_DTO_1.getLocalidad() + " no se encuentra", exception.getMessage());
+    }
+
+    @DisplayName("Test para eliminar un codigo postal (service)")
+    @Test
+    void eliminarCodigoPostalTest() {
+
+        given(codigoPostalRepository.existsById(Datos.CODIGO_POSTAL_1.getId())).willReturn(true);
+        given(propietarioService.obtenerPropietariosPorCodigoPostalHQL(Datos.CODIGO_POSTAL_1.getId())).willReturn(Collections.emptyList());
+        willDoNothing().given(codigoPostalRepository).deleteById(Datos.CODIGO_POSTAL_1.getId());
+
+        codigoPostalService.deleteById(Datos.CODIGO_POSTAL_1.getId());
+
+        verify(codigoPostalRepository, times(1)).deleteById(Datos.CODIGO_POSTAL_1.getId());
     }
 }
