@@ -87,7 +87,7 @@ public class PiezaServiceImpl implements PiezaService {
     }
 
     @Override
-    public ResponseEntity<PiezaDTO> modificarPieza(PiezaDTO piezaDTO) {
+    public PiezaDTO modificarPieza(PiezaDTO piezaDTO) {
         if (piezaDTO.getId() == null)
             throw new BadRequestModificacionException("Pieza", "id");
 
@@ -103,8 +103,9 @@ public class PiezaServiceImpl implements PiezaService {
         pieza.setPrecio(piezaDTO.getPrecio());
 
         Pieza piezaModificada = piezaRepository.save(pieza);
+        PiezaDTO piezaModificadaDTO = modelMapper.map(piezaModificada, PiezaDTO.class);
 
-        return new ResponseEntity<>(modelMapper.map(piezaModificada, PiezaDTO.class), HttpStatus.OK);
+        return piezaModificadaDTO;
     }
 
     @Override

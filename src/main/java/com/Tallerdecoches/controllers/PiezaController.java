@@ -124,7 +124,7 @@ public class PiezaController {
     @PutMapping()
     public ResponseEntity<PiezaDTO> modificarPieza(@Valid @RequestBody PiezaDTO piezaDTO) {
 
-        return piezaService.modificarPieza(piezaDTO);
+        return new ResponseEntity<>(piezaService.modificarPieza(piezaDTO), HttpStatus.OK);
     }
 
     @Operation(summary = "Eliminar una pieza", description = "Eliminar una pieza")
