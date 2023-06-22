@@ -112,7 +112,7 @@ public class ProveedorServiceImpl implements ProveedorService{
     }
 
     @Override
-    public ResponseEntity<ProveedorDTO> modificarProveedor(ProveedorDTO proveedorDTO, Long idCodigoPostal) {
+    public ProveedorDTO modificarProveedor(ProveedorDTO proveedorDTO, Long idCodigoPostal) {
 
         if (proveedorDTO.getId() == null)
             throw new BadRequestModificacionException("Proveedor", "id");
@@ -134,8 +134,9 @@ public class ProveedorServiceImpl implements ProveedorService{
         proveedor.setCodigoPostal(codigoPostal);
 
         Proveedor proveedorModificado = proveedorRepository.save(proveedor);
+        ProveedorDTO proveedorModificadoDTO = modelMapper.map(proveedorModificado, ProveedorDTO.class);
 
-        return new ResponseEntity<>(modelMapper.map(proveedor, ProveedorDTO.class), HttpStatus.OK);
+        return proveedorModificadoDTO;
     }
 
     @Override

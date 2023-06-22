@@ -159,7 +159,7 @@ public class ProveedorController {
     public ResponseEntity<ProveedorDTO> modificarProveedor(@Valid @RequestBody ProveedorDTO proveedorDTO
             , @Parameter(description = "id del codigo postal", required = true) @PathVariable Long id_codigoPostal) {
 
-        return proveedorService.modificarProveedor(proveedorDTO, id_codigoPostal);
+        return new ResponseEntity<>(proveedorService.modificarProveedor(proveedorDTO, id_codigoPostal), HttpStatus.OK);
     }
 
     @Operation(summary = "Eliminar un Proveedor", description = "Eliminar un Proveedor")
