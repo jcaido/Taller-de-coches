@@ -9,7 +9,7 @@ public interface PiezaService {
 
     PiezaDTO crearPieza(PiezaCrearDTO piezaCrearDTO);
     List<PiezaDTO> findAll();
-    ResponseEntity<PiezaDTO> findById(Long id);
+    PiezaDTO findById(Long id);
     ResponseEntity<PiezaDTO> findByReferencia(String referencia);
     List<PiezaDTO> findByNombre (String nombre);
     ResponseEntity<PiezaDTO> modificarPieza(PiezaDTO piezaDTO);

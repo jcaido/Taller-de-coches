@@ -74,7 +74,7 @@ public class PiezaController {
     public ResponseEntity<PiezaDTO> obtenerPiezaPorId(@Parameter(description = "id de la pieza a buscar",
             required = true) @PathVariable Long id) {
 
-        return piezaService.findById(id);
+        return new ResponseEntity<>(piezaService.findById(id), HttpStatus.OK);
     }
 
     @Operation(summary = "Obtener Pieza por referencia", description = "Obtener Pieza por referencia")
