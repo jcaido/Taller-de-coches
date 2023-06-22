@@ -13,5 +13,5 @@ public interface PiezaService {
     PiezaDTO findByReferencia(String referencia);
     List<PiezaDTO> findByNombre (String nombre);
     PiezaDTO modificarPieza(PiezaDTO piezaDTO);
-    ResponseEntity<String> deleteById(Long id);
+    String deleteById(Long id);
 }

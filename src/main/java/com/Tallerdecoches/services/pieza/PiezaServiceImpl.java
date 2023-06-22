@@ -109,7 +109,7 @@ public class PiezaServiceImpl implements PiezaService {
     }
 
     @Override
-    public ResponseEntity<String> deleteById(Long id) {
+    public String deleteById(Long id) {
 
         if (!piezaRepository.existsById(id))
             throw new ResourceNotFoundException("Pieza", "id", String.valueOf(id));
@@ -122,6 +122,8 @@ public class PiezaServiceImpl implements PiezaService {
 
         piezaRepository.deleteById(id);
 
-        return new ResponseEntity<>("Pieza eliminada con exito", HttpStatus.OK);
+        String respuesta = "Pieza eliminada con exito";
+
+        return respuesta;
     }
 }
