@@ -33,7 +33,7 @@ public class ManoDeObraServiceImpl implements ManoDeObraService {
     }
 
     @Override
-    public ResponseEntity<ManoDeObraDTO> crearManoDeObra(ManoDeObraCrearDTO manoDeObraCrearDTO) {
+    public ManoDeObraDTO crearManoDeObra(ManoDeObraCrearDTO manoDeObraCrearDTO) {
 
         if (manoDeObraRepository.existsByprecioHoraClienteTaller(manoDeObraCrearDTO.getPrecioHoraClienteTaller()))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El precio horario ya existe");
@@ -47,7 +47,7 @@ public class ManoDeObraServiceImpl implements ManoDeObraService {
         ManoDeObra nuevoPrecioManoDeObra = manoDeObraRepository.save(manoDeObra);
         ManoDeObraDTO manoDeObraRespuesta = modelMapper.map(nuevoPrecioManoDeObra, ManoDeObraDTO.class);
 
-        return new ResponseEntity<>(manoDeObraRespuesta, HttpStatus.CREATED);
+        return manoDeObraRespuesta;
     }
 
     @Override

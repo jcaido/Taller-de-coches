@@ -7,6 +7,7 @@ import com.Tallerdecoches.entities.ManoDeObra;
 import com.Tallerdecoches.repositories.ManoDeObraRepository;
 import com.Tallerdecoches.services.manoDeObra.ManoDeObraService;
 import io.swagger.v3.oas.annotations.Parameter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class ManoDeObraController {
     @PostMapping()
     public ResponseEntity<ManoDeObraDTO> crearManoDeObra(@Valid @RequestBody ManoDeObraCrearDTO manoDeObraCrearDTO) {
 
-        return manoDeObraService.crearManoDeObra(manoDeObraCrearDTO);
+        return new ResponseEntity<>(manoDeObraService.crearManoDeObra(manoDeObraCrearDTO), HttpStatus.CREATED);
     }
 
     @GetMapping()
