@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -42,7 +43,7 @@ public class PiezaController {
     @PostMapping()
     public ResponseEntity<PiezaDTO> crearPieza(@Valid @RequestBody PiezaCrearDTO piezaCrearDTO) {
 
-        return piezaService.crearPieza(piezaCrearDTO);
+        return new ResponseEntity<>(piezaService.crearPieza(piezaCrearDTO), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Obtener todas las Piezas", description = "Obtener todas las Piezas")

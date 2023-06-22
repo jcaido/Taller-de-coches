@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PiezaService {
 
-    ResponseEntity<PiezaDTO> crearPieza(PiezaCrearDTO piezaCrearDTO);
+    PiezaDTO crearPieza(PiezaCrearDTO piezaCrearDTO);
     List<PiezaDTO> findAll();
     ResponseEntity<PiezaDTO> findById(Long id);
     ResponseEntity<PiezaDTO> findByReferencia(String referencia);

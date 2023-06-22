@@ -36,7 +36,7 @@ public class PiezaServiceImpl implements PiezaService {
     }
 
     @Override
-    public ResponseEntity<PiezaDTO> crearPieza(PiezaCrearDTO piezaCrearDTO) {
+    public PiezaDTO crearPieza(PiezaCrearDTO piezaCrearDTO) {
 
         if (piezaRepository.existsByReferencia(piezaCrearDTO.getReferencia()))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "La referencia ya existe");
@@ -45,7 +45,7 @@ public class PiezaServiceImpl implements PiezaService {
         Pieza nuevaPieza = piezaRepository.save(pieza);
         PiezaDTO piezaRespuesta = modelMapper.map(pieza, PiezaDTO.class);
 
-        return new ResponseEntity<>(piezaRespuesta, HttpStatus.CREATED);
+        return piezaRespuesta;
     }
 
     @Override
