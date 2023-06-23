@@ -16,6 +16,13 @@ public class Datos {
             .provincia("Cordoba")
             .build();
 
+    public final static CodigoPostal CODIGO_POSTAL_1_MODIFICADO = CodigoPostal.builder()
+            .id(2L)
+            .codigo("11111")
+            .localidad("Rute")
+            .provincia("Albacete")
+            .build();
+
     public final static CodigoPostal CODIGO_POSTAL_2 = CodigoPostal.builder()
             .id(3L)
             .codigo("45111")
@@ -45,6 +52,12 @@ public class Datos {
             .codigo("14920")
             .localidad("Aguilar de la Frontera")
             .provincia("Cordoba")
+            .build();
+    public final static CodigoPostalDTO CODIGO_POSTAL_DTO_1_MODIFICADO = CodigoPostalDTO.builder()
+            .id(2L)
+            .codigo("11111")
+            .localidad("Rute")
+            .provincia("Albacete")
             .build();
     public final static CodigoPostalDTO CODIGO_POSTAL_DTO_2 = CodigoPostalDTO.builder()
             .id(3L)

@@ -6,6 +6,7 @@ import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.CodigoPostalRepository;
 import com.Tallerdecoches.repositories.Datos;
 import com.Tallerdecoches.services.codigoPostal.CodigoPostalServiceImpl;
+import com.Tallerdecoches.services.codigoPostal.CodigoPostalValidacionesUniqueService;
 import com.Tallerdecoches.services.propietario.PropietarioService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,8 @@ public class CodigoPostalServiceTest {
 
     @Mock
     private CodigoPostalRepository codigoPostalRepository;
+    @Mock
+    private CodigoPostalValidacionesUniqueService codigoPostalValidacionesUniqueService;
 
     @Mock
     private ModelMapper modelMapper;
@@ -130,14 +133,14 @@ public class CodigoPostalServiceTest {
     @DisplayName("Test para obtener un codigo postal por su codigo (service), codigo postal no encontrado")
     @Test
     void obtenerCodigoPostalPorCodigoCodigoPostalNoEncontradoTest() {
-        when(codigoPostalRepository.findByCodigo(Datos.CODIGO_POSTAL_1.getCodigo())).thenReturn(Optional.empty());
+        when(codigoPostalRepository.findByCodigo(Datos.CODIGO_POSTAL_2.getCodigo())).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
-            codigoPostalService.findByCodigo(Datos.CODIGO_POSTAL_1.getCodigo());
+            codigoPostalService.findByCodigo(Datos.CODIGO_POSTAL_2.getCodigo());
         });
 
-        assertTrue(codigoPostalRepository.findByCodigo(Datos.CODIGO_POSTAL_DTO_1.getCodigo()).isEmpty());
-        assertEquals("Codigo Postal con codigo " + Datos.CODIGO_POSTAL_DTO_1.getCodigo() + " no se encuentra", exception.getMessage());
+        assertTrue(codigoPostalRepository.findByCodigo(Datos.CODIGO_POSTAL_DTO_2.getCodigo()).isEmpty());
+        assertEquals("Codigo Postal con codigo " + Datos.CODIGO_POSTAL_DTO_2.getCodigo() + " no se encuentra", exception.getMessage());
     }
 
     @DisplayName("Test para obtener una lista de codigos postales por Provincia (service)")
@@ -216,5 +219,20 @@ public class CodigoPostalServiceTest {
         });
 
         assertEquals("409 CONFLICT \"Existen propietarios relacionados con ese codigo postal\"", exception.getMessage());
+    }
+
+    @DisplayName("Test para modificar un codigo postal (service")
+    @Test
+    void modificarCodigoPostalTest() {
+        when(codigoPostalRepository.existsById(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO.getId())).thenReturn(true);
+        when(codigoPostalValidacionesUniqueService.validacionUniqueLocalidad(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO)).thenReturn(true);
+        when(codigoPostalValidacionesUniqueService.validacionUniqueCodigo(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO)).thenReturn(true);
+        when(codigoPostalRepository.findById(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO.getId())).thenReturn(Optional.of(Datos.CODIGO_POSTAL_1));
+        when(codigoPostalRepository.save(Datos.CODIGO_POSTAL_1)).thenReturn(Datos.CODIGO_POSTAL_1_MODIFICADO);
+        when(modelMapper.map(eq(Datos.CODIGO_POSTAL_1_MODIFICADO), eq(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO);
+
+        codigoPostalService.modificarCodigoPostal(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO);
+
+        assertEquals("11111", Datos.CODIGO_POSTAL_1.getCodigo());
     }
 }
