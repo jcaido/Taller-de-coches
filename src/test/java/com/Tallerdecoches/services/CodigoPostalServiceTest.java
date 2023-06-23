@@ -192,4 +192,16 @@ public class CodigoPostalServiceTest {
 
         verify(codigoPostalRepository, times(1)).deleteById(Datos.CODIGO_POSTAL_1.getId());
     }
+
+    @DisplayName("Test para eliminar un codigo postal (service), codigo postal no encontrado")
+    @Test
+    void eliminarCodigoPostalCodigoPostalNoEncontradoTest() {
+        when(codigoPostalRepository.existsById(Datos.CODIGO_POSTAL_1.getId())).thenReturn(false);
+
+        Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
+            codigoPostalService.deleteById(Datos.CODIGO_POSTAL_1.getId());
+        });
+
+        assertEquals("Codigo Postal con id " + Datos.CODIGO_POSTAL_DTO_1.getId() + " no se encuentra", exception.getMessage());
+    }
 }
