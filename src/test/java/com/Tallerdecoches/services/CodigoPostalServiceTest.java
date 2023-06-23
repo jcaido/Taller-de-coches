@@ -184,8 +184,8 @@ public class CodigoPostalServiceTest {
     @Test
     void eliminarCodigoPostalTest() {
 
-        given(codigoPostalRepository.existsById(Datos.CODIGO_POSTAL_1.getId())).willReturn(true);
-        given(propietarioService.obtenerPropietariosPorCodigoPostalHQL(Datos.CODIGO_POSTAL_1.getId())).willReturn(Collections.emptyList());
+        when(codigoPostalRepository.existsById(Datos.CODIGO_POSTAL_1.getId())).thenReturn(true);
+        when(propietarioService.obtenerPropietariosPorCodigoPostalHQL(Datos.CODIGO_POSTAL_1.getId())).thenReturn(Collections.emptyList());
         willDoNothing().given(codigoPostalRepository).deleteById(Datos.CODIGO_POSTAL_1.getId());
 
         codigoPostalService.deleteById(Datos.CODIGO_POSTAL_1.getId());
