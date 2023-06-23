@@ -235,4 +235,16 @@ public class CodigoPostalServiceTest {
 
         assertEquals("11111", Datos.CODIGO_POSTAL_1.getCodigo());
     }
+
+    @DisplayName("Test para modificar un codigo postal (service), codigo postal no encontrado")
+    @Test
+    void modificarCodigoPostalCodigoPostalNoEncontradoTest() {
+        when(codigoPostalRepository.existsById(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO.getId())).thenReturn(false);
+
+        Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
+            codigoPostalService.modificarCodigoPostal(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO);
+        });
+
+        assertEquals("Codigo Postal con id " + Datos.CODIGO_POSTAL_DTO_1_MODIFICADO.getId() + " no se encuentra", exception.getMessage());
+    }
 }
