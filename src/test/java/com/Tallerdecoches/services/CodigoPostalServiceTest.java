@@ -260,4 +260,18 @@ public class CodigoPostalServiceTest {
 
         assertEquals("409 CONFLICT \"La localidad ya existe\"", exception.getMessage());
     }
+
+    @DisplayName("Test para modificar un codigo postal (service), el codigo ya existe")
+    @Test
+    void modificarCodigoPostalCodigoYaExisteTest() {
+        when(codigoPostalRepository.existsById(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO.getId())).thenReturn(true);
+        when(codigoPostalValidacionesUniqueService.validacionUniqueLocalidad(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO)).thenReturn(true);
+        when(codigoPostalValidacionesUniqueService.validacionUniqueCodigo(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO)).thenReturn(false);
+
+        Exception exception = assertThrows(ResponseStatusException.class, () -> {
+            codigoPostalService.modificarCodigoPostal(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO);
+        });
+
+        assertEquals("409 CONFLICT \"El codigo del Codigo Postal ya existe\"", exception.getMessage());
+    }
 }
