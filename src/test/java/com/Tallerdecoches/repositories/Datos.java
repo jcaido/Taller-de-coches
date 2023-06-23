@@ -2,6 +2,7 @@ package com.Tallerdecoches.repositories;
 
 import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalCrearDTO;
 import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalDTO;
+import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.entities.CodigoPostal;
 
 import java.util.Arrays;
@@ -63,5 +64,21 @@ public class Datos {
             .codigo("14920")
             .localidad("Aguilar de la Frontera")
             .provincia("Cordoba")
+            .build();
+
+    public final static PropietarioBusquedasDTO PROPIETARIO_BUSQUEDAS_1 = PropietarioBusquedasDTO.builder()
+            .nombre("Antonio")
+            .primerApellido("Perez")
+            .segundoApellido("Jimenez")
+            .dni("44000888T")
+            .domicilio("Calle Alta, 98")
+            .build();
+
+    public final static PropietarioBusquedasDTO PROPIETARIO_BUSQUEDAS_2 =PropietarioBusquedasDTO.builder()
+            .nombre("Juan")
+            .primerApellido("Cabello")
+            .segundoApellido("Alba")
+            .dni("33888000L")
+            .domicilio("Calle Baja, 89")
             .build();
 }

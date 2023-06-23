@@ -204,4 +204,17 @@ public class CodigoPostalServiceTest {
 
         assertEquals("Codigo Postal con id " + Datos.CODIGO_POSTAL_DTO_1.getId() + " no se encuentra", exception.getMessage());
     }
+
+    @DisplayName("Test para eliminar un codigo postal(service), existen propietarios relacionados")
+    @Test
+    void eliminarCodigoPostalExistenPropietariosRelacionadosTest() {
+        when(codigoPostalRepository.existsById(Datos.CODIGO_POSTAL_1.getId())).thenReturn(true);
+        when(propietarioService.obtenerPropietariosPorCodigoPostalHQL(Datos.CODIGO_POSTAL_1.getId())).thenReturn(List.of(Datos.PROPIETARIO_BUSQUEDAS_1, Datos.PROPIETARIO_BUSQUEDAS_2));
+
+        Exception exception = assertThrows(ResponseStatusException.class, () -> {
+            codigoPostalService.deleteById(Datos.CODIGO_POSTAL_1.getId());
+        });
+
+        assertEquals("409 CONFLICT \"Existen propietarios relacionados con ese codigo postal\"", exception.getMessage());
+    }
 }
