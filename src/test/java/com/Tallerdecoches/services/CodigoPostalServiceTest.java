@@ -247,4 +247,17 @@ public class CodigoPostalServiceTest {
 
         assertEquals("Codigo Postal con id " + Datos.CODIGO_POSTAL_DTO_1_MODIFICADO.getId() + " no se encuentra", exception.getMessage());
     }
+
+    @DisplayName("Test para modificar un codigo postal (service), la localidad ya existe")
+    @Test
+    void modificarCodigoPostalLocalidadYaExisteTest() {
+        when(codigoPostalRepository.existsById(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO.getId())).thenReturn(true);
+        when(codigoPostalValidacionesUniqueService.validacionUniqueLocalidad(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO)).thenReturn(false);
+
+        Exception exception = assertThrows(ResponseStatusException.class, () -> {
+            codigoPostalService.modificarCodigoPostal(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO);
+        });
+
+        assertEquals("409 CONFLICT \"La localidad ya existe\"", exception.getMessage());
+    }
 }
