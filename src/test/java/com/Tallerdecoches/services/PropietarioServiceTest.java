@@ -135,4 +135,15 @@ public class PropietarioServiceTest {
         assertTrue(propietarioRepository.findById(Datos.PROPIETARIO_BUSQUEDAS_DTO_1.getId()).isEmpty());
         assertEquals("Propietario con id " + Datos.PROPIETARIO_BUSQUEDAS_DTO_1.getId() + " no se encuentra", exception.getMessage());
     }
+
+    @DisplayName("Test para obtener un propietario por dni (service)")
+    @Test
+    void obtenerPropietarioPorDniTest() {
+        when(propietarioRepository.findByDni(anyString())).thenReturn(Optional.of(Datos.PROPIETARIO_1));
+        when(modelMapper.map(any(), eq(PropietarioBusquedasDTO.class))).thenReturn(Datos.PROPIETARIO_BUSQUEDAS_DTO_1);
+
+        PropietarioBusquedasDTO propietarioEncontrado = propietarioService.findByDni(Datos.PROPIETARIO_1.getDni());
+
+        assertEquals("33888000L", propietarioEncontrado.getDni());
+    }
 }
