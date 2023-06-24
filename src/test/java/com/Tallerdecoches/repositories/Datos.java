@@ -3,6 +3,7 @@ package com.Tallerdecoches.repositories;
 import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalCrearDTO;
 import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
+import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioCrearDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
 import com.Tallerdecoches.entities.CodigoPostal;
@@ -135,6 +136,13 @@ public class Datos {
             .domicilio("Calle Baja, 89")
             .codigoPostal(CODIGO_POSTAL_1)
             .build();
+    public final static PropietarioBusquedasParcialDTO PROPIETARIO_BUSQUEDAS_PARCIAL_DTO_1 = PropietarioBusquedasParcialDTO.builder()
+            .id(1L)
+            .nombre("Juan")
+            .primerApellido("Cabello")
+            .segundoApellido("Alba")
+            .dni("33888000L")
+            .build();
     public final static PropietarioBusquedasDTO PROPIETARIO_BUSQUEDAS_2 =PropietarioBusquedasDTO.builder()
             .nombre("Juan")
             .primerApellido("Cabello")
@@ -150,5 +158,12 @@ public class Datos {
             .dni("33888000L")
             .domicilio("Calle Baja, 89")
             .codigoPostal(CODIGO_POSTAL_2)
+            .build();
+    public final static PropietarioBusquedasParcialDTO PROPIETARIO_BUSQUEDAS_PARCIAL_DTO_2 = PropietarioBusquedasParcialDTO.builder()
+            .id(2L)
+            .nombre("Francisco")
+            .primerApellido("Garcia")
+            .segundoApellido("Gutierrez")
+            .dni("55000900B")
             .build();
 }

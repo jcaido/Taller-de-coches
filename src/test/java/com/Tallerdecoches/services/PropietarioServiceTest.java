@@ -1,6 +1,7 @@
 package com.Tallerdecoches.services;
 
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
+import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
 import com.Tallerdecoches.entities.Propietario;
 import com.Tallerdecoches.repositories.CodigoPostalRepository;
@@ -95,5 +96,19 @@ public class PropietarioServiceTest {
         assertEquals(2, propietarios.size());
         assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getNombre().equals("Juan")));
         assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getDomicilio().equals("Calle Baja, 89")));
+    }
+
+    @DisplayName("Test para obtener una lista parcial con todos los propietarios (service)")
+    @Test
+    void obtenerPropietariosTodosParcialTest() {
+        when(propietarioRepository.findAll()).thenReturn(Datos.PROPIETARIOS);
+        when(modelMapper.map(eq(Datos.PROPIETARIO_1), eq(PropietarioBusquedasParcialDTO.class))).thenReturn(Datos.PROPIETARIO_BUSQUEDAS_PARCIAL_DTO_1);
+        when(modelMapper.map(eq(Datos.PROPIETARIO_2), eq(PropietarioBusquedasParcialDTO.class))).thenReturn(Datos.PROPIETARIO_BUSQUEDAS_PARCIAL_DTO_2);
+
+        List<PropietarioBusquedasParcialDTO> propietarios = propietarioService.findAllPartial();
+
+        assertEquals(2, propietarios.size());
+        assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getNombre().equals("Juan")));
+        assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getDni().equals("55000900B")));
     }
 }

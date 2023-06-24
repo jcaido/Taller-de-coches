@@ -1,14 +1,12 @@
 package com.Tallerdecoches.DTOs.propietario;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class PropietarioBusquedasParcialDTO {
 
     private Long id;
