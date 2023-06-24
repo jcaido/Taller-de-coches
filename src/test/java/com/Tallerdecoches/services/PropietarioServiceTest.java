@@ -4,6 +4,7 @@ import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
 import com.Tallerdecoches.entities.Propietario;
+import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.CodigoPostalRepository;
 import com.Tallerdecoches.repositories.Datos;
 import com.Tallerdecoches.repositories.PropietarioRepository;
@@ -120,5 +121,18 @@ public class PropietarioServiceTest {
         PropietarioBusquedasDTO propietarioEncontrado = propietarioService.findById(Datos.PROPIETARIO_1.getId());
 
         assertEquals("33888000L", propietarioEncontrado.getDni());
+    }
+
+    @DisplayName("Test para obtener un propietario por su id (service), propietario no encontrado")
+    @Test
+    void obtenerPropietarioPorIdPropietarioNoEncontradoTest() {
+        when(propietarioRepository.findById(Datos.PROPIETARIO_1.getId())).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
+            propietarioService.findById(Datos.PROPIETARIO_1.getId());
+        });
+
+        assertTrue(propietarioRepository.findById(Datos.PROPIETARIO_BUSQUEDAS_DTO_1.getId()).isEmpty());
+        assertEquals("Propietario con id " + Datos.PROPIETARIO_BUSQUEDAS_DTO_1.getId() + " no se encuentra", exception.getMessage());
     }
 }
