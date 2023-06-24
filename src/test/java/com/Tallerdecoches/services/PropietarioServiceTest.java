@@ -146,4 +146,16 @@ public class PropietarioServiceTest {
 
         assertEquals("33888000L", propietarioEncontrado.getDni());
     }
+
+    @DisplayName("Test para obtener un propietario  por su dni (service), propietario no encontrado")
+    @Test
+    void obtenerPropietarioPorDniPropietarioNoEncontradoTest() {
+        when(propietarioRepository.findByDni(Datos.PROPIETARIO_1.getDni())).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
+            PropietarioBusquedasDTO propietarioEncontrado = propietarioService.findByDni(Datos.PROPIETARIO_1.getDni());
+        });
+
+        assertEquals("Propietario con dni " + Datos.PROPIETARIO_1.getDni() + " no se encuentra", exception.getMessage());
+    }
 }
