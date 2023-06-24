@@ -1,5 +1,6 @@
 package com.Tallerdecoches.services;
 
+import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
 import com.Tallerdecoches.entities.Propietario;
 import com.Tallerdecoches.repositories.CodigoPostalRepository;
@@ -16,10 +17,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -79,5 +81,19 @@ public class PropietarioServiceTest {
         });
 
         assertEquals("409 CONFLICT \"El codigo Postal asociado al propietario no existe\"", exception.getMessage());
+    }
+
+    @DisplayName("Test para obtener una lista con todos los propietarios (service)")
+    @Test
+    void obtenerPropietariosTodosTest() {
+        when(propietarioRepository.findAll()).thenReturn(Datos.PROPIETARIOS);
+        when(modelMapper.map(eq(Datos.PROPIETARIO_1), eq(PropietarioBusquedasDTO.class))).thenReturn(Datos.PROPIETARIO_BUSQUEDAS_DTO_1);
+        when(modelMapper.map(eq(Datos.PROPIETARIO_2), eq(PropietarioBusquedasDTO.class))).thenReturn(Datos.PROPIETARIO_BUSQUEDAS_DTO_2);
+
+        List<PropietarioBusquedasDTO> propietarios = propietarioService.findAll();
+
+        assertEquals(2, propietarios.size());
+        assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getNombre().equals("Juan")));
+        assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getDomicilio().equals("Calle Baja, 89")));
     }
 }

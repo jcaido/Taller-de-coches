@@ -118,6 +118,7 @@ public class Datos {
             .domicilio("Calle San Anton, 54")
             .codigoPostal(CODIGO_POSTAL_2)
             .build();
+    public final static List<Propietario> PROPIETARIOS = Arrays.asList(PROPIETARIO_1, PROPIETARIO_2);
     public final static PropietarioBusquedasDTO PROPIETARIO_BUSQUEDAS_1 = PropietarioBusquedasDTO.builder()
             .nombre("Juan")
             .primerApellido("Cabello")
@@ -125,12 +126,29 @@ public class Datos {
             .dni("33888000L")
             .domicilio("Calle Baja, 89")
             .build();
-
+    public final static PropietarioBusquedasDTO PROPIETARIO_BUSQUEDAS_DTO_1 = PropietarioBusquedasDTO.builder()
+            .id(1L)
+            .nombre("Juan")
+            .primerApellido("Cabello")
+            .segundoApellido("Alba")
+            .dni("33888000L")
+            .domicilio("Calle Baja, 89")
+            .codigoPostal(CODIGO_POSTAL_1)
+            .build();
     public final static PropietarioBusquedasDTO PROPIETARIO_BUSQUEDAS_2 =PropietarioBusquedasDTO.builder()
             .nombre("Juan")
             .primerApellido("Cabello")
             .segundoApellido("Alba")
             .dni("33888000L")
             .domicilio("Calle Baja, 89")
+            .build();
+    public final static PropietarioBusquedasDTO PROPIETARIO_BUSQUEDAS_DTO_2 = PropietarioBusquedasDTO.builder()
+            .id(2L)
+            .nombre("Juan")
+            .primerApellido("Cabello")
+            .segundoApellido("Alba")
+            .dni("33888000L")
+            .domicilio("Calle Baja, 89")
+            .codigoPostal(CODIGO_POSTAL_2)
             .build();
 }
