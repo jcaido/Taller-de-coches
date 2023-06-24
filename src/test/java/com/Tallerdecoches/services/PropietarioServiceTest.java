@@ -23,8 +23,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -110,5 +109,16 @@ public class PropietarioServiceTest {
         assertEquals(2, propietarios.size());
         assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getNombre().equals("Juan")));
         assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getDni().equals("55000900B")));
+    }
+
+    @DisplayName("Test para obtener un propietario por su id (service)")
+    @Test
+    void obtenerPropietarioPorIdTest() {
+        when(propietarioRepository.findById(anyLong())).thenReturn(Optional.of(Datos.PROPIETARIO_1));
+        when(modelMapper.map(any(), eq(PropietarioBusquedasDTO.class))).thenReturn(Datos.PROPIETARIO_BUSQUEDAS_DTO_1);
+
+        PropietarioBusquedasDTO propietarioEncontrado = propietarioService.findById(Datos.PROPIETARIO_1.getId());
+
+        assertEquals("33888000L", propietarioEncontrado.getDni());
     }
 }
