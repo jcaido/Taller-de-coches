@@ -3,12 +3,17 @@ package com.Tallerdecoches.repositories;
 import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalCrearDTO;
 import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
+import com.Tallerdecoches.DTOs.propietario.PropietarioCrearDTO;
+import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
 import com.Tallerdecoches.entities.CodigoPostal;
+import com.Tallerdecoches.entities.Propietario;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Datos {
+
+    //CODIGOS POSTALES
     public final static CodigoPostal CODIGO_POSTAL_1 = CodigoPostal.builder()
             .id(2L)
             .codigo("14920")
@@ -79,12 +84,46 @@ public class Datos {
             .provincia("Cordoba")
             .build();
 
-    public final static PropietarioBusquedasDTO PROPIETARIO_BUSQUEDAS_1 = PropietarioBusquedasDTO.builder()
+    //PROPIETARIOS
+    public final static Propietario PROPIETARIO_1 = Propietario.builder()
+            .id(1L)
             .nombre("Antonio")
             .primerApellido("Perez")
             .segundoApellido("Jimenez")
             .dni("44000888T")
             .domicilio("Calle Alta, 98")
+            //.codigoPostal(CODIGO_POSTAL_1)
+            .build();
+    public final static PropietarioDTO PROPIETARIO_DTO_1 = PropietarioDTO.builder()
+            .id(1L)
+            .nombre("Antonio")
+            .primerApellido("Perez")
+            .segundoApellido("Jimenez")
+            .dni("44000888T")
+            .domicilio("Calle Alta, 98")
+            .build();
+    public final static PropietarioCrearDTO PROPIETARIO_CREAR_DTO_1 = PropietarioCrearDTO.builder()
+            .nombre("Antonio")
+            .primerApellido("Perez")
+            .segundoApellido("Jimenez")
+            .dni("44000888T")
+            .domicilio("Calle Alta, 98")
+            .build();
+    public final static Propietario PROPIETARIO_2 = Propietario.builder()
+            .id(2L)
+            .nombre("Francisco")
+            .primerApellido("Garcia")
+            .segundoApellido("Gutierrez")
+            .dni("55000900B")
+            .domicilio("Calle San Anton, 54")
+            .codigoPostal(CODIGO_POSTAL_2)
+            .build();
+    public final static PropietarioBusquedasDTO PROPIETARIO_BUSQUEDAS_1 = PropietarioBusquedasDTO.builder()
+            .nombre("Juan")
+            .primerApellido("Cabello")
+            .segundoApellido("Alba")
+            .dni("33888000L")
+            .domicilio("Calle Baja, 89")
             .build();
 
     public final static PropietarioBusquedasDTO PROPIETARIO_BUSQUEDAS_2 =PropietarioBusquedasDTO.builder()
