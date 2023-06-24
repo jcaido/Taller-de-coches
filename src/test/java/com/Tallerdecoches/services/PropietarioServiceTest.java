@@ -59,7 +59,20 @@ public class PropietarioServiceTest {
     @DisplayName("Test para guardar un propietario (service), el dni del propietario ya existe")
     @Test
     void guardarPropietarioDniPropietarioYaExisteTest() {
+        when(propietarioRepository.existsByDni(Datos.PROPIETARIO_CREAR_DTO_1.getDni())).thenReturn(true);
+
+        Exception exception = assertThrows(ResponseStatusException.class, () -> {
+            PropietarioDTO propietarioGuardado = propietarioService.crearPropietario(Datos.PROPIETARIO_CREAR_DTO_1, Datos.CODIGO_POSTAL_1.getId());
+        });
+
+        assertEquals("409 CONFLICT \"El DNI del propietario ya existe\"", exception.getMessage());
+    }
+
+    @DisplayName("Test para guardar un propietario (service), el codigo postal asoociado no existe")
+    @Test
+    void guardarPropietarioCodigoPostalAsociadoNoExisteTest() {
         when(propietarioRepository.existsByDni(Datos.PROPIETARIO_CREAR_DTO_1.getDni())).thenReturn(false);
+        when(propietarioModificacionCambiosService.validacionCodigoPostal(anyLong())).thenReturn(false);
 
         Exception exception = assertThrows(ResponseStatusException.class, () -> {
             PropietarioDTO propietarioGuardado = propietarioService.crearPropietario(Datos.PROPIETARIO_CREAR_DTO_1, Datos.CODIGO_POSTAL_1.getId());
