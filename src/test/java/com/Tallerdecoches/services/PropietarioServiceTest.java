@@ -268,5 +268,17 @@ public class PropietarioServiceTest {
 
         verify(propietarioRepository, times(1)).deleteById(Datos.PROPIETARIO_1.getId());
     }
+
+    @DisplayName("Test para eliminar un propietario (service), propietario no encontrado")
+    @Test
+    void eliminarPropietarioNoEncontradoTest() {
+        when(propietarioRepository.existsById(Datos.PROPIETARIO_1.getId())).thenReturn(false);
+
+        Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
+            propietarioService.deleteById(Datos.PROPIETARIO_1.getId());
+        });
+
+        assertEquals("Propietario con id " + Datos.PROPIETARIO_1.getId() + " no se encuentra", exception.getMessage());
+    }
 }
 
