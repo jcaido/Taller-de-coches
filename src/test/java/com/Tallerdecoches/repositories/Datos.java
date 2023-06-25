@@ -95,6 +95,7 @@ public class Datos {
             .segundoApellido("Jimenez")
             .dni("44000888T")
             .domicilio("Calle Alta, 98")
+            .codigoPostal(CODIGO_POSTAL_1)
             .build();
     public final static PropietarioDTO PROPIETARIO_DTO_1 = PropietarioDTO.builder()
             .id(1L)

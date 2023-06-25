@@ -209,5 +209,16 @@ public class PropietarioServiceTest {
         assertEquals(1, propietarios.size());
         assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getPrimerApellido().equals("Perez")));
     }
+
+    @DisplayName("Test para obtener una lista de propietarios por codigo postal (service)")
+    @Test
+    void obtenerPropietariosPorCodigoPostalTest() {
+        when(codigoPostalRepository.findById(anyLong())).thenReturn(Optional.of(Datos.CODIGO_POSTAL_1));
+        Datos.CODIGO_POSTAL_1.setPropietarios(List.of(Datos.PROPIETARIO_1, Datos.PROPIETARIO_2));
+
+        List<PropietarioBusquedasDTO> propietarios = propietarioService.ObtenerPropietariosPorCodigoPostal(Datos.CODIGO_POSTAL_1.getId());
+
+        assertEquals(2, propietarios.size());
+    }
 }
 
