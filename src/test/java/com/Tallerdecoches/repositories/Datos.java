@@ -59,6 +59,7 @@ public class Datos {
             .localidad("Aguilar de la Frontera")
             .provincia("Cordoba")
             .build();
+
     public final static CodigoPostalDTO CODIGO_POSTAL_DTO_1_MODIFICADO = CodigoPostalDTO.builder()
             .id(2L)
             .codigo("11111")
@@ -86,6 +87,7 @@ public class Datos {
             .build();
 
     //PROPIETARIOS
+
     public final static Propietario PROPIETARIO_1 = Propietario.builder()
             .id(1L)
             .nombre("Antonio")
@@ -93,7 +95,6 @@ public class Datos {
             .segundoApellido("Jimenez")
             .dni("44000888T")
             .domicilio("Calle Alta, 98")
-            //.codigoPostal(CODIGO_POSTAL_1)
             .build();
     public final static PropietarioDTO PROPIETARIO_DTO_1 = PropietarioDTO.builder()
             .id(1L)
@@ -119,6 +120,14 @@ public class Datos {
             .domicilio("Calle San Anton, 54")
             .codigoPostal(CODIGO_POSTAL_2)
             .build();
+    public final static PropietarioDTO PROPIETARIO_DTO_2 = PropietarioDTO.builder()
+            .id(2L)
+            .nombre("Francisco")
+            .primerApellido("Garcia")
+            .segundoApellido("Gutierrez")
+            .dni("55000900B")
+            .domicilio("Calle San Anton, 54")
+            .build();
     public final static Propietario PROPIETARIO_3 = Propietario.builder()
             .id(3L)
             .nombre("Antonio")
@@ -138,28 +147,29 @@ public class Datos {
             .build();
     public final static List<Propietario> PROPIETARIOS = Arrays.asList(PROPIETARIO_1, PROPIETARIO_2);
     public final static List<Propietario> PROPIETARIOS_1 = Arrays.asList(PROPIETARIO_1, PROPIETARIO_3);
+    public final static List<Propietario> PROPIETARIOS_2 = Arrays.asList(PROPIETARIO_1);
     public final static PropietarioBusquedasDTO PROPIETARIO_BUSQUEDAS_1 = PropietarioBusquedasDTO.builder()
-            .nombre("Juan")
-            .primerApellido("Cabello")
-            .segundoApellido("Alba")
-            .dni("33888000L")
-            .domicilio("Calle Baja, 89")
+            .nombre("Antonio")
+            .primerApellido("Perez")
+            .segundoApellido("Jimenez")
+            .dni("44000888T")
+            .domicilio("Calle Alta, 98")
             .build();
     public final static PropietarioBusquedasDTO PROPIETARIO_BUSQUEDAS_DTO_1 = PropietarioBusquedasDTO.builder()
             .id(1L)
-            .nombre("Juan")
-            .primerApellido("Cabello")
-            .segundoApellido("Alba")
-            .dni("33888000L")
-            .domicilio("Calle Baja, 89")
+            .nombre("Antonio")
+            .primerApellido("Perez")
+            .segundoApellido("Jimenez")
+            .dni("44000888T")
+            .domicilio("Calle Alta, 98")
             .codigoPostal(CODIGO_POSTAL_1)
             .build();
     public final static PropietarioBusquedasParcialDTO PROPIETARIO_BUSQUEDAS_PARCIAL_DTO_1 = PropietarioBusquedasParcialDTO.builder()
             .id(1L)
-            .nombre("Juan")
-            .primerApellido("Cabello")
-            .segundoApellido("Alba")
-            .dni("55000900B")
+            .nombre("Antonio")
+            .primerApellido("Perez")
+            .segundoApellido("Jimenez")
+            .dni("44000888T")
             .build();
     public final static PropietarioBusquedasDTO PROPIETARIO_BUSQUEDAS_2 =PropietarioBusquedasDTO.builder()
             .nombre("Francisco")

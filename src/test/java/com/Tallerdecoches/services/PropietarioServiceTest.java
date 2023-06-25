@@ -94,8 +94,8 @@ public class PropietarioServiceTest {
         List<PropietarioBusquedasDTO> propietarios = propietarioService.findAll();
 
         assertEquals(2, propietarios.size());
-        assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getNombre().equals("Juan")));
-        assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getDomicilio().equals("Calle Baja, 89")));
+        assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getNombre().equals("Antonio")));
+        assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getDomicilio().equals("Calle San Anton, 54")));
     }
 
     @DisplayName("Test para obtener una lista parcial con todos los propietarios (service)")
@@ -108,7 +108,7 @@ public class PropietarioServiceTest {
         List<PropietarioBusquedasParcialDTO> propietarios = propietarioService.findAllPartial();
 
         assertEquals(2, propietarios.size());
-        assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getNombre().equals("Juan")));
+        assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getNombre().equals("Antonio")));
         assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getDni().equals("55000900B")));
     }
 
@@ -120,7 +120,7 @@ public class PropietarioServiceTest {
 
         PropietarioBusquedasDTO propietarioEncontrado = propietarioService.findById(Datos.PROPIETARIO_1.getId());
 
-        assertEquals("33888000L", propietarioEncontrado.getDni());
+        assertEquals("44000888T", propietarioEncontrado.getDni());
     }
 
     @DisplayName("Test para obtener un propietario por su id (service), propietario no encontrado")
@@ -144,7 +144,7 @@ public class PropietarioServiceTest {
 
         PropietarioBusquedasDTO propietarioEncontrado = propietarioService.findByDni(Datos.PROPIETARIO_1.getDni());
 
-        assertEquals("33888000L", propietarioEncontrado.getDni());
+        assertEquals("44000888T", propietarioEncontrado.getDni());
     }
 
     @DisplayName("Test para obtener un propietario  por su dni (service), propietario no encontrado")
@@ -169,9 +169,21 @@ public class PropietarioServiceTest {
         List<PropietarioBusquedasDTO> propietarios = propietarioService.findByNombre(Datos.PROPIETARIO_1.getNombre());
 
         assertEquals(2, propietarios.size());
-        assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getDni().equals("33888000L")));
+        assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getDni().equals("44000888T")));
         assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getDni().equals("22777555K")));
         assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getDomicilio().equals("Calle Vinuesa, 87")));
+    }
+
+    @DisplayName("Test para obtener una lista de propietarios por primer apellido (service)")
+    @Test
+    void obtenerPropietariosPorPrimerApellidoTest() {
+        when(propietarioRepository.findByPrimerApellido(anyString())).thenReturn(Datos.PROPIETARIOS_2);
+        when(modelMapper.map(eq(Datos.PROPIETARIO_1), eq(PropietarioBusquedasDTO.class))).thenReturn(Datos.PROPIETARIO_BUSQUEDAS_DTO_1);
+
+        List<PropietarioBusquedasDTO> propietarios = propietarioService.findByPrimerApellido(Datos.PROPIETARIO_1.getPrimerApellido());
+
+        assertEquals(1, propietarios.size());
+        assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getPrimerApellido().equals("Perez")));
     }
 }
 
