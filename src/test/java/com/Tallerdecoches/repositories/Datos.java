@@ -6,8 +6,10 @@ import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioBusquedasParcialDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioCrearDTO;
 import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
+import com.Tallerdecoches.DTOs.vehiculo.VehiculoBusquedasDTO;
 import com.Tallerdecoches.entities.CodigoPostal;
 import com.Tallerdecoches.entities.Propietario;
+import com.Tallerdecoches.entities.Vehiculo;
 
 import java.util.Arrays;
 import java.util.List;
@@ -217,5 +219,39 @@ public class Datos {
             .primerApellido("Moreno")
             .segundoApellido("Gordillo")
             .dni("22777555K")
+            .build();
+
+    //VEHICULOS
+    public final static Vehiculo VEHICULO_1 = Vehiculo.builder()
+            .id(1L)
+            .matricula("2233DFG")
+            .marca("RENAULT")
+            .modelo("CLIO")
+            .color("blanco")
+            .propietario(PROPIETARIO_1)
+            .build();
+    public final static VehiculoBusquedasDTO VEHICULO_BUSQUEDAS_1 = VehiculoBusquedasDTO.builder()
+            .id(1L)
+            .matricula("2233DFG")
+            .marca("RENAULT")
+            .modelo("CLIO")
+            .color("blanco")
+            .propietario(PROPIETARIO_1)
+            .build();
+    public final static Vehiculo VEHICULO_2 = Vehiculo.builder()
+            .id(2L)
+            .matricula("4466YYY")
+            .marca("PEUGEOT")
+            .modelo("407")
+            .color("gris")
+            .propietario(PROPIETARIO_2)
+            .build();
+    public final static VehiculoBusquedasDTO VEHICULO_BUSQUEDAS_2 = VehiculoBusquedasDTO.builder()
+            .id(2L)
+            .matricula("4466YYY")
+            .marca("PEUGEOT")
+            .modelo("407")
+            .color("gris")
+            .propietario(PROPIETARIO_2)
             .build();
 }

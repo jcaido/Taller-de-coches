@@ -280,5 +280,18 @@ public class PropietarioServiceTest {
 
         assertEquals("Propietario con id " + Datos.PROPIETARIO_1.getId() + " no se encuentra", exception.getMessage());
     }
+
+    @DisplayName("Test para eliminar un propietario (service), existen vehiculos relacionados")
+    @Test
+    void eliminarPropietarioExistenVehiculosRelacionadosTest() {
+        when(propietarioRepository.existsById(Datos.PROPIETARIO_1.getId())).thenReturn(true);
+        when(vehiculoService.obtenerVehiculosPorPropietarioHQL(Datos.PROPIETARIO_1.getId())).thenReturn(List.of(Datos.VEHICULO_BUSQUEDAS_1, Datos.VEHICULO_BUSQUEDAS_2));
+
+        Exception exception = assertThrows(ResponseStatusException.class, () -> {
+            propietarioService.deleteById(Datos.PROPIETARIO_1.getId());
+        });
+
+        assertEquals("409 CONFLICT \"Existen vehiculos relacionado con ese propietario\"", exception.getMessage());
+    }
 }
 
