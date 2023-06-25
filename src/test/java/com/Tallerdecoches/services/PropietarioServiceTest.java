@@ -197,5 +197,17 @@ public class PropietarioServiceTest {
         assertEquals(1, propietarios.size());
         assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getPrimerApellido().equals("Perez")));
     }
+
+    @DisplayName("Test para  obtener una lista de propietarios por nombre completo (service)")
+    @Test
+    void obtenerPropietariosPorNombreCompletoTest() {
+        when(propietarioRepository.findByNombreAndPrimerApellidoAndSegundoApellido(anyString(), anyString(), anyString())).thenReturn(Datos.PROPIETARIOS_2);
+        when(modelMapper.map(eq(Datos.PROPIETARIO_1), eq(PropietarioBusquedasDTO.class))).thenReturn(Datos.PROPIETARIO_BUSQUEDAS_DTO_1);
+
+        List<PropietarioBusquedasDTO> propietarios = propietarioService.findByNombreAndPrimerApellidoAndSegundoApellido(Datos.PROPIETARIO_1.getNombre(), Datos.PROPIETARIO_1.getPrimerApellido(), Datos.PROPIETARIO_1.getSegundoApellido());
+
+        assertEquals(1, propietarios.size());
+        assertTrue(propietarios.stream().anyMatch(propietario -> propietario.getPrimerApellido().equals("Perez")));
+    }
 }
 
