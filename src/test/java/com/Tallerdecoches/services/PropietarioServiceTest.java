@@ -10,6 +10,7 @@ import com.Tallerdecoches.repositories.Datos;
 import com.Tallerdecoches.repositories.PropietarioRepository;
 import com.Tallerdecoches.services.propietario.PropietarioModificacionCambiosService;
 import com.Tallerdecoches.services.propietario.PropietarioServiceImpl;
+import com.Tallerdecoches.services.vehiculo.VehiculoService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,29 +20,29 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PropietarioServiceTest {
 
     @Mock
     private PropietarioRepository propietarioRepository;
-
     @Mock
     private CodigoPostalRepository codigoPostalRepository;
-
     @Mock
     private PropietarioModificacionCambiosService propietarioModificacionCambiosService;
-
+    @Mock
+    private VehiculoService vehiculoService;
     @Mock
     private ModelMapper modelMapper;
-
     @InjectMocks
     private PropietarioServiceImpl propietarioService;
 
@@ -254,6 +255,18 @@ public class PropietarioServiceTest {
         });
 
         assertEquals("Codigo Postal con id " + Datos.CODIGO_POSTAL_1.getId() + " no se encuentra", exception.getMessage());
+    }
+
+    @DisplayName("Test para eliminar un propietario (service)")
+    @Test
+    void eliminarPropietarioTest() {
+        when(propietarioRepository.existsById(Datos.PROPIETARIO_1.getId())).thenReturn(true);
+        when(vehiculoService.obtenerVehiculosPorPropietarioHQL(Datos.PROPIETARIO_1.getId())).thenReturn(Collections.emptyList());
+        willDoNothing().given(propietarioRepository).deleteById(Datos.PROPIETARIO_1.getId());
+
+        propietarioService.deleteById(Datos.PROPIETARIO_1.getId());
+
+        verify(propietarioRepository, times(1)).deleteById(Datos.PROPIETARIO_1.getId());
     }
 }
 
