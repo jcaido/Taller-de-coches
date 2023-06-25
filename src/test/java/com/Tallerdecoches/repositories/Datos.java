@@ -119,7 +119,25 @@ public class Datos {
             .domicilio("Calle San Anton, 54")
             .codigoPostal(CODIGO_POSTAL_2)
             .build();
+    public final static Propietario PROPIETARIO_3 = Propietario.builder()
+            .id(3L)
+            .nombre("Antonio")
+            .primerApellido("Moreno")
+            .segundoApellido("Gordillo")
+            .dni("22777555K")
+            .domicilio("Calle Vinuesa, 87")
+            .codigoPostal(CODIGO_POSTAL_1)
+            .build();
+    public final static Propietario PROPIETARIO_DTO_3 = Propietario.builder()
+            .id(3L)
+            .nombre("Jose")
+            .primerApellido("Moreno")
+            .segundoApellido("Gordillo")
+            .dni("22777555K")
+            .domicilio("Calle Vinuesa, 87")
+            .build();
     public final static List<Propietario> PROPIETARIOS = Arrays.asList(PROPIETARIO_1, PROPIETARIO_2);
+    public final static List<Propietario> PROPIETARIOS_1 = Arrays.asList(PROPIETARIO_1, PROPIETARIO_3);
     public final static PropietarioBusquedasDTO PROPIETARIO_BUSQUEDAS_1 = PropietarioBusquedasDTO.builder()
             .nombre("Juan")
             .primerApellido("Cabello")
@@ -148,7 +166,7 @@ public class Datos {
             .primerApellido("Garcia")
             .segundoApellido("Gutierrez")
             .dni("55000900B")
-            .domicilio("Calle Baja, 89")
+            .domicilio("Calle San Anton, 54")
             .build();
     public final static PropietarioBusquedasDTO PROPIETARIO_BUSQUEDAS_DTO_2 = PropietarioBusquedasDTO.builder()
             .id(2L)
@@ -156,7 +174,7 @@ public class Datos {
             .primerApellido("Garcia")
             .segundoApellido("Gutierrez")
             .dni("55000900B")
-            .domicilio("Calle Baja, 89")
+            .domicilio("Calle San Anton, 54")
             .codigoPostal(CODIGO_POSTAL_2)
             .build();
     public final static PropietarioBusquedasParcialDTO PROPIETARIO_BUSQUEDAS_PARCIAL_DTO_2 = PropietarioBusquedasParcialDTO.builder()
@@ -165,5 +183,28 @@ public class Datos {
             .primerApellido("Garcia")
             .segundoApellido("Gutierrez")
             .dni("55000900B")
+            .build();
+    public final static PropietarioBusquedasDTO PROPIETARIO_BUSQUEDAS_3 = PropietarioBusquedasDTO.builder()
+            .nombre("Antonio")
+            .primerApellido("Moreno")
+            .segundoApellido("Gordillo")
+            .dni("22777555K")
+            .domicilio("Calle Vinuesa, 87")
+            .build();
+    public final static PropietarioBusquedasDTO PROPIETARIO_BUSQUEDAS_DTO_3 = PropietarioBusquedasDTO.builder()
+            .id(3L)
+            .nombre("Antonio")
+            .primerApellido("Moreno")
+            .segundoApellido("Gordillo")
+            .dni("22777555K")
+            .domicilio("Calle Vinuesa, 87")
+            .codigoPostal(CODIGO_POSTAL_1)
+            .build();
+    public final static PropietarioBusquedasParcialDTO PROPIETARIO_BUSQUEDAS_PARCIAL_DTO_3 = PropietarioBusquedasParcialDTO.builder()
+            .id(3L)
+            .nombre("Antonio")
+            .primerApellido("Moreno")
+            .segundoApellido("Gordillo")
+            .dni("22777555K")
             .build();
 }
