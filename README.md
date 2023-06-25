@@ -51,7 +51,7 @@
 <ul>
     <li>Abrir  una interfaz de línea de comandos  (CLI), por ejemplo la consola de windows</li>
     <li>Crear una carpeta en la cual alojaremos el proyecto</li>
-    <li>En la interfaz de línea de comandos y dentro de la carpeta creada en el punto anterior, ejecutamos el comando "git clone https://github.com/jcaido/Taleer-de-coches.git". Es necesario tener instalado git en nuestro sistema
+    <li>En la interfaz de línea de comandos y dentro de la carpeta creada en el punto anterior, ejecutamos el comando "git clone https://github.com/jcaido/Taller-de-coches.git". Es necesario tener instalado git en nuestro sistema
     </li>
 </ul>
 <br>
