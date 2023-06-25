@@ -132,7 +132,7 @@ public class PropietarioServiceImpl implements PropietarioService {
         Optional<CodigoPostal> codigo = codigoPostalRepository.findById(id);
 
         if (!codigo.isPresent())
-            throw new ResourceNotFoundException("Propietario", "id", String.valueOf(id));
+            throw new ResourceNotFoundException("Codigo Postal", "id", String.valueOf(id));
 
         List<Propietario> propietarios = codigo.get().getPropietarios();
 

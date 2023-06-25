@@ -220,5 +220,17 @@ public class PropietarioServiceTest {
 
         assertEquals(2, propietarios.size());
     }
+
+    @DisplayName("Test para obtener una lista de propietarios por codigo postal (service), codigo postal no encontrado")
+    @Test
+    void obtenerPropietariosPorCodigoPostalCodigoPostalNoEncontradoTest() {
+        when(codigoPostalRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
+            List<PropietarioBusquedasDTO> propietarios = propietarioService.ObtenerPropietariosPorCodigoPostal(Datos.CODIGO_POSTAL_1.getId());
+        });
+
+        assertEquals("Codigo Postal con id " + Datos.CODIGO_POSTAL_1.getId() + " no se encuentra", exception.getMessage());
+    }
 }
 
