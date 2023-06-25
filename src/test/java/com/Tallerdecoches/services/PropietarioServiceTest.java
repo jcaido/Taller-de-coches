@@ -232,5 +232,16 @@ public class PropietarioServiceTest {
 
         assertEquals("Codigo Postal con id " + Datos.CODIGO_POSTAL_1.getId() + " no se encuentra", exception.getMessage());
     }
+
+    @DisplayName("Test para obtener una lista parcial de propietarios por codigo postal (service)")
+    @Test
+    void obtenerPropietariosParcialPorCodigoPostalTest() {
+        when(codigoPostalRepository.findById(anyLong())).thenReturn(Optional.of(Datos.CODIGO_POSTAL_1));
+        Datos.CODIGO_POSTAL_1.setPropietarios(List.of(Datos.PROPIETARIO_1, Datos.PROPIETARIO_2));
+
+        List<PropietarioBusquedasParcialDTO> propietarios = propietarioService.obtenerPropietariosPorCodigoPostalParcial(Datos.CODIGO_POSTAL_1.getId());
+
+        assertEquals(2, propietarios.size());
+    }
 }
 
