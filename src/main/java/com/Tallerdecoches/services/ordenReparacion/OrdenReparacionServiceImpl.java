@@ -295,7 +295,6 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
         ordenReparacionRepository.deleteById(id);
         String respuesta = "Orden de reparacion eliminada con exito";
 
-        //return new ResponseEntity<>("Orden de reparacion eliminada con exito", HttpStatus.OK);
         return respuesta;
     }
 

@@ -175,7 +175,6 @@ public class OrdenReparacionController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarPropietario(@PathVariable Long id) {
 
-        //return ordenReparacionService.deleteById(id);
         return new ResponseEntity<>(ordenReparacionService.deleteById(id), HttpStatus.OK);
     }
 }
