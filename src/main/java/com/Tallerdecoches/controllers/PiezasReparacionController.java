@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -48,7 +49,7 @@ public class PiezasReparacionController {
             @Parameter(description = "id de la pieza a imputar", required = true)
             @PathVariable Long id_pieza) {
 
-        return piezasReparacionService.crearPiezasReparacion(piezasReparacionCrearDTO, id_ordenReparacion, id_pieza);
+        return new ResponseEntity<>(piezasReparacionService.crearPiezasReparacion(piezasReparacionCrearDTO, id_ordenReparacion, id_pieza), HttpStatus.CREATED);
     }
     @Operation(summary = "imputar una pieza a una orden de reparación", description = "imputar una pieza a una orden de reparación")
     @ApiResponses(value = {
@@ -71,7 +72,7 @@ public class PiezasReparacionController {
             @Parameter(description = "id de la pieza a imputar", required = true)
             @RequestParam(value="pieza") Long id_pieza) {
 
-        return piezasReparacionService.crearPiezasReparacion(piezasReparacionCrearDTO, id_ordenReparacion, id_pieza);
+        return new ResponseEntity<>(piezasReparacionService.crearPiezasReparacion(piezasReparacionCrearDTO, id_ordenReparacion, id_pieza), HttpStatus.CREATED);
     }
     @Operation(summary = "Obtener todas las piezas imputadas", description = "Obtener todas las piezas imputadas")
     @ApiResponses(value = {

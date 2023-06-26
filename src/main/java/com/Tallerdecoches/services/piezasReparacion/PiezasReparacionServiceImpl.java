@@ -39,7 +39,7 @@ public class PiezasReparacionServiceImpl implements PiezasReparacionService {
     }
 
     @Override
-    public ResponseEntity<PiezasReparacionDTO> crearPiezasReparacion(PiezasReparacionCrearDTO piezasReparacionCrearDTO, Long id_ordenReparacion, Long id_pieza) {
+    public PiezasReparacionDTO crearPiezasReparacion(PiezasReparacionCrearDTO piezasReparacionCrearDTO, Long id_ordenReparacion, Long id_pieza) {
 
         if (!ordenReparacionRepository.existsById(id_ordenReparacion))
             throw new ResourceNotFoundException("orden de reparación", "id", String.valueOf(id_ordenReparacion));
@@ -53,8 +53,9 @@ public class PiezasReparacionServiceImpl implements PiezasReparacionService {
         piezasReparacion.setOrdenReparacion(ordenReparacion);
         piezasReparacion.setPieza(pieza);
         piezasReparacionRepository.save(piezasReparacion);
+        PiezasReparacionDTO piezasReparacionRespuesta = modelMapper.map(piezasReparacion, PiezasReparacionDTO.class);
 
-        return new ResponseEntity<>(modelMapper.map(piezasReparacion, PiezasReparacionDTO.class), HttpStatus.CREATED);
+        return piezasReparacionRespuesta;
     }
 
     @Override

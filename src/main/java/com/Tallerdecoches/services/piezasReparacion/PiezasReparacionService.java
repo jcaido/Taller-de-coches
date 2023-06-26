@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface PiezasReparacionService {
 
-    ResponseEntity<PiezasReparacionDTO> crearPiezasReparacion(PiezasReparacionCrearDTO piezasReparacionCrearDTO, Long id_ordenReparacion, Long id_pieza);
+    PiezasReparacionDTO crearPiezasReparacion(PiezasReparacionCrearDTO piezasReparacionCrearDTO, Long id_ordenReparacion, Long id_pieza);
     List<PiezasReparacionBusquedasDTO> findAll();
     ResponseEntity<PiezasReparacionBusquedasDTO> findById(Long id);
     List<PiezasReparacionBusquedasParcialDTO> obtenerPiezasReparacionPorOrdenReparacion(Long id);
