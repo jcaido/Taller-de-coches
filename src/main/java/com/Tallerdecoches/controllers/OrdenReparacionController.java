@@ -33,7 +33,7 @@ public class OrdenReparacionController {
     @GetMapping("/{id}")
     public ResponseEntity<OrdenReparacionBusquedasDTO> obtenerOrdenReparacionPorId(@PathVariable Long id) {
 
-        return ordenReparacionService.findById(id);
+        return new ResponseEntity<>(ordenReparacionService.findById(id), HttpStatus.OK);
     }
 
     //Obtener una orden de reparacion por su id parcial

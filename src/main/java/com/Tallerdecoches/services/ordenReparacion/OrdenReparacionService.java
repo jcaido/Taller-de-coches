@@ -10,7 +10,7 @@ public interface OrdenReparacionService {
 
     OrdenReparacionDTO crearOrdenReparacion(OrdenReparacionDTO ordenReparacionDTO, Long idVehiculo);
     List<OrdenReparacionBusquedasDTO> findAll();
-    ResponseEntity<OrdenReparacionBusquedasDTO> findById(Long id);
+    OrdenReparacionBusquedasDTO findById(Long id);
     ResponseEntity<OrdenReparacionBusquedasParcialDTO> findByIdParcial(Long id);
     List<OrdenReparacionBusquedasDTO> findByFechaApertura(LocalDate fechaApertura);
     List<OrdenReparacionBusquedasDTO> findByFechaCierre(LocalDate fechaCierre);
