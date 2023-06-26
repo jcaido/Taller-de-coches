@@ -148,6 +148,6 @@ public class PiezasReparacionController {
     public ResponseEntity<String> eliminarPiezaReparacion(@Parameter(description = "id de la imputación de pieza a eliminar",
             required = true) @PathVariable Long id) {
 
-        return piezasReparacionService.deleteById(id);
+        return new ResponseEntity<>(piezasReparacionService.deleteById(id), HttpStatus.OK);
     }
 }

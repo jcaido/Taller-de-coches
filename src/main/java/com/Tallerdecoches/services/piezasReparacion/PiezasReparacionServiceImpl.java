@@ -119,13 +119,15 @@ public class PiezasReparacionServiceImpl implements PiezasReparacionService {
     }
 
     @Override
-    public ResponseEntity<String> deleteById(Long id) {
+    public String deleteById(Long id) {
 
         if (!piezasReparacionRepository.existsById(id))
             throw new ResourceNotFoundException("Imputacion de pieza", "id", String.valueOf(id));
 
         piezasReparacionRepository.deleteById(id);
 
-        return new ResponseEntity<>("Imputacion de pieza eliminada con exito", HttpStatus.OK);
+        String respuesta = "Imputacion de pieza eliminada con exito";
+
+        return respuesta;
     }
 }
