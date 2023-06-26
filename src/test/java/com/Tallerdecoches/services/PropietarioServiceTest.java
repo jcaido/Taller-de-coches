@@ -337,5 +337,19 @@ public class PropietarioServiceTest {
 
         assertEquals("409 CONFLICT \"El DNI ya existe\"", exception.getMessage());
     }
+
+    @DisplayName("Test para modificar un propietario (service), codigo postal asociado no existe")
+    @Test
+    void modificarPropietarioCodigoPostalNoExisteTest() {
+        when(propietarioRepository.existsById(Datos.PROPIETARIO_DTO_MODIFICADO_1.getId())).thenReturn(true);
+        when(propietarioValidacionesUniqueService.validacionUniqueDni(Datos.PROPIETARIO_DTO_MODIFICADO_1)).thenReturn(true);
+        when(propietarioModificacionCambiosService.validacionCodigoPostal(anyLong())).thenReturn(false);
+
+        Exception exception = assertThrows(ResponseStatusException.class, () -> {
+            propietarioService.modificarPropietario(Datos.PROPIETARIO_DTO_MODIFICADO_1, Datos.CODIGO_POSTAL_1.getId());
+        });
+
+        assertEquals("409 CONFLICT \"El codigo postal asociado al propietario no existe\"", exception.getMessage());
+    }
 }
 
