@@ -10,6 +10,7 @@ import com.Tallerdecoches.repositories.Datos;
 import com.Tallerdecoches.repositories.PropietarioRepository;
 import com.Tallerdecoches.services.propietario.PropietarioModificacionCambiosService;
 import com.Tallerdecoches.services.propietario.PropietarioServiceImpl;
+import com.Tallerdecoches.services.propietario.PropietarioValidacionesUniqueService;
 import com.Tallerdecoches.services.vehiculo.VehiculoService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,8 @@ public class PropietarioServiceTest {
     private PropietarioRepository propietarioRepository;
     @Mock
     private CodigoPostalRepository codigoPostalRepository;
+    @Mock
+    private PropietarioValidacionesUniqueService propietarioValidacionesUniqueService;
     @Mock
     private PropietarioModificacionCambiosService propietarioModificacionCambiosService;
     @Mock
@@ -292,6 +295,22 @@ public class PropietarioServiceTest {
         });
 
         assertEquals("409 CONFLICT \"Existen vehiculos relacionado con ese propietario\"", exception.getMessage());
+    }
+
+    @DisplayName("Test para modificar un propietario (service)")
+    @Test
+    void modificarPropietarioTest() {
+        when(propietarioRepository.existsById(Datos.PROPIETARIO_DTO_MODIFICADO_1.getId())).thenReturn(true);
+        when(propietarioValidacionesUniqueService.validacionUniqueDni(Datos.PROPIETARIO_DTO_MODIFICADO_1)).thenReturn(true);
+        when(propietarioModificacionCambiosService.validacionCodigoPostal(anyLong())).thenReturn(true);
+        when(propietarioRepository.findById(Datos.PROPIETARIO_DTO_MODIFICADO_1.getId())).thenReturn(Optional.of(Datos.PROPIETARIO_1));
+        when(codigoPostalRepository.findById(anyLong())).thenReturn(Optional.of(Datos.CODIGO_POSTAL_1));
+        when(propietarioRepository.save(Datos.PROPIETARIO_1)).thenReturn(Datos.PROPIETARIO_1_MODIFICADO);
+        when(modelMapper.map(eq(Datos.PROPIETARIO_1_MODIFICADO), eq(PropietarioDTO.class))).thenReturn(Datos.PROPIETARIO_DTO_MODIFICADO_1);
+
+        propietarioService.modificarPropietario(Datos.PROPIETARIO_DTO_MODIFICADO_1, Datos.CODIGO_POSTAL_1.getId());
+
+        assertEquals("Pepe", Datos.PROPIETARIO_1.getNombre());
     }
 }
 

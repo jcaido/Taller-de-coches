@@ -114,6 +114,23 @@ public class Datos {
             .dni("44000888T")
             .domicilio("Calle Alta, 98")
             .build();
+    public final static Propietario PROPIETARIO_1_MODIFICADO = Propietario.builder()
+            .id(1L)
+            .nombre("Pepe")
+            .primerApellido("Sanchez")
+            .segundoApellido("Lopez")
+            .dni("33111000G")
+            .domicilio("Calle Huerta, 8")
+            .codigoPostal(CODIGO_POSTAL_1)
+            .build();
+    public final static PropietarioDTO PROPIETARIO_DTO_MODIFICADO_1 = PropietarioDTO.builder()
+            .id(1L)
+            .nombre("Pepe")
+            .primerApellido("Sanchez")
+            .segundoApellido("Lopez")
+            .dni("33111000G")
+            .domicilio("Calle Huerta, 8")
+            .build();
     public final static Propietario PROPIETARIO_2 = Propietario.builder()
             .id(2L)
             .nombre("Francisco")
