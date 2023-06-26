@@ -312,5 +312,17 @@ public class PropietarioServiceTest {
 
         assertEquals("Pepe", Datos.PROPIETARIO_1.getNombre());
     }
+
+    @DisplayName("Test para modificar un propietario (service), propietario mo encontrado")
+    @Test
+    void modificarPropietarioNoEncontradoTest() {
+        when(propietarioRepository.existsById(Datos.PROPIETARIO_DTO_MODIFICADO_1.getId())).thenReturn(false);
+
+        Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
+            propietarioService.modificarPropietario(Datos.PROPIETARIO_DTO_MODIFICADO_1, Datos.CODIGO_POSTAL_1.getId());
+        });
+
+        assertEquals("Propietario con id " + Datos.PROPIETARIO_1.getId() + " no se encuentra", exception.getMessage());
+    }
 }
 
