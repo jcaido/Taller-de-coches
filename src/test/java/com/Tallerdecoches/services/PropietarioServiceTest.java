@@ -324,5 +324,18 @@ public class PropietarioServiceTest {
 
         assertEquals("Propietario con id " + Datos.PROPIETARIO_1.getId() + " no se encuentra", exception.getMessage());
     }
+
+    @DisplayName("Test para modificar un propietario (service), el dni ya existe")
+    @Test
+    void modificarPropietarioDniYaExisteTest() {
+        when(propietarioRepository.existsById(Datos.PROPIETARIO_DTO_MODIFICADO_1.getId())).thenReturn(true);
+        when(propietarioValidacionesUniqueService.validacionUniqueDni(Datos.PROPIETARIO_DTO_MODIFICADO_1)).thenReturn(false);
+
+        Exception exception = assertThrows(ResponseStatusException.class, () -> {
+            propietarioService.modificarPropietario(Datos.PROPIETARIO_DTO_MODIFICADO_1, Datos.CODIGO_POSTAL_1.getId());
+        });
+
+        assertEquals("409 CONFLICT \"El DNI ya existe\"", exception.getMessage());
+    }
 }
 
