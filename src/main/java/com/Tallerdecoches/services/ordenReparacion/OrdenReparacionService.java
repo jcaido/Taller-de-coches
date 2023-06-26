@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface OrdenReparacionService {
 
-    ResponseEntity<OrdenReparacionDTO> crearOrdenReparacion(OrdenReparacionDTO ordenReparacionDTO, Long idVehiculo);
+    OrdenReparacionDTO crearOrdenReparacion(OrdenReparacionDTO ordenReparacionDTO, Long idVehiculo);
     List<OrdenReparacionBusquedasDTO> findAll();
     ResponseEntity<OrdenReparacionBusquedasDTO> findById(Long id);
     ResponseEntity<OrdenReparacionBusquedasParcialDTO> findByIdParcial(Long id);

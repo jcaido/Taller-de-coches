@@ -3,6 +3,7 @@ package com.Tallerdecoches.controllers;
 import com.Tallerdecoches.DTOs.ordenReparacion.*;
 import com.Tallerdecoches.services.ordenReparacion.OrdenReparacionService;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -25,7 +26,7 @@ public class OrdenReparacionController {
     public ResponseEntity<OrdenReparacionDTO> crearOrdenesReparacion(@Valid @RequestBody OrdenReparacionDTO ordenReparacionDTO
             , @PathVariable Long idVehiculo) {
 
-        return ordenReparacionService.crearOrdenReparacion(ordenReparacionDTO, idVehiculo);
+        return new ResponseEntity<>(ordenReparacionService.crearOrdenReparacion(ordenReparacionDTO, idVehiculo), HttpStatus.CREATED);
     }
 
     //Obtener una orden de reparacion por su id
