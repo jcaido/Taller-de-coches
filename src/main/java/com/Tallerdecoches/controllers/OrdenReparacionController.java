@@ -154,7 +154,7 @@ public class OrdenReparacionController {
     @PutMapping("/horas")
     public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionHoras(@RequestBody OrdenReparacionHorasDTO ordenReparacionHorasDTO) {
 
-        return ordenReparacionService.modificarOrdenReparacionHoras(ordenReparacionHorasDTO);
+        return new ResponseEntity<>(ordenReparacionService.modificarOrdenReparacionHoras(ordenReparacionHorasDTO), HttpStatus.OK);
     }
 
     //Modificar una orden de reparacion, solo la fecha de cierre
