@@ -161,7 +161,7 @@ public class OrdenReparacionController {
     @PutMapping("/cierre")
     public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionCierre(@RequestBody OrdenReparacionCierreDTO ordenReparacionCierreDTO) {
 
-        return ordenReparacionService.modificarOrdenReparacionCierre(ordenReparacionCierreDTO);
+        return new ResponseEntity<>(ordenReparacionService.modificarOrdenReparacionCierre(ordenReparacionCierreDTO), HttpStatus.OK);
     }
 
     //Modificar una orden de reparacion, abrir orden

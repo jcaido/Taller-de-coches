@@ -25,7 +25,7 @@ public interface OrdenReparacionService {
     List<OrdenReparacionReducidaDTO> obtenerOrdenesReparacionCerradasPtesFacturar();
     OrdenReparacionDTO modificarOrdenReparacion(OrdenReparacionDTO ordenReparacionDTO, Long id_vehiculo);
     OrdenReparacionDTO modificarOrdenReparacionHoras(OrdenReparacionHorasDTO ordenReparacionHorasDTO);
-    ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionCierre(OrdenReparacionCierreDTO ordenReparacionCierreDTO);
+    OrdenReparacionDTO modificarOrdenReparacionCierre(OrdenReparacionCierreDTO ordenReparacionCierreDTO);
     ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionAbrir(OrdenReparacionCierreDTO ordenReparacionCierreDTO);
     ResponseEntity<String> deleteById(Long  id);
 }
