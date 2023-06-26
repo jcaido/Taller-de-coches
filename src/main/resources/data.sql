@@ -89,6 +89,8 @@ insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fech
 insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada, facturada) values (2, null, '2022/11/19', null, 'COMPROBAR ARRANQUE', 123321, null, false, false);
 insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada, facturada) values (1, 2, '2022/11/20', '2022/11/25', 'CAMBIAR FILTRO POLEN', 54345, 2.5, true, false);
 insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada, facturada) values (2, 2, '2022/11/21', '2022/11/21', 'REVISAR BUJIAS', 22345, 2, true, false);
+insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada, facturada) values (3, 2, '2023/02/20', '2023/02/21', 'CAMBIAR FILTROS', 25987, 3, true, false);
+insert into orden_reparacion (vehiculo_id, mano_de_obra_id, fecha_apertura, fecha_cierre, descripcion, kilometros, horas, cerrada, facturada) values (4, 2, '2023/03/10', '2023/03/11', 'VALVULA EGR', 123456, 4, true, false);
 
 insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (1, 1, 1);
 insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (1, 1, 2);
@@ -100,4 +102,11 @@ insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (
 insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (1, 6, 1);
 insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (1, 6, 2);
 insert into piezas_reparacion (cantidad, orden_reparacion_id, pieza_id) values (2, 6, 4);
+
+insert into facturas_clientes (fecha_factura, numero_factura, serie_factura, tipo_iva, orden_reparacion_id, propietario_id) values ('2022/11/20', 1, 'T2022', 21, 1, 1);
+insert into facturas_clientes (fecha_factura, numero_factura, serie_factura, tipo_iva, orden_reparacion_id, propietario_id) values ('2022/11/23', 2, 'T2022', 21, 4, 1);
+insert into facturas_clientes (fecha_factura, numero_factura, serie_factura, tipo_iva, orden_reparacion_id, propietario_id) values ('2022/12/20', 3, 'T2022', 12, 9, 1);
+insert into facturas_clientes (fecha_factura, numero_factura, serie_factura, tipo_iva, orden_reparacion_id, propietario_id) values ('2022/12/25', 4, 'T2022', 21, 10, 3);
+insert into facturas_clientes (fecha_factura, numero_factura, serie_factura, tipo_iva, orden_reparacion_id, propietario_id) values ('2023/03/10', 1, 'T2023', 21, 11, 1);
+insert into facturas_clientes (fecha_factura, numero_factura, serie_factura, tipo_iva, orden_reparacion_id, propietario_id) values ('2023/03/15', 2, 'T2023', 21, 12, 5);
 
