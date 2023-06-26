@@ -147,7 +147,7 @@ public class OrdenReparacionController {
     @PutMapping("/{id_vehiculo}")
     public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacion(@Valid @RequestBody OrdenReparacionDTO ordenReparacionDTO, @PathVariable Long id_vehiculo) {
 
-        return ordenReparacionService.modificarOrdenReparacion(ordenReparacionDTO, id_vehiculo);
+        return new ResponseEntity<>(ordenReparacionService.modificarOrdenReparacion(ordenReparacionDTO, id_vehiculo), HttpStatus.OK);
     }
 
     //Modificar una orden de reparacion, solo las horas

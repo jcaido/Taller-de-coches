@@ -194,7 +194,7 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
     }
 
     @Override
-    public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacion(OrdenReparacionDTO ordenReparacionDTO, Long id_vehiculo) {
+    public OrdenReparacionDTO modificarOrdenReparacion(OrdenReparacionDTO ordenReparacionDTO, Long id_vehiculo) {
 
         if (ordenReparacionDTO.getId() == null)
             throw new BadRequestModificacionException("Orden de reparacion", "id");
@@ -214,8 +214,9 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
         ordenReparacion.setVehiculo(vehiculo);
 
         OrdenReparacion ordenReparacionModificada = ordenReparacionRepository.save(ordenReparacion);
+        OrdenReparacionDTO ordenReparacionModificadaDTO = modelMapper.map(ordenReparacion, OrdenReparacionDTO.class);
 
-        return new ResponseEntity<>(modelMapper.map(ordenReparacion, OrdenReparacionDTO.class), HttpStatus.OK);
+        return ordenReparacionModificadaDTO;
     }
 
     @Override

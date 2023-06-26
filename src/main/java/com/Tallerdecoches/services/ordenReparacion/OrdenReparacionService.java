@@ -23,7 +23,7 @@ public interface OrdenReparacionService {
     List<OrdenReparacionBusquedasDTO> findByCerradaPorVehiculo(Boolean cerrada, Long id_vehiculo);
     List<OrdenReparacionBusquedasDTO> obtenerOrdenesReparacionPorVehiculo(Long id_vehiculo);
     List<OrdenReparacionReducidaDTO> obtenerOrdenesReparacionCerradasPtesFacturar();
-    ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacion(OrdenReparacionDTO ordenReparacionDTO, Long id_vehiculo);
+    OrdenReparacionDTO modificarOrdenReparacion(OrdenReparacionDTO ordenReparacionDTO, Long id_vehiculo);
     ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionHoras(OrdenReparacionHorasDTO ordenReparacionHorasDTO);
     ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionCierre(OrdenReparacionCierreDTO ordenReparacionCierreDTO);
     ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionAbrir(OrdenReparacionCierreDTO ordenReparacionCierreDTO);
