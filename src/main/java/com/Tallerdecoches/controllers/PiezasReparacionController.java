@@ -101,7 +101,7 @@ public class PiezasReparacionController {
     public ResponseEntity<PiezasReparacionBusquedasDTO> obtenerPiezaReparacionPorId(@Parameter(description = "id de la imputación de pieza a buscar",
             required = true) @PathVariable Long id) {
 
-        return piezasReparacionService.findById(id);
+        return new ResponseEntity<>(piezasReparacionService.findById(id), HttpStatus.OK);
     }
 
     @Operation(summary = "Obtener piezas imputadas a una orden de reparación", description = "Obtener piezas imputadas a una orden de reparación")
