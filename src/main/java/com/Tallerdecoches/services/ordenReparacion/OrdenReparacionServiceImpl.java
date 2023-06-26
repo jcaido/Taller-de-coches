@@ -85,13 +85,15 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
     }
 
     @Override
-    public ResponseEntity<OrdenReparacionBusquedasParcialDTO> findByIdParcial(Long id) {
+    public OrdenReparacionBusquedasParcialDTO findByIdParcial(Long id) {
         Optional<OrdenReparacion> ordenReparacion = ordenReparacionRepository.findById(id);
 
         if (!ordenReparacion.isPresent())
             throw new ResourceNotFoundException("Orden de reparacion", "id", String.valueOf(id));
 
-        return new ResponseEntity<>(modelMapper.map(ordenReparacion, OrdenReparacionBusquedasParcialDTO.class), HttpStatus.OK);
+        OrdenReparacionBusquedasParcialDTO ordenReparacionEncontrada = modelMapper.map(ordenReparacion, OrdenReparacionBusquedasParcialDTO.class);
+
+        return ordenReparacionEncontrada;
     }
 
     @Override

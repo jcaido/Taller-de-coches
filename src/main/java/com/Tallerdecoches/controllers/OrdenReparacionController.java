@@ -40,7 +40,7 @@ public class OrdenReparacionController {
     @GetMapping("/parcial/{id}")
     public ResponseEntity<OrdenReparacionBusquedasParcialDTO> obtenerOrdenReparacionPorIdParcial(@PathVariable Long id) {
 
-        return ordenReparacionService.findByIdParcial(id);
+        return new ResponseEntity<>(ordenReparacionService.findByIdParcial(id), HttpStatus.OK);
     }
 
     //Obtener una lista con todas las ordenes de reparacion
