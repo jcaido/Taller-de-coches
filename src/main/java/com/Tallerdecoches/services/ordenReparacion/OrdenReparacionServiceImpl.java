@@ -262,7 +262,7 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
     }
 
     @Override
-    public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionAbrir(OrdenReparacionCierreDTO ordenReparacionCierreDTO) {
+    public OrdenReparacionDTO modificarOrdenReparacionAbrir(OrdenReparacionCierreDTO ordenReparacionCierreDTO) {
 
         if (ordenReparacionCierreDTO.getId() == null)
             throw new BadRequestModificacionException("Orden de reparacion", "id");
@@ -276,8 +276,9 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
         ordenReparacion.setCerrada(false);
 
         OrdenReparacion ordenReparacionModificada = ordenReparacionRepository.save(ordenReparacion);
+        OrdenReparacionDTO ordenReparacionModificadaDTO = modelMapper.map(ordenReparacion, OrdenReparacionDTO.class);
 
-        return new ResponseEntity<>(modelMapper.map(ordenReparacion, OrdenReparacionDTO.class), HttpStatus.OK);
+        return ordenReparacionModificadaDTO;
     }
 
     @Override
