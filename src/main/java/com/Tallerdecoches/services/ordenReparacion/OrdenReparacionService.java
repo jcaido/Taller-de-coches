@@ -27,5 +27,5 @@ public interface OrdenReparacionService {
     OrdenReparacionDTO modificarOrdenReparacionHoras(OrdenReparacionHorasDTO ordenReparacionHorasDTO);
     OrdenReparacionDTO modificarOrdenReparacionCierre(OrdenReparacionCierreDTO ordenReparacionCierreDTO);
     OrdenReparacionDTO modificarOrdenReparacionAbrir(OrdenReparacionCierreDTO ordenReparacionCierreDTO);
-    ResponseEntity<String> deleteById(Long  id);
+    String deleteById(Long  id);
 }

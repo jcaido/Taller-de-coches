@@ -282,7 +282,7 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
     }
 
     @Override
-    public ResponseEntity<String> deleteById(Long id) {
+    public String deleteById(Long id) {
 
         Optional<OrdenReparacion> ordenReparacion = ordenReparacionRepository.findById(id);
 
@@ -293,8 +293,10 @@ public class OrdenReparacionServiceImpl implements OrdenReparacionService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Existen piezas relacionadas con esa orden de reparacion");
 
         ordenReparacionRepository.deleteById(id);
+        String respuesta = "Orden de reparacion eliminada con exito";
 
-        return new ResponseEntity<>("Orden de reparacion eliminada con exito", HttpStatus.OK);
+        //return new ResponseEntity<>("Orden de reparacion eliminada con exito", HttpStatus.OK);
+        return respuesta;
     }
 
 }
