@@ -6,12 +6,14 @@ import com.Tallerdecoches.DTOs.facturaCliente.FacturaClientesBusquedasDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorBusquedasDTO;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface FacturaClienteService {
 
     ResponseEntity<FacturaClienteDTO> crearFacturaCliente(FacturaClienteCrearDTO facturaClienteCrearDTO, Long idPropietario, Long idOrdenReparacion);
     List<FacturaClientesBusquedasDTO> findAll();
+    List<FacturaClientesBusquedasDTO> obtenerFacturasClientesEntreFechas(LocalDate fechaFacturaInicial, LocalDate fechaFacturaFinal);
     ResponseEntity<FacturaClientesBusquedasDTO> findById(Long id);
     ResponseEntity<FacturaClientesBusquedasDTO> obtenerUltimaFacturaCliente();
     ResponseEntity<FacturaClienteDTO> modificarFacturaCliente(FacturaClienteDTO facturaClienteDTO, Long idOrdenReparacion);

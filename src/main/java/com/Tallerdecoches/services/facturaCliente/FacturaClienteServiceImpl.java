@@ -3,7 +3,9 @@ package com.Tallerdecoches.services.facturaCliente;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteCrearDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClientesBusquedasDTO;
+import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorBusquedasDTO;
 import com.Tallerdecoches.entities.FacturaCliente;
+import com.Tallerdecoches.entities.FacturaProveedor;
 import com.Tallerdecoches.entities.OrdenReparacion;
 import com.Tallerdecoches.entities.Propietario;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
@@ -20,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,6 +86,19 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
         List<FacturaCliente> facturasCliente = facturaClienteRepository.findAll();
 
         return facturasCliente.stream().map(factura -> modelMapper.map(factura, FacturaClientesBusquedasDTO.class)).toList();
+    }
+
+    @Override
+    public List<FacturaClientesBusquedasDTO> obtenerFacturasClientesEntreFechas(LocalDate fechaFacturaInicial, LocalDate fechaFacturaFinal) {
+        Query query = entityManager.createQuery("FROM FacturaCliente f " +
+                "WHERE f.fechaFactura >= :fechaFacturaInicial AND f.fechaFactura <= :fechaFacturaFinal " +
+                "ORDER BY f.fechaFactura asc");
+        query.setParameter("fechaFacturaInicial", fechaFacturaInicial);
+        query.setParameter("fechaFacturaFinal", fechaFacturaFinal);
+
+        List<FacturaCliente> facturasClientes = query.getResultList();
+
+        return facturasClientes.stream().map(facturaCliente-> modelMapper.map(facturaCliente, FacturaClientesBusquedasDTO.class)).toList();
     }
 
     @Override

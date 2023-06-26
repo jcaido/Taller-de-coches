@@ -3,11 +3,14 @@ package com.Tallerdecoches.controllers;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteCrearDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClientesBusquedasDTO;
+import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorBusquedasDTO;
 import com.Tallerdecoches.services.facturaCliente.FacturaClienteService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -35,6 +38,15 @@ public class FacturaClienteController {
     public List<FacturaClientesBusquedasDTO> obtenerTodasLasFacturasCliente() {
 
         return facturaClienteService.findAll();
+    }
+
+    //Obtener facturas de clientes entre fechas
+    @GetMapping("/{fechaFacturaInicial}/{fechaFacturaFinal}")
+    public List<FacturaClientesBusquedasDTO> obtenerFacturasClientesEntreFechas(
+            @PathVariable(name="fechaFacturaInicial")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFacturaInicial,
+            @PathVariable(name="fechaFacturaFinal")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFacturaFinal) {
+
+        return facturaClienteService.obtenerFacturasClientesEntreFechas(fechaFacturaInicial, fechaFacturaFinal);
     }
 
     //Obtener una factura de cliente por su id
