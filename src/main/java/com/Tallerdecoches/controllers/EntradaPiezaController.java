@@ -121,6 +121,6 @@ public class EntradaPiezaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarEntradaPieza(@Parameter(description = "id de la pieza", required = true) @PathVariable Long id) {
 
-        return entradaPiezaService.deleteById(id);
+        return new ResponseEntity<>(entradaPiezaService.deleteById(id), HttpStatus.OK);
     }
 }

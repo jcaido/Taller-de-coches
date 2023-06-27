@@ -15,5 +15,5 @@ public interface EntradaPiezaService {
     List<EntradaPiezaBusquedasDTO> obtenerEntradasPorPiezaHQL(Long id_pieza);
     List<EntradaPiezaBusquedasDTO> obtenerEntradasPiezasPorAlbaranProveedorHQL(Long id_pieza);
     EntradaPiezaDTO modificarEntradaPieza(EntradaPiezaDTO entradaPiezaDTO, Long idPieza);
-    ResponseEntity<String> deleteById(Long id);
+    String deleteById(Long id);
 }
