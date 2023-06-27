@@ -95,7 +95,7 @@ public class EntradaPiezaServiceImpl implements EntradaPiezaService{
     }
 
     @Override
-    public ResponseEntity<EntradaPiezaDTO> modificarEntradaPieza(EntradaPiezaDTO entradaPiezaDTO, Long idPieza) {
+    public EntradaPiezaDTO modificarEntradaPieza(EntradaPiezaDTO entradaPiezaDTO, Long idPieza) {
 
         if (entradaPiezaDTO.getId() == null)
             throw new BadRequestModificacionException("Entrada", "id");
@@ -112,9 +112,10 @@ public class EntradaPiezaServiceImpl implements EntradaPiezaService{
         entradaPieza.setCantidad(entradaPiezaDTO.getCantidad());
         entradaPieza.setPrecioEntrada(entradaPiezaDTO.getPrecioEntrada());
 
-        entradaPiezaRepository.save(entradaPieza);
+        EntradaPieza entradaPiezaModificada = entradaPiezaRepository.save(entradaPieza);
+        EntradaPiezaDTO entradaPiezaModificadaDTO = modelMapper.map(entradaPiezaModificada, EntradaPiezaDTO.class);
 
-        return new ResponseEntity<>(modelMapper.map(entradaPieza, EntradaPiezaDTO.class), HttpStatus.OK);
+        return entradaPiezaModificadaDTO;
     }
 
     @Override

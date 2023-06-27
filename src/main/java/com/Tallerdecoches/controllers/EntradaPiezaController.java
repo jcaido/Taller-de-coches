@@ -115,7 +115,7 @@ public class EntradaPiezaController {
             @Parameter(description = "id de la pieza", required = true)
             @PathVariable Long id_pieza) {
 
-        return entradaPiezaService.modificarEntradaPieza(entradaPiezaDTO, id_pieza);
+        return new ResponseEntity<>(entradaPiezaService.modificarEntradaPieza(entradaPiezaDTO, id_pieza), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
