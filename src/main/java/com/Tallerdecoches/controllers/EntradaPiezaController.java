@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,7 +49,7 @@ public class EntradaPiezaController {
             @Parameter(description = "id del albarán del proveedor", required = true)
             @PathVariable Long idAlbaranProveedor) {
 
-        return entradaPiezaService.crearEntradaPieza(entradaPiezaCrearDTO, idPieza, idAlbaranProveedor);
+        return new ResponseEntity<>(entradaPiezaService.crearEntradaPieza(entradaPiezaCrearDTO, idPieza, idAlbaranProveedor), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Obtener todas las entradas de piezas", description = "Obtener todas las entradas de piezas")

@@ -43,7 +43,7 @@ public class EntradaPiezaServiceImpl implements EntradaPiezaService{
     }
 
     @Override
-    public ResponseEntity<EntradaPiezaDTO> crearEntradaPieza(EntradaPiezaCrearDTO entradaPiezaCrearDTO, Long idPieza, Long idAlbaranProveedor) {
+    public EntradaPiezaDTO crearEntradaPieza(EntradaPiezaCrearDTO entradaPiezaCrearDTO, Long idPieza, Long idAlbaranProveedor) {
 
         if (!entradaPiezaModificacionCambiosService.validacionPieza(idPieza))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "La pieza asociada a la entrada no existe");
@@ -54,8 +54,9 @@ public class EntradaPiezaServiceImpl implements EntradaPiezaService{
         AlbaranProveedor albaranProveedor = albaranProveedorRepository.findById(idAlbaranProveedor).get();
         entradaPieza.setAlbaranProveedor(albaranProveedor);
         entradaPiezaRepository.save(entradaPieza);
+        EntradaPiezaDTO entradaPiezaRespuesta = modelMapper.map(entradaPieza, EntradaPiezaDTO.class);
 
-        return new ResponseEntity<>(modelMapper.map(entradaPieza, EntradaPiezaDTO.class), HttpStatus.CREATED);
+        return entradaPiezaRespuesta;
     }
 
     @Override
