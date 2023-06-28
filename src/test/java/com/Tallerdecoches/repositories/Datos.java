@@ -82,6 +82,8 @@ public class Datos {
             .provincia("Sevilla")
             .build();
 
+    public final static List<CodigoPostalDTO> CODIGOS_POSTALES_DTO_1 = Arrays.asList(CODIGO_POSTAL_DTO_1, CODIGO_POSTAL_DTO_2, CODIGO_POSTAL_DTO_3);
+
     public final static CodigoPostalCrearDTO CODIGO_POSTAL_CREAR_DTO_1 = CodigoPostalCrearDTO.builder()
             .codigo("14920")
             .localidad("Aguilar de la Frontera")

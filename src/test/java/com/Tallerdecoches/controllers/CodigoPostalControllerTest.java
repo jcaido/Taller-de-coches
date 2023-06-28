@@ -50,4 +50,16 @@ public class CodigoPostalControllerTest {
                 .andExpect(jsonPath("$.provincia", is(Datos.CODIGO_POSTAL_DTO_1.getProvincia())));
     }
 
+    @DisplayName("Test para obtener una lista con todos los codigos postales (controller)")
+    @Test
+    void obtenerEmpleadosTodosTest() throws Exception {
+        when(codigoPostalService.findAll()).thenReturn(Datos.CODIGOS_POSTALES_DTO_1);
+
+        ResultActions response = mockMvc.perform(get("/api/codigosPostales"));
+
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", is(Datos.CODIGOS_POSTALES_DTO_1.size())));
+    }
+
 }
