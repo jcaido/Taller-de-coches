@@ -163,4 +163,15 @@ public class CodigoPostalControllerTest {
                 .andExpect(jsonPath("$.codigo", is(Datos.CODIGO_POSTAL_DTO_1.getCodigo())));
     }
 
+    @DisplayName("Test para obtener un codigo postal por su localidad (controller), codigo postal no encontrado")
+    @Test
+    void obtenerCodigoPostalPorLocalidadCodigoPostalNoEncontradoTest() throws Exception {
+        when(codigoPostalService.findByLocalidad("Aguilar de la Frontera")).thenThrow(ResourceNotFoundException.class);
+
+        ResultActions response = mockMvc.perform(get("/api/codigosPostales/localidad/{localidad}", "Aguilar de la Frontera"));
+
+        response.andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
 }
