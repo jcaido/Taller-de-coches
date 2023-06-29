@@ -1,6 +1,7 @@
 package com.Tallerdecoches.controllers;
 
 import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalCrearDTO;
+import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.Datos;
 import com.Tallerdecoches.services.codigoPostal.CodigoPostalService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -72,6 +73,17 @@ public class CodigoPostalControllerTest {
         response.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.codigo", is(Datos.CODIGO_POSTAL_DTO_1.getCodigo())));
+    }
+
+    @DisplayName("Test para obtener un codigo postal por id (controller), codigo postal no encontrado")
+    @Test
+    void obtenerCodigoPostalPorIdCodigoPostalNoEncontradoTest() throws Exception {
+        when(codigoPostalService.findById(1L)).thenThrow(ResourceNotFoundException.class);
+
+        ResultActions response = mockMvc.perform(get("/api/codigosPostales/{id}", 1L));
+
+        response.andDo(print())
+                .andExpect(status().isNotFound());
     }
 
 }
