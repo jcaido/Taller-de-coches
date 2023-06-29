@@ -139,4 +139,16 @@ public class CodigoPostalControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @DisplayName("Test para obtener una lista de codigos postales por provincia (controller)")
+    @Test
+    void obtenerCodigosPostalesPorProvinciaTest() throws Exception {
+        when(codigoPostalService.findByProvincia("Cordoba")).thenReturn(Datos.CODIGOS_POSTALES_DTO_1);
+
+        ResultActions response = mockMvc.perform(get("/api/codigosPostales/provincia/{provincia}", "Cordoba"));
+
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", is(Datos.CODIGOS_POSTALES_DTO_1.size())));
+    }
+
 }
