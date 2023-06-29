@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.web.server.ResponseStatusException;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -49,6 +51,20 @@ public class CodigoPostalControllerTest {
                 .andExpect(jsonPath("$.codigo", is(Datos.CODIGO_POSTAL_DTO_1.getCodigo())))
                 .andExpect(jsonPath("$.localidad", is(Datos.CODIGO_POSTAL_DTO_1.getLocalidad())))
                 .andExpect(jsonPath("$.provincia", is(Datos.CODIGO_POSTAL_DTO_1.getProvincia())));
+    }
+
+    @DisplayName("Test para guardar un codigo postal (controller), numero del codigo postal ya existe")
+    @Test
+    void crearCodigoPostalNumeroCodigoPostalYaExisteTest() throws Exception {
+        when(codigoPostalService.crearCodigoPostal(any(CodigoPostalCrearDTO.class))).thenThrow(new ResponseStatusException(HttpStatus.CONFLICT, "El numero del codigo postal ya existe"));
+
+        ResultActions response = mockMvc.perform(post("/api/codigosPostales")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(Datos.CODIGO_POSTAL_CREAR_DTO_1)));
+
+        response.andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.mensaje", is("409 CONFLICT \"El numero del codigo postal ya existe\"")));
     }
 
     @DisplayName("Test para obtener una lista con todos los codigos postales (controller)")
