@@ -116,4 +116,16 @@ public class CodigoPostalControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @DisplayName("Test para obtener un codigo postal por su codigo (controller)")
+    @Test
+    void obtenerCodigoPostalPorCodigoTest() throws Exception {
+        when(codigoPostalService.findByCodigo("14920")).thenReturn(Datos.CODIGO_POSTAL_DTO_1);
+
+        ResultActions response = mockMvc.perform(get("/api/codigosPostales/codigo/{codigo}", "14920"));
+
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.codigo", is(Datos.CODIGO_POSTAL_DTO_1.getCodigo())));
+    }
+
 }
