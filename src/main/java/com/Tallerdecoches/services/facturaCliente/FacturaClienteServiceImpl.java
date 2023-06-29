@@ -102,6 +102,21 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
     }
 
     @Override
+    public List<FacturaClientesBusquedasDTO> obtenerFacturasPorClienteEntreFechas(Long idCliente, LocalDate fechaFacturaInicial, LocalDate fechaFacturaFinal) {
+        Query query = entityManager.createQuery("FROM FacturaCliente f " +
+                "WHERE f.ordenReparacion.vehiculo.propietario.id = :idCliente AND " +
+                "f.fechaFactura >= :fechaFacturaInicial AND f.fechaFactura <= :fechaFacturaFinal " +
+                "ORDER BY f.fechaFactura asc");
+        query.setParameter("idCliente", idCliente);
+        query.setParameter("fechaFacturaInicial", fechaFacturaInicial);
+        query.setParameter("fechaFacturaFinal", fechaFacturaFinal);
+
+        List<FacturaCliente> facturasClientes = query.getResultList();
+
+        return facturasClientes.stream().map(facturaCliente-> modelMapper.map(facturaCliente, FacturaClientesBusquedasDTO.class)).toList();
+    }
+
+    @Override
     public ResponseEntity<FacturaClientesBusquedasDTO> findById(Long id) {
 
         Optional<FacturaCliente> facturaCliente = facturaClienteRepository.findById(id);
