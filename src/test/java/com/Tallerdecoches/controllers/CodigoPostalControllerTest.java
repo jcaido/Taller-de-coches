@@ -234,4 +234,18 @@ public class CodigoPostalControllerTest {
                 .andExpect(jsonPath("$.mensaje", is("409 CONFLICT \"La localidad ya existe\"")));
     }
 
+    @DisplayName("Test para modificar un codigo postal (controller), el numero del codigo postal ya existe")
+    @Test
+    void modificarCodigoPostalNumeroCodigoYaExisteTest() throws Exception {
+        when(codigoPostalService.modificarCodigoPostal(any(CodigoPostalDTO.class))).thenThrow(new ResponseStatusException(HttpStatus.CONFLICT, "El codigo del Codigo Postal ya existe"));
+
+        ResultActions response = mockMvc.perform(put("/api/codigosPostales")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(Datos.CODIGO_POSTAL_CREAR_DTO_1)));
+
+        response.andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.mensaje", is("409 CONFLICT \"El codigo del Codigo Postal ya existe\"")));
+    }
+
 }
