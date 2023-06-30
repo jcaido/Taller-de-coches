@@ -2,6 +2,7 @@ package com.Tallerdecoches.controllers;
 
 import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalCrearDTO;
 import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalDTO;
+import com.Tallerdecoches.exceptions.BadRequestModificacionException;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.Datos;
 import com.Tallerdecoches.services.codigoPostal.CodigoPostalService;
@@ -189,6 +190,20 @@ public class CodigoPostalControllerTest {
                 .andExpect(jsonPath("$.codigo", is(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO.getCodigo())))
                 .andExpect(jsonPath("$.localidad", is(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO.getLocalidad())))
                 .andExpect(jsonPath("$.provincia", is(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO.getProvincia())));
+    }
+
+    @DisplayName("Test para modificar un codigo postal (controller), bad request")
+    @Test
+    void modificarCodigoPostalBadRequestTest() throws Exception {
+        when(codigoPostalService.modificarCodigoPostal(any(CodigoPostalDTO.class))).thenThrow(new BadRequestModificacionException("Codigo Postal", "id"));
+
+        ResultActions response = mockMvc.perform(put("/api/codigosPostales")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(Datos.CODIGO_POSTAL_CREAR_DTO_1)));
+
+        response.andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.mensaje", is("La modificacion de un Codigo Postal debe contener el campo id")));
     }
 
 }
