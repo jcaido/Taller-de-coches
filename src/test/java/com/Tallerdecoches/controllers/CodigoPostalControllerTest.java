@@ -273,4 +273,16 @@ public class CodigoPostalControllerTest {
                 .andExpect(jsonPath("$.mensaje", is("Codigo Postal con id " + Datos.CODIGO_POSTAL_1.getId() + " no se encuentra")));
     }
 
+    @DisplayName("Test para eliminar un codigo postal (controller), existen propietarios relacionados")
+    @Test
+    void eliminarCodigoPostalExistenPropietariosRelacionadosTest() throws Exception {
+        when(codigoPostalService.deleteById(anyLong())).thenThrow(new ResponseStatusException(HttpStatus.CONFLICT, "Existen propietarios relacionados con ese codigo postal"));
+
+        ResultActions response = mockMvc.perform(delete("/api/codigosPostales/{id}", Datos.CODIGO_POSTAL_1.getId()));
+
+        response.andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.mensaje", is("409 CONFLICT \"Existen propietarios relacionados con ese codigo postal\"")));
+    }
+
 }
