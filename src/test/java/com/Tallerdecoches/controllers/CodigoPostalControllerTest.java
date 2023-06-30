@@ -1,6 +1,7 @@
 package com.Tallerdecoches.controllers;
 
 import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalCrearDTO;
+import com.Tallerdecoches.DTOs.codigoPostal.CodigoPostalDTO;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.Datos;
 import com.Tallerdecoches.services.codigoPostal.CodigoPostalService;
@@ -172,6 +173,22 @@ public class CodigoPostalControllerTest {
 
         response.andDo(print())
                 .andExpect(status().isNotFound());
+    }
+
+    @DisplayName("Test para modificar un codigo postal (controller)")
+    @Test
+    void modificarCodigoPostalTest() throws Exception {
+        when(codigoPostalService.modificarCodigoPostal(any(CodigoPostalDTO.class))).thenReturn(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO);
+
+        ResultActions response = mockMvc.perform(put("/api/codigosPostales")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO)));
+
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.codigo", is(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO.getCodigo())))
+                .andExpect(jsonPath("$.localidad", is(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO.getLocalidad())))
+                .andExpect(jsonPath("$.provincia", is(Datos.CODIGO_POSTAL_DTO_1_MODIFICADO.getProvincia())));
     }
 
 }
