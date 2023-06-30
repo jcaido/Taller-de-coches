@@ -209,7 +209,7 @@ public class CodigoPostalControllerTest {
     @DisplayName("Test para modificat un codigo postal (controller), el codigo postal no existe")
     @Test
     void modificarCodigoPostalCodigoPostalNoExisteTest() throws Exception {
-        when(codigoPostalService.modificarCodigoPostal(any(CodigoPostalDTO.class))).thenThrow(new ResourceNotFoundException("Codigo Postal", "id", "1"));
+        when(codigoPostalService.modificarCodigoPostal(any(CodigoPostalDTO.class))).thenThrow(new ResourceNotFoundException("Codigo Postal", "id", String.valueOf(Datos.CODIGO_POSTAL_1.getId())));
 
         ResultActions response = mockMvc.perform(put("/api/codigosPostales")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -217,7 +217,7 @@ public class CodigoPostalControllerTest {
 
         response.andDo(print())
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.mensaje", is("Codigo Postal con id 1 no se encuentra")));
+                .andExpect(jsonPath("$.mensaje", is("Codigo Postal con id " +Datos.CODIGO_POSTAL_1.getId() + " no se encuentra")));
     }
 
     @DisplayName("Test para modificar un codigo postal (controller), la localidad ya existe")
@@ -259,6 +259,18 @@ public class CodigoPostalControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("Codigo Postal eliminado con exito"));
 
+    }
+
+    @DisplayName("Test para eliminar un codigo postal (controller), codigo postal no encontrado")
+    @Test
+    void eliminarCodigoPostalCodigoPostalNoEncontradoTest() throws Exception {
+        when(codigoPostalService.deleteById(anyLong())).thenThrow(new ResourceNotFoundException("Codigo Postal", "id", String.valueOf(Datos.CODIGO_POSTAL_1.getId())));
+
+        ResultActions response = mockMvc.perform(delete("/api/codigosPostales/{id}", Datos.CODIGO_POSTAL_1.getId()));
+
+        response.andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.mensaje", is("Codigo Postal con id " + Datos.CODIGO_POSTAL_1.getId() + " no se encuentra")));
     }
 
 }
