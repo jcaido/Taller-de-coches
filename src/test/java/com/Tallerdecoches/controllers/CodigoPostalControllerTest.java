@@ -248,4 +248,17 @@ public class CodigoPostalControllerTest {
                 .andExpect(jsonPath("$.mensaje", is("409 CONFLICT \"El codigo del Codigo Postal ya existe\"")));
     }
 
+    @DisplayName("Test para eliminar un codigo postal (controller)")
+    @Test
+    void eliminarCodigoPostalTest() throws Exception {
+        when(codigoPostalService.deleteById(anyLong())).thenReturn("Codigo Postal eliminado con exito");
+
+        ResultActions response = mockMvc.perform(delete("/api/codigosPostales/{id}", Datos.CODIGO_POSTAL_1.getId()));
+
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("Codigo Postal eliminado con exito"));
+
+    }
+
 }
