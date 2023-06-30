@@ -206,4 +206,18 @@ public class CodigoPostalControllerTest {
                 .andExpect(jsonPath("$.mensaje", is("La modificacion de un Codigo Postal debe contener el campo id")));
     }
 
+    @DisplayName("Test para modificat un codigo postal (controller), el codigo postal no existe")
+    @Test
+    void modificarCodigoPostalCodigoPostalNoExisteTest() throws Exception {
+        when(codigoPostalService.modificarCodigoPostal(any(CodigoPostalDTO.class))).thenThrow(new ResourceNotFoundException("Codigo Postal", "id", "1"));
+
+        ResultActions response = mockMvc.perform(put("/api/codigosPostales")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(Datos.CODIGO_POSTAL_CREAR_DTO_1)));
+
+        response.andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.mensaje", is("Codigo Postal con id 1 no se encuentra")));
+    }
+
 }
