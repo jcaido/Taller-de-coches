@@ -93,4 +93,16 @@ public class PropietarioControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()", is(Datos.PROPIETARIOS_BUSQUEDAS_DTO_1.size())));
     }
+
+    @DisplayName("Test para obtener un propietario por su id (controller)")
+    @Test
+    void obtenerPropietarioPorIdTest() throws Exception {
+        when(propietarioService.findById(anyLong())).thenReturn(Datos.PROPIETARIO_BUSQUEDAS_DTO_1);
+
+        ResultActions response = mockMvc.perform(get("/api/propietarios/{id}", 1L));
+
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nombre", is(Datos.PROPIETARIO_BUSQUEDAS_DTO_1.getNombre())));
+    }
 }
