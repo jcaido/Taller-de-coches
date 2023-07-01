@@ -95,6 +95,18 @@ public class PropietarioControllerTest {
                 .andExpect(jsonPath("$.size()", is(Datos.PROPIETARIOS_BUSQUEDAS_DTO_1.size())));
     }
 
+    @DisplayName("Test para obtener una lista parcial con todos los propietarios (controller)")
+    @Test
+    void obtenerPropietariosParcialTodosTest() throws Exception {
+        when(propietarioService.findAllPartial()).thenReturn(Datos.PROPIETARIOS_BUSQUEDAS_PARCIAL_DTO_1);
+
+        ResultActions response = mockMvc.perform(get("/api/propietarios/parcial"));
+
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", is(Datos.PROPIETARIOS_BUSQUEDAS_PARCIAL_DTO_1.size())));
+    }
+
     @DisplayName("Test para obtener un propietario por su id (controller)")
     @Test
     void obtenerPropietarioPorIdTest() throws Exception {

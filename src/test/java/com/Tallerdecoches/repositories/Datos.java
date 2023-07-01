@@ -241,6 +241,7 @@ public class Datos {
             .build();
 
     public final static List<PropietarioBusquedasDTO> PROPIETARIOS_BUSQUEDAS_DTO_1 = Arrays.asList(PROPIETARIO_BUSQUEDAS_DTO_1, PROPIETARIO_BUSQUEDAS_DTO_2);
+    public final static List<PropietarioBusquedasParcialDTO> PROPIETARIOS_BUSQUEDAS_PARCIAL_DTO_1 = Arrays.asList(PROPIETARIO_BUSQUEDAS_PARCIAL_DTO_1, PROPIETARIO_BUSQUEDAS_PARCIAL_DTO_2, PROPIETARIO_BUSQUEDAS_PARCIAL_DTO_3);
 
     //VEHICULOS
     public final static Vehiculo VEHICULO_1 = Vehiculo.builder()
