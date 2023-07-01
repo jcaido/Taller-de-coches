@@ -1,6 +1,7 @@
 package com.Tallerdecoches.controllers;
 
 import com.Tallerdecoches.DTOs.propietario.PropietarioCrearDTO;
+import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.Datos;
 import com.Tallerdecoches.services.propietario.PropietarioService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -104,5 +105,16 @@ public class PropietarioControllerTest {
         response.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nombre", is(Datos.PROPIETARIO_BUSQUEDAS_DTO_1.getNombre())));
+    }
+
+    @DisplayName("Test para obtener un propietario por su id (controller), propietario no encontrado")
+    @Test
+    void obtenerPropietarioPorIdPropietarioNoEncontradoTest() throws Exception {
+        when(propietarioService.findById(anyLong())).thenThrow(ResourceNotFoundException.class);
+
+        ResultActions response = mockMvc.perform(get("/api/propietarios/{id}", 1L));
+
+        response.andDo(print())
+                .andExpect(status().isNotFound());
     }
 }
