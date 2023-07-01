@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.web.server.ResponseStatusException;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -34,7 +36,7 @@ public class PropietarioControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @DisplayName("Test para guardar un propietario")
+    @DisplayName("Test para guardar un propietario (controller) ")
     @Test
     void guardarPropietarioTest() throws Exception {
         when(propietarioService.crearPropietario(any(PropietarioCrearDTO.class), anyLong())).thenReturn(Datos.PROPIETARIO_DTO_1);
@@ -50,5 +52,19 @@ public class PropietarioControllerTest {
                 .andExpect(jsonPath("$.segundoApellido", is(Datos.PROPIETARIO_DTO_1.getSegundoApellido())))
                 .andExpect(jsonPath("$.dni", is(Datos.PROPIETARIO_DTO_1.getDni())))
                 .andExpect(jsonPath("$.domicilio", is(Datos.PROPIETARIO_DTO_1.getDomicilio())));
+    }
+
+    @DisplayName("Test para guardar un propietario (controller), DNI del propietario ya existe")
+    @Test
+    void guardarPropietarioDNIYaExisteTest() throws Exception {
+        when(propietarioService.crearPropietario(any(PropietarioCrearDTO.class), anyLong())).thenThrow(new ResponseStatusException(HttpStatus.CONFLICT, "El DNI del propietario ya existe"));
+
+        ResultActions response = mockMvc.perform(post("/api/propietarios/{id_codigoPostal}", Datos.CODIGO_POSTAL_1.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(Datos.PROPIETARIO_CREAR_DTO_1)));
+
+        response.andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.mensaje", is("409 CONFLICT \"El DNI del propietario ya existe\"")));
     }
 }
