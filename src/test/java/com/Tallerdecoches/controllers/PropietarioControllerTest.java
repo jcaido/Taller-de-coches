@@ -67,4 +67,18 @@ public class PropietarioControllerTest {
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.mensaje", is("409 CONFLICT \"El DNI del propietario ya existe\"")));
     }
+
+    @DisplayName("Test para guardar un propietario (controller), codigo postal asociado no existe")
+    @Test
+    void guardarPropietarioCodigoPostalAsociadoNoExisteTest() throws Exception {
+        when(propietarioService.crearPropietario(any(PropietarioCrearDTO.class), anyLong())).thenThrow(new ResponseStatusException(HttpStatus.CONFLICT, "El codigo Postal asociado al propietario no existe"));
+
+        ResultActions response = mockMvc.perform(post("/api/propietarios/{id_codigoPostal}", Datos.CODIGO_POSTAL_1.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(Datos.PROPIETARIO_CREAR_DTO_1)));
+
+        response.andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.mensaje", is("409 CONFLICT \"El codigo Postal asociado al propietario no existe\"")));
+    }
 }
