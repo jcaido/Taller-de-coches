@@ -141,4 +141,15 @@ public class PropietarioControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nombre", is(Datos.PROPIETARIO_BUSQUEDAS_DTO_1.getNombre())));
     }
+
+    @DisplayName("Test para obtener un propietario por su dni (controller), propietario no encontrado")
+    @Test
+    void obtenerPropietarioPorDniPropietarioNoEncontradoTest() throws Exception {
+        when(propietarioService.findByDni(anyString())).thenThrow(ResourceNotFoundException.class);
+
+        ResultActions response = mockMvc.perform(get("/api/propietarios/dni/{dni}", "44000888T"));
+
+        response.andDo(print())
+                .andExpect(status().isNotFound());
+    }
 }
