@@ -240,6 +240,8 @@ public class Datos {
             .dni("22777555K")
             .build();
 
+    public final static List<PropietarioBusquedasDTO> PROPIETARIOS_BUSQUEDAS_DTO_1 = Arrays.asList(PROPIETARIO_BUSQUEDAS_DTO_1, PROPIETARIO_BUSQUEDAS_DTO_2);
+
     //VEHICULOS
     public final static Vehiculo VEHICULO_1 = Vehiculo.builder()
             .id(1L)

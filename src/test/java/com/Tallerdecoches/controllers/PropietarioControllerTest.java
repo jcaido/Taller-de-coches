@@ -81,4 +81,16 @@ public class PropietarioControllerTest {
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.mensaje", is("409 CONFLICT \"El codigo Postal asociado al propietario no existe\"")));
     }
+
+    @DisplayName("Test para obtener una lista con todos los propietarios (controller)")
+    @Test
+    void obtenerPropietariosTodosTest() throws Exception {
+        when(propietarioService.findAll()).thenReturn(Datos.PROPIETARIOS_BUSQUEDAS_DTO_1);
+
+        ResultActions response = mockMvc.perform(get("/api/propietarios"));
+
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", is(Datos.PROPIETARIOS_BUSQUEDAS_DTO_1.size())));
+    }
 }
