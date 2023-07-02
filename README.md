@@ -69,4 +69,5 @@
 <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Para ejecutar la aplicación, desde el directorio raiz del proyecto debemos ejecutar el comando "docker-compose up". Ha que teneren cuenta que deberemos tener instalado docker en nuestro sistema y que se esté ejecutando</p><br>
 
 ## Probar el proyecto<a name="id5"></a>
+<p>Podemos probar las funcionalidades del proyecto consumiento los endpoints utilizando la interfaz de <strong>swagger</strong>. Para ello, con el proyecto ejecutándose según los pasos anteriores accederemos desde cualquier navegador a http://localhost:8080/swagger-ui/index.html</p>
 
