@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface AlbaranProveedorService {
-    ResponseEntity<AlbaranProveedorDTO> crearAlbaranProveedor(AlbaranProveedorCrearDTO albaranProveedorCrearDTO, Long idProveedor);
+    AlbaranProveedorDTO crearAlbaranProveedor(AlbaranProveedorCrearDTO albaranProveedorCrearDTO, Long idProveedor);
     List<AlbaranProveedorBusquedasDTO> findAll();
     List<AlbaranProveedorBusquedasParcialDTO> findAllParcial();
     ResponseEntity<AlbaranProveedorBusquedasDTO> findById(Long id);

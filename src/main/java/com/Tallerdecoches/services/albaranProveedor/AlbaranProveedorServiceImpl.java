@@ -43,7 +43,7 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
     }
 
     @Override
-    public ResponseEntity<AlbaranProveedorDTO> crearAlbaranProveedor(AlbaranProveedorCrearDTO albaranProveedorCrearDTO, Long idProveedor) {
+    public AlbaranProveedorDTO crearAlbaranProveedor(AlbaranProveedorCrearDTO albaranProveedorCrearDTO, Long idProveedor) {
 
         if (!albaranProveedorModificacionCambiosService.validacionProveedor(idProveedor))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El proveedor asociado al albarán no existe");
@@ -55,8 +55,9 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
         Proveedor proveedor = proveedorRepository.findById(idProveedor).get();
         albaranProveedor.setProveedor(proveedor);
         albaranProveedorRepository.save(albaranProveedor);
+        AlbaranProveedorDTO albaranProveedorRespuesta = modelMapper.map(albaranProveedor, AlbaranProveedorDTO.class);
 
-        return new ResponseEntity<>(modelMapper.map(albaranProveedor, AlbaranProveedorDTO.class), HttpStatus.CREATED);
+        return albaranProveedorRespuesta;
     }
 
     @Override

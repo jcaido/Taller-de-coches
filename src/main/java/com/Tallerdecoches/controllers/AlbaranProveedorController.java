@@ -2,6 +2,7 @@ package com.Tallerdecoches.controllers;
 
 import com.Tallerdecoches.DTOs.albaranProveedor.*;
 import com.Tallerdecoches.services.albaranProveedor.AlbaranProveedorService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class AlbaranProveedorController {
     public ResponseEntity<AlbaranProveedorDTO> crearAlbaranProveedor(@Valid @RequestBody AlbaranProveedorCrearDTO albaranProveedorCrearDTO
             , @PathVariable Long idProveedor) {
 
-        return albaranProveedorService.crearAlbaranProveedor(albaranProveedorCrearDTO, idProveedor);
+        return new ResponseEntity<>(albaranProveedorService.crearAlbaranProveedor(albaranProveedorCrearDTO, idProveedor), HttpStatus.CREATED);
     }
 
     //Obtener una lista con todos los albaranes de proveedor
