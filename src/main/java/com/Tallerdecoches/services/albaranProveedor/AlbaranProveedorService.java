@@ -9,7 +9,7 @@ public interface AlbaranProveedorService {
     AlbaranProveedorDTO crearAlbaranProveedor(AlbaranProveedorCrearDTO albaranProveedorCrearDTO, Long idProveedor);
     List<AlbaranProveedorBusquedasDTO> findAll();
     List<AlbaranProveedorBusquedasParcialDTO> findAllParcial();
-    ResponseEntity<AlbaranProveedorBusquedasDTO> findById(Long id);
+    AlbaranProveedorBusquedasDTO findById(Long id);
     List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesProveedorPorProveedorHQL(Long idProveedor);
     List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesPtesFacturarPorProveedorHQL(Long idProveedor);
     List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesProveedorPorFacturaProveedorHQL(Long idFactura);

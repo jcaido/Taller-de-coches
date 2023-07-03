@@ -75,13 +75,15 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
     }
 
     @Override
-    public ResponseEntity<AlbaranProveedorBusquedasDTO> findById(Long id) {
+    public AlbaranProveedorBusquedasDTO findById(Long id) {
         Optional<AlbaranProveedor> albaranProveedor = albaranProveedorRepository.findById(id);
 
         if (!albaranProveedor.isPresent())
             throw new ResourceNotFoundException("Albaran de proveedor", "id", String.valueOf(id));
 
-        return new ResponseEntity<>(modelMapper.map(albaranProveedor, AlbaranProveedorBusquedasDTO.class), HttpStatus.OK);
+        AlbaranProveedorBusquedasDTO albaranProveedorEncontrado = modelMapper.map(albaranProveedor, AlbaranProveedorBusquedasDTO.class);
+
+        return albaranProveedorEncontrado;
     }
 
     @Override

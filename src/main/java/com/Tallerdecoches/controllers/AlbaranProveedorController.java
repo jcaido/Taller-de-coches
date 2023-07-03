@@ -46,7 +46,7 @@ public class AlbaranProveedorController {
     @GetMapping("/{id}")
     public ResponseEntity<AlbaranProveedorBusquedasDTO> obtenerAlbaranProveedorPorId(@PathVariable Long id) {
 
-        return albaranProveedorService.findById(id);
+        return new ResponseEntity<>(albaranProveedorService.findById(id), HttpStatus.OK);
     }
 
     //Obtener albaranes no facturados de un proveedor
