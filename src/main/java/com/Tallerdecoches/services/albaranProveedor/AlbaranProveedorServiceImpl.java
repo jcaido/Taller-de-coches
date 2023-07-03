@@ -146,7 +146,7 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
     }
 
     @Override
-    public ResponseEntity<AlbaranProveedorDTO> facturarAlbaranProveedor(Long idAlbaran, Long idFactura) {
+    public AlbaranProveedorDTO facturarAlbaranProveedor(Long idAlbaran, Long idFactura) {
 
         if (!albaranProveedorRepository.existsById(idAlbaran))
             throw new ResourceNotFoundException("Albarán de proveedor", "id", String.valueOf(idAlbaran));
@@ -160,9 +160,10 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
         albaran.setFacturaProveedor(factura);
         albaran.setFacturado(true);
 
-        albaranProveedorRepository.save(albaran);
+        AlbaranProveedor albaranProveedorFacturado = albaranProveedorRepository.save(albaran);
+        AlbaranProveedorDTO albaranProveedorFacturadoDTO = modelMapper.map(albaranProveedorFacturado, AlbaranProveedorDTO.class);
 
-        return new ResponseEntity<>(modelMapper.map(albaran, AlbaranProveedorDTO.class), HttpStatus.OK);
+        return albaranProveedorFacturadoDTO;
     }
 
     @Override

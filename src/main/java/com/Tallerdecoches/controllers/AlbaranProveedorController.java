@@ -74,7 +74,7 @@ public class AlbaranProveedorController {
     @PutMapping("/facturarAlbaran/{idAlbaran}/{idFactura}")
     public ResponseEntity<AlbaranProveedorDTO> facturarAlbaranProveedor(@PathVariable Long idAlbaran, @PathVariable Long idFactura) {
 
-        return albaranProveedorService.facturarAlbaranProveedor(idAlbaran, idFactura);
+        return new ResponseEntity<>(albaranProveedorService.facturarAlbaranProveedor(idAlbaran, idFactura), HttpStatus.OK);
     }
 
     //Marcar un albaran ya facturado como no facturado
