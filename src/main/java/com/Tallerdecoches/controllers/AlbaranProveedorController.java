@@ -81,7 +81,7 @@ public class AlbaranProveedorController {
     @PutMapping("/noFacturarAlbaran/{idAlbaran}")
     public ResponseEntity<AlbaranProveedorDTO> noFacturarAlbaranProveedorFacturado(@PathVariable Long idAlbaran) {
 
-        return albaranProveedorService.noFacturarAlbaranProveedorFacturado(idAlbaran);
+        return new ResponseEntity<>(albaranProveedorService.noFacturarAlbaranProveedorFacturado(idAlbaran), HttpStatus.OK);
     }
 
     //Eliminar un albarán de proveedor
