@@ -115,7 +115,7 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
     }
 
     @Override
-    public ResponseEntity<AlbaranProveedorDTO> modificarAlbaranProveedor(AlbaranProveedorDTO albaranProveedorDTO, Long idProveedor) {
+    public AlbaranProveedorDTO modificarAlbaranProveedor(AlbaranProveedorDTO albaranProveedorDTO, Long idProveedor) {
 
         if (albaranProveedorDTO.getId() == null)
             throw new BadRequestModificacionException("Albarán de proveedor", "id");
@@ -139,9 +139,10 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
         albaranProveedor.setNumeroAlbaran(albaranProveedorDTO.getNumeroAlbaran());
         albaranProveedor.setFacturado(albaranProveedorDTO.getFacturado());
 
-        albaranProveedorRepository.save(albaranProveedor);
+        AlbaranProveedor albaranProveedorModificado = albaranProveedorRepository.save(albaranProveedor);
+        AlbaranProveedorDTO albaranProveedorModificadoDTO = modelMapper.map(albaranProveedorModificado, AlbaranProveedorDTO.class);
 
-        return new ResponseEntity<>(modelMapper.map(albaranProveedor, AlbaranProveedorDTO.class), HttpStatus.OK);
+        return albaranProveedorModificadoDTO;
     }
 
     @Override

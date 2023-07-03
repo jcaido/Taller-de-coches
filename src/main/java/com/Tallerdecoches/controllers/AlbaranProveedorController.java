@@ -67,7 +67,7 @@ public class AlbaranProveedorController {
     @PutMapping("/{idProveedor}")
     public ResponseEntity<AlbaranProveedorDTO> modificarAlbaranProveedor(@Valid @RequestBody AlbaranProveedorDTO albaranProveedorDTO, @PathVariable Long idProveedor) {
 
-        return albaranProveedorService.modificarAlbaranProveedor(albaranProveedorDTO, idProveedor);
+        return new ResponseEntity<>(albaranProveedorService.modificarAlbaranProveedor(albaranProveedorDTO, idProveedor), HttpStatus.OK);
     }
 
     //Facturar un albaran de proveedor

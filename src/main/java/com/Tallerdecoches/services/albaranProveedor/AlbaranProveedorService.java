@@ -13,7 +13,7 @@ public interface AlbaranProveedorService {
     List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesProveedorPorProveedorHQL(Long idProveedor);
     List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesPtesFacturarPorProveedorHQL(Long idProveedor);
     List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesProveedorPorFacturaProveedorHQL(Long idFactura);
-    ResponseEntity<AlbaranProveedorDTO> modificarAlbaranProveedor(AlbaranProveedorDTO albaranProveedorDTO, Long idProveedor);
+    AlbaranProveedorDTO modificarAlbaranProveedor(AlbaranProveedorDTO albaranProveedorDTO, Long idProveedor);
     ResponseEntity<AlbaranProveedorDTO> facturarAlbaranProveedor(Long idAlbaran, Long idFactura);
     ResponseEntity<AlbaranProveedorDTO> noFacturarAlbaranProveedorFacturado(Long idAlbaran);
     ResponseEntity<String> deleteById(Long  id);
