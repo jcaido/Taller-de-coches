@@ -16,5 +16,5 @@ public interface AlbaranProveedorService {
     AlbaranProveedorDTO modificarAlbaranProveedor(AlbaranProveedorDTO albaranProveedorDTO, Long idProveedor);
     AlbaranProveedorDTO facturarAlbaranProveedor(Long idAlbaran, Long idFactura);
     AlbaranProveedorDTO noFacturarAlbaranProveedorFacturado(Long idAlbaran);
-    ResponseEntity<String> deleteById(Long  id);
+    String deleteById(Long  id);
 }

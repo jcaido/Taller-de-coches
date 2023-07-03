@@ -88,6 +88,6 @@ public class AlbaranProveedorController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarAlbaranProveedor(@PathVariable Long id) {
 
-        return albaranProveedorService.deleteById(id);
+        return new ResponseEntity<>(albaranProveedorService.deleteById(id), HttpStatus.OK);
     }
 }

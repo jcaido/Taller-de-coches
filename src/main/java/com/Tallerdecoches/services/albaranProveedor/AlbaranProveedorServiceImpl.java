@@ -184,7 +184,7 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
     }
 
     @Override
-    public ResponseEntity<String> deleteById(Long id) {
+    public String deleteById(Long id) {
         AlbaranProveedor albaranProveedor = albaranProveedorRepository.findById(id).get();
 
         if (entradaPiezaService.obtenerEntradasPiezasPorAlbaranProveedorHQL(id).size() > 0)
@@ -195,6 +195,8 @@ public class AlbaranProveedorServiceImpl implements  AlbaranProveedorService{
 
         albaranProveedorRepository.deleteById(id);
 
-        return new ResponseEntity<>("Albaran de proveedor eliminado con exito", HttpStatus.OK);
+        String respuesta = "Albarán de proveedor eliminado con exito";
+
+        return respuesta;
     }
 }
