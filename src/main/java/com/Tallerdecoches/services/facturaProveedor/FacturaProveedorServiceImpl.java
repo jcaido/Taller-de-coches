@@ -148,7 +148,7 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
     }
 
     @Override
-    public ResponseEntity<String> deleteById(Long id) {
+    public String deleteById(Long id) {
 
         if (!facturaProveedorRepository.existsById(id))
             throw new ResourceNotFoundException("Factura", "id", String.valueOf(id));
@@ -160,6 +160,8 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
 
         facturaProveedorRepository.deleteById(id);
 
-        return new ResponseEntity<>("Factura de proveedor eliminada con exito", HttpStatus.OK);
+        String respuesta = "Factura de proveedor eliminada con exito";
+
+        return respuesta;
     }
 }
