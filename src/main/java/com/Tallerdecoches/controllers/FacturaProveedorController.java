@@ -43,7 +43,7 @@ public class FacturaProveedorController {
     @GetMapping("/{id}")
     public ResponseEntity<FacturaProveedorBusquedasDTO> obtenerFacturaProveedorPorId(@PathVariable Long id) {
 
-        return facturaProveedorService.findById(id);
+        return new ResponseEntity<>(facturaProveedorService.findById(id), HttpStatus.OK);
     }
 
     //Obtener facturas de proveedores entre fechas

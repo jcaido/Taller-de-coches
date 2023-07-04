@@ -12,7 +12,7 @@ public interface FacturaProveedorService {
 
     FacturaProveedorDTO crearFacturaProveedor(FacturaProveedorCrearDTO facturaProveedorCrearDTO, Long idProveedor);
     List<FacturaProveedorBusquedasDTO> findAll();
-    ResponseEntity<FacturaProveedorBusquedasDTO> findById(Long id);
+    FacturaProveedorBusquedasDTO findById(Long id);
     List<FacturaProveedorBusquedasDTO> obtenerFacturasProveedoresEntreFechas(LocalDate fechaFacturaInicial, LocalDate fechaFacturaFinal);
     List<FacturaProveedorBusquedasDTO> obtenerFacturasPorProveedorEntreFechas(Long idProveedor, LocalDate fechaFacturaInicial, LocalDate fechaFacturaFinal);
     ResponseEntity<FacturaProveedorDTO> modificarFacturaProveedor(FacturaProveedorDTO facturaProveedorDTO, Long idProveedor);

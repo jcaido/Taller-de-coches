@@ -71,14 +71,16 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
     }
 
     @Override
-    public ResponseEntity<FacturaProveedorBusquedasDTO> findById(Long id) {
+    public FacturaProveedorBusquedasDTO findById(Long id) {
 
         Optional<FacturaProveedor> facturasProveedor = facturaProveedorRepository.findById(id);
 
         if (!facturasProveedor.isPresent())
             throw new ResourceNotFoundException("Factura de proveedor", "id", String.valueOf(id));
 
-        return new ResponseEntity<>(modelMapper.map(facturasProveedor, FacturaProveedorBusquedasDTO.class), HttpStatus.OK);
+        FacturaProveedorBusquedasDTO facturaProveedorEncontrada = modelMapper.map(facturasProveedor, FacturaProveedorBusquedasDTO.class);
+
+        return facturaProveedorEncontrada;
     }
 
     @Override
