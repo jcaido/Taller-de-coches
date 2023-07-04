@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface FacturaProveedorService {
 
-    ResponseEntity<FacturaProveedorDTO> crearFacturaProveedor(FacturaProveedorCrearDTO facturaProveedorCrearDTO, Long idProveedor);
+    FacturaProveedorDTO crearFacturaProveedor(FacturaProveedorCrearDTO facturaProveedorCrearDTO, Long idProveedor);
     List<FacturaProveedorBusquedasDTO> findAll();
     ResponseEntity<FacturaProveedorBusquedasDTO> findById(Long id);
     List<FacturaProveedorBusquedasDTO> obtenerFacturasProveedoresEntreFechas(LocalDate fechaFacturaInicial, LocalDate fechaFacturaFinal);

@@ -45,7 +45,7 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
     }
 
     @Override
-    public ResponseEntity<FacturaProveedorDTO> crearFacturaProveedor(FacturaProveedorCrearDTO facturaProveedorCrearDTO, Long idProveedor) {
+    public FacturaProveedorDTO crearFacturaProveedor(FacturaProveedorCrearDTO facturaProveedorCrearDTO, Long idProveedor) {
 
         if (!albaranProveedorModificacionCambiosService.validacionProveedor(idProveedor))
             throw new ResourceNotFoundException("Proveedor", "id", String.valueOf(idProveedor));
@@ -58,7 +58,9 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
         facturaProveedor.setProveedor(proveedor);
         facturaProveedorRepository.save(facturaProveedor);
 
-        return new ResponseEntity<>(modelMapper.map(facturaProveedor, FacturaProveedorDTO.class), HttpStatus.CREATED);
+        FacturaProveedorDTO facturaProveedorRespuesta = modelMapper.map(facturaProveedor, FacturaProveedorDTO.class);
+
+        return facturaProveedorRespuesta;
     }
 
     @Override

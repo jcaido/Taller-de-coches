@@ -5,6 +5,7 @@ import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorDTO;
 import com.Tallerdecoches.services.facturaProveedor.FacturaProveedorService;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class FacturaProveedorController {
     public ResponseEntity<FacturaProveedorDTO> crearFacturaProveedor(@Valid @RequestBody FacturaProveedorCrearDTO facturaProveedorCrearDTO
             , @PathVariable Long idProveedor) {
 
-        return facturaProveedorService.crearFacturaProveedor(facturaProveedorCrearDTO, idProveedor);
+        return new ResponseEntity<>(facturaProveedorService.crearFacturaProveedor(facturaProveedorCrearDTO, idProveedor), HttpStatus.CREATED);
     }
 
     //obtener una lista con todas las facturas
