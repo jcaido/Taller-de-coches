@@ -70,7 +70,7 @@ public class FacturaProveedorController {
     @PutMapping("/{idProveedor}")
     public ResponseEntity<FacturaProveedorDTO> modificarFacturaProveedor(@Valid @RequestBody FacturaProveedorDTO facturaProveedorDTO, @PathVariable Long idProveedor) {
 
-        return facturaProveedorService.modificarFacturaProveedor(facturaProveedorDTO, idProveedor);
+        return new ResponseEntity<>(facturaProveedorService.modificarFacturaProveedor(facturaProveedorDTO, idProveedor), HttpStatus.OK);
     }
 
     //Eliminar una factura existente

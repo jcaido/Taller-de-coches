@@ -15,6 +15,6 @@ public interface FacturaProveedorService {
     FacturaProveedorBusquedasDTO findById(Long id);
     List<FacturaProveedorBusquedasDTO> obtenerFacturasProveedoresEntreFechas(LocalDate fechaFacturaInicial, LocalDate fechaFacturaFinal);
     List<FacturaProveedorBusquedasDTO> obtenerFacturasPorProveedorEntreFechas(Long idProveedor, LocalDate fechaFacturaInicial, LocalDate fechaFacturaFinal);
-    ResponseEntity<FacturaProveedorDTO> modificarFacturaProveedor(FacturaProveedorDTO facturaProveedorDTO, Long idProveedor);
+    FacturaProveedorDTO modificarFacturaProveedor(FacturaProveedorDTO facturaProveedorDTO, Long idProveedor);
     ResponseEntity<String> deleteById(Long id);
 }

@@ -111,7 +111,7 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
         return facturasProveedor.stream().map(facturaProveedor -> modelMapper.map(facturaProveedor, FacturaProveedorBusquedasDTO.class)).toList();
     }
     @Override
-    public ResponseEntity<FacturaProveedorDTO> modificarFacturaProveedor(FacturaProveedorDTO facturaProveedorDTO, Long idProveedor) {
+    public FacturaProveedorDTO modificarFacturaProveedor(FacturaProveedorDTO facturaProveedorDTO, Long idProveedor) {
 
         if (facturaProveedorDTO.getId() ==  null)
             throw new BadRequestModificacionException("Factura de proveedor", "id");
@@ -141,9 +141,10 @@ public class FacturaProveedorServiceImpl implements FacturaProveedorService{
         facturaProveedor.setTipoIVA(facturaProveedorDTO.getTipoIVA());
         facturaProveedor.setContabilizada(facturaProveedorDTO.getContabilizada());
 
-        facturaProveedorRepository.save(facturaProveedor);
+        FacturaProveedor facturaProveedorModificada = facturaProveedorRepository.save(facturaProveedor);
+        FacturaProveedorDTO facturaProveedorModificadaDTO = modelMapper.map(facturaProveedorModificada, FacturaProveedorDTO.class);
 
-        return new ResponseEntity<>(modelMapper.map(facturaProveedor, FacturaProveedorDTO.class), HttpStatus.OK);
+        return facturaProveedorModificadaDTO;
     }
 
     @Override
