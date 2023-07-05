@@ -84,7 +84,8 @@ public class FacturaClienteController {
     //Modificar una factura de cliente sin cambiar la asignacion de la orden de reparacion
     @PutMapping("/modificarFactura")
     public ResponseEntity<FacturaClienteDTO> modificarFacturaCliente(@Valid @RequestBody FacturaClienteDTO facturaClienteDTO) {
-        return facturaClienteService.modificarFacturaClienteNoOR(facturaClienteDTO);
+
+        return new ResponseEntity<>(facturaClienteService.modificarFacturaClienteNoOR(facturaClienteDTO), HttpStatus.OK);
     }
 
     //Eliminar una factura de cliente
