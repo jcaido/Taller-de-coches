@@ -234,7 +234,7 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
 
     @Override
     @Transactional
-    public ResponseEntity<String> eliminarFacturaCliente(Long id) {
+    public String eliminarFacturaCliente(Long id) {
 
         if (!facturaClienteRepository.existsById(id))
             throw new ResourceNotFoundException("Factura", "id", String.valueOf(id));
@@ -248,6 +248,8 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
 
         facturaClienteRepository.deleteById(id);
 
-        return new ResponseEntity<>("Factura de cliente eliminada con exito", HttpStatus.OK);
+        String respuesta = "Factura de cliente eliminada con exito";
+
+        return respuesta;
     }
 }

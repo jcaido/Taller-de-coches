@@ -91,6 +91,7 @@ public class FacturaClienteController {
     //Eliminar una factura de cliente
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarFacturaCliente(@PathVariable Long id) {
-        return facturaClienteService.eliminarFacturaCliente(id);
+
+        return new ResponseEntity<>(facturaClienteService.eliminarFacturaCliente(id), HttpStatus.OK);
     }
 }

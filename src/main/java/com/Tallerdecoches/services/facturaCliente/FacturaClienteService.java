@@ -19,6 +19,6 @@ public interface FacturaClienteService {
     FacturaClientesBusquedasDTO obtenerUltimaFacturaCliente();
     FacturaClienteDTO modificarFacturaCliente(FacturaClienteDTO facturaClienteDTO, Long idOrdenReparacion);
     FacturaClienteDTO modificarFacturaClienteNoOR(FacturaClienteDTO facturaClienteDTO);
-    ResponseEntity<String> eliminarFacturaCliente(Long id);
+    String eliminarFacturaCliente(Long id);
 
 }
