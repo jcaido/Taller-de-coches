@@ -130,12 +130,14 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
     }
 
     @Override
-    public ResponseEntity<FacturaClientesBusquedasDTO> obtenerUltimaFacturaCliente() {
+    public FacturaClientesBusquedasDTO obtenerUltimaFacturaCliente() {
 
         Query query = entityManager.createNativeQuery("SELECT * FROM facturas_clientes ORDER BY id DESC LIMIT 1", FacturaCliente.class);
         FacturaCliente ultimaFactura = (FacturaCliente) query.getSingleResult();
 
-        return new ResponseEntity<>(modelMapper.map(ultimaFactura, FacturaClientesBusquedasDTO.class), HttpStatus.OK);
+        FacturaClientesBusquedasDTO facturaClienteEncontrada = modelMapper.map(ultimaFactura, FacturaClientesBusquedasDTO.class);
+
+        return facturaClienteEncontrada;
     }
 
     @Override

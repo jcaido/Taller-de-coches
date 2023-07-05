@@ -71,7 +71,7 @@ public class FacturaClienteController {
     @GetMapping("/ultima-factura")
     public ResponseEntity<FacturaClientesBusquedasDTO> obtenerUltimaFactura() {
 
-        return facturaClienteService.obtenerUltimaFacturaCliente();
+        return new ResponseEntity<>(facturaClienteService.obtenerUltimaFacturaCliente(), HttpStatus.OK);
     }
 
     //Modificar una factura de cliente
