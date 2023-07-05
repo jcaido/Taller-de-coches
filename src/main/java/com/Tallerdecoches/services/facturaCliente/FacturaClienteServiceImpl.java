@@ -142,7 +142,7 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
 
     @Override
     @Transactional
-    public ResponseEntity<FacturaClienteDTO> modificarFacturaCliente(FacturaClienteDTO facturaClienteDTO, Long idOrdenReparacion) {
+    public FacturaClienteDTO modificarFacturaCliente(FacturaClienteDTO facturaClienteDTO, Long idOrdenReparacion) {
 
         if (facturaClienteDTO.getId() ==  null)
             throw new BadRequestModificacionException("Factura de cliente", "id");
@@ -187,9 +187,10 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
         facturaCliente.setNumeroFactura(facturaAModificar.getNumeroFactura());
         facturaCliente.setFechaFactura(facturaClienteDTO.getFechaFactura());
 
-        facturaClienteRepository.save(facturaCliente);
+        FacturaCliente facturaClienteModificada = facturaClienteRepository.save(facturaCliente);
+        FacturaClienteDTO facturaClienteModificadaDTO = modelMapper.map(facturaClienteModificada, FacturaClienteDTO.class);
 
-        return new ResponseEntity<>(modelMapper.map(facturaCliente, FacturaClienteDTO.class), HttpStatus.OK);
+        return facturaClienteModificadaDTO;
     }
 
     @Override
