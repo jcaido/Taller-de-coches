@@ -15,7 +15,7 @@ public interface FacturaClienteService {
     List<FacturaClientesBusquedasDTO> findAll();
     List<FacturaClientesBusquedasDTO> obtenerFacturasClientesEntreFechas(LocalDate fechaFacturaInicial, LocalDate fechaFacturaFinal);
     List<FacturaClientesBusquedasDTO> obtenerFacturasPorClienteEntreFechas(Long idCliente, LocalDate fechaFacturaInicial, LocalDate fechaFacturaFinal);
-    ResponseEntity<FacturaClientesBusquedasDTO> findById(Long id);
+    FacturaClientesBusquedasDTO findById(Long id);
     ResponseEntity<FacturaClientesBusquedasDTO> obtenerUltimaFacturaCliente();
     ResponseEntity<FacturaClienteDTO> modificarFacturaCliente(FacturaClienteDTO facturaClienteDTO, Long idOrdenReparacion);
     ResponseEntity<FacturaClienteDTO> modificarFacturaClienteNoOR(FacturaClienteDTO facturaClienteDTO);

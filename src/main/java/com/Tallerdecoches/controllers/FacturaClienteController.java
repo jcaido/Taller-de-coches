@@ -64,7 +64,7 @@ public class FacturaClienteController {
     @GetMapping("/{id}")
     public ResponseEntity<FacturaClientesBusquedasDTO> obtenerFacturaClientePorId(@PathVariable Long id) {
 
-        return facturaClienteService.findById(id);
+        return new ResponseEntity<>(facturaClienteService.findById(id), HttpStatus.OK);
     }
 
     //Obtener la ultima factura de cliente
