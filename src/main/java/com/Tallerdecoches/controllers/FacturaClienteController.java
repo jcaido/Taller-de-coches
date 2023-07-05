@@ -6,6 +6,7 @@ import com.Tallerdecoches.DTOs.facturaCliente.FacturaClientesBusquedasDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorBusquedasDTO;
 import com.Tallerdecoches.services.facturaCliente.FacturaClienteService;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class FacturaClienteController {
                                                                  @PathVariable Long idPropietario,
                                                                  @PathVariable Long idOrdenReparacion) {
 
-        return facturaClienteService.crearFacturaCliente(facturaClienteCrearDTO, idPropietario, idOrdenReparacion);
+        return new ResponseEntity<>(facturaClienteService.crearFacturaCliente(facturaClienteCrearDTO, idPropietario, idOrdenReparacion), HttpStatus.CREATED);
     }
 
     //Obtener todas las facturas cliente

@@ -3,9 +3,7 @@ package com.Tallerdecoches.services.facturaCliente;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteCrearDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClientesBusquedasDTO;
-import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorBusquedasDTO;
 import com.Tallerdecoches.entities.FacturaCliente;
-import com.Tallerdecoches.entities.FacturaProveedor;
 import com.Tallerdecoches.entities.OrdenReparacion;
 import com.Tallerdecoches.entities.Propietario;
 import com.Tallerdecoches.exceptions.BadRequestModificacionException;
@@ -49,7 +47,7 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
 
     @Override
     @Transactional
-    public ResponseEntity<FacturaClienteDTO> crearFacturaCliente(FacturaClienteCrearDTO facturaClienteCrearDTO, Long idPropietario, Long idOrdenReparacion) {
+    public FacturaClienteDTO crearFacturaCliente(FacturaClienteCrearDTO facturaClienteCrearDTO, Long idPropietario, Long idOrdenReparacion) {
 
         if (!facturaClienteValidacionesService.validacionPropietario(idPropietario))
             throw new ResourceNotFoundException("Propietario", "id", String.valueOf(idPropietario));
@@ -78,7 +76,9 @@ public class FacturaClienteServiceImpl implements FacturaClienteService{
         facturaCliente.getOrdenReparacion().setFacturada(true);
         facturaClienteConsultasService.asignarNumeroFacturaCrearFactura(facturaCliente, facturaClienteCrearDTO);
 
-        return new ResponseEntity<>(modelMapper.map(facturaCliente, FacturaClienteDTO.class), HttpStatus.CREATED);
+        FacturaClienteDTO facturaClienteRespuesta = modelMapper.map(facturaCliente, FacturaClienteDTO.class);
+
+        return facturaClienteRespuesta;
     }
 
     @Override
