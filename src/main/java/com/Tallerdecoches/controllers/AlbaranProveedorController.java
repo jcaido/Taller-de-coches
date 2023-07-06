@@ -107,9 +107,17 @@ public class AlbaranProveedorController {
         return albaranProveedorService.obtenerAlbaranesPtesFacturarPorProveedorHQL(idProveedor);
     }
 
-    //Obtener albaranes asignados a una factura de proveedor
+    @Operation(summary = "Obtener una lista de albaranes asignados a una factura de proveedor", description = "Obtener una lista de albaranes asignados a una factura de proveedor")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Albaranes asignados a factura de proveedor obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = AlbaranProveedorBusquedasDTO.class))
+                    }),
+    })
     @GetMapping("/factura/{idFactura}")
-    public List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesPorFacturaProveedor(@PathVariable Long idFactura) {
+    public List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesPorFacturaProveedor(@Parameter(description = "id de la factura del proveedor",
+            required = true) @PathVariable Long idFactura) {
 
         return albaranProveedorService.obtenerAlbaranesProveedorPorFacturaProveedorHQL(idFactura);
     }
