@@ -75,9 +75,19 @@ public class AlbaranProveedorController {
         return albaranProveedorService.findAllParcial();
     }
 
-    //Obtener un albarán de proveedor por su id
+    @Operation(summary = "Obtener albarán de proveedor por id", description = "Obtener albarán de proveedor por id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Albarán de proveedor obtenido correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = AlbaranProveedorBusquedasDTO.class))
+                    }),
+            @ApiResponse(responseCode = "404", description = "Albarán de proveedor no encontrado",
+                    content = @Content)
+    })
     @GetMapping("/{id}")
-    public ResponseEntity<AlbaranProveedorBusquedasDTO> obtenerAlbaranProveedorPorId(@PathVariable Long id) {
+    public ResponseEntity<AlbaranProveedorBusquedasDTO> obtenerAlbaranProveedorPorId(@Parameter(description = "id del albarán de proveedor a buscar",
+            required = true) @PathVariable Long id) {
 
         return new ResponseEntity<>(albaranProveedorService.findById(id), HttpStatus.OK);
     }
