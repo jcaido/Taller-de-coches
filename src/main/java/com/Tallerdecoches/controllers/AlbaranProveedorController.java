@@ -122,7 +122,6 @@ public class AlbaranProveedorController {
         return albaranProveedorService.obtenerAlbaranesProveedorPorFacturaProveedorHQL(idFactura);
     }
 
-    //Modificar un albarán de proveedor
     @Operation(summary = "Modificar un albarán de proveedor", description = "Modificar un albarán de proveedor")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Albarán de proveedor modificado correctamente",
@@ -145,9 +144,20 @@ public class AlbaranProveedorController {
         return new ResponseEntity<>(albaranProveedorService.modificarAlbaranProveedor(albaranProveedorDTO, idProveedor), HttpStatus.OK);
     }
 
-    //Facturar un albaran de proveedor
+    @Operation(summary = "Facturar un albarán de proveedor", description = "Facturar un albarán de proveedor")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Albarán de proveedor facturado correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = AlbaranProveedorDTO.class))
+                    }),
+            @ApiResponse(responseCode = "404", description = "[Albarán de proveedor no encontrado], [Factura de proveedor no encontrada]",
+                    content = @Content)
+    })
     @PutMapping("/facturarAlbaran/{idAlbaran}/{idFactura}")
-    public ResponseEntity<AlbaranProveedorDTO> facturarAlbaranProveedor(@PathVariable Long idAlbaran, @PathVariable Long idFactura) {
+    public ResponseEntity<AlbaranProveedorDTO> facturarAlbaranProveedor(@Parameter(description = "id del albarán de proveedor",
+            required = true) @PathVariable Long idAlbaran, @Parameter(description = "id de la factura de proveedor",
+            required = true) @PathVariable Long idFactura) {
 
         return new ResponseEntity<>(albaranProveedorService.facturarAlbaranProveedor(idAlbaran, idFactura), HttpStatus.OK);
     }
