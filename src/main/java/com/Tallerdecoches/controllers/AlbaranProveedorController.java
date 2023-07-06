@@ -162,9 +162,19 @@ public class AlbaranProveedorController {
         return new ResponseEntity<>(albaranProveedorService.facturarAlbaranProveedor(idAlbaran, idFactura), HttpStatus.OK);
     }
 
-    //Marcar un albaran ya facturado como no facturado
+    @Operation(summary = "Marcar un albarán ya facturado como no facturado", description = "Marcar un albarán ya facturado como no facturado")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Albarán de proveedor modificado correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = AlbaranProveedorDTO.class))
+                    }),
+            @ApiResponse(responseCode = "404", description = "Albarán de proveedor no encontrado",
+                    content = @Content)
+    })
     @PutMapping("/noFacturarAlbaran/{idAlbaran}")
-    public ResponseEntity<AlbaranProveedorDTO> noFacturarAlbaranProveedorFacturado(@PathVariable Long idAlbaran) {
+    public ResponseEntity<AlbaranProveedorDTO> noFacturarAlbaranProveedorFacturado(@Parameter(description = "id del albarán de proveedor",
+            required = true) @PathVariable Long idAlbaran) {
 
         return new ResponseEntity<>(albaranProveedorService.noFacturarAlbaranProveedorFacturado(idAlbaran), HttpStatus.OK);
     }
