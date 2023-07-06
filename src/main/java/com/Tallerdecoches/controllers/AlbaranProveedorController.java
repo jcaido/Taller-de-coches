@@ -92,9 +92,17 @@ public class AlbaranProveedorController {
         return new ResponseEntity<>(albaranProveedorService.findById(id), HttpStatus.OK);
     }
 
-    //Obtener albaranes no facturados de un proveedor
+    @Operation(summary = "Obtener una lista de albaranes de proveedor no facturados", description = "Obtener una lista de albaranes de proveedor no facturados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Albaranes de proveedor no facturados obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = AlbaranProveedorBusquedasDTO.class))
+                    }),
+    })
     @GetMapping("/no-facturados/{idProveedor}")
-    public List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesProveedorNoFacturados(@PathVariable Long idProveedor) {
+    public List<AlbaranProveedorBusquedasDTO> obtenerAlbaranesProveedorNoFacturados(@Parameter(description = "id del proveedor",
+            required = true) @PathVariable Long idProveedor) {
 
         return albaranProveedorService.obtenerAlbaranesPtesFacturarPorProveedorHQL(idProveedor);
     }
