@@ -47,7 +47,14 @@ public class AlbaranProveedorController {
         return new ResponseEntity<>(albaranProveedorService.crearAlbaranProveedor(albaranProveedorCrearDTO, idProveedor), HttpStatus.CREATED);
     }
 
-    //Obtener una lista con todos los albaranes de proveedor
+    @Operation(summary = "Obtener una lista con todos los albaranes de proveedor", description = "Obtener una lista con todos los albaranes de proveedor")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Albaranes de proveedor obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = AlbaranProveedorBusquedasDTO.class))
+                    })
+    })
     @GetMapping
     public List<AlbaranProveedorBusquedasDTO> obtenerTodosLosAlbaranesProveedor() {
 
