@@ -61,7 +61,14 @@ public class AlbaranProveedorController {
         return albaranProveedorService.findAll();
     }
 
-    //Obtener una lista con todos los albaranes de proveedor, campos id, fecha, numero y nombre del proveedor
+    @Operation(summary = "Obtener una lista con todos los albaranes de proveedor", description = "solo se incluye en la lista el id, la fecha, el numero, el nombre y el cif/nif del proveedor")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Albaranes de proveedor obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = AlbaranProveedorBusquedasParcialDTO.class))
+                    })
+    })
     @GetMapping("/parcial")
     public List<AlbaranProveedorBusquedasParcialDTO> obtenerTodosLosAlbaranesProveedorParcial() {
 
