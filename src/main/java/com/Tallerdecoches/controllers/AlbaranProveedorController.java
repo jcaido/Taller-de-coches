@@ -179,9 +179,19 @@ public class AlbaranProveedorController {
         return new ResponseEntity<>(albaranProveedorService.noFacturarAlbaranProveedorFacturado(idAlbaran), HttpStatus.OK);
     }
 
-    //Eliminar un albarán de proveedor
+    @Operation(summary = "Eliminar un albarán de proveedor", description = "Eliminar un albarán de proveedor")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Albarán de proveedor eliminado correctamente",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Albarán de proveedor no encontrado",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "[Existen entradas de piezas asociadas con ese albaran de proveedor]," +
+                    " [El albarán ya está asociado a una factura]",
+                    content = @Content),
+    })
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarAlbaranProveedor(@PathVariable Long id) {
+    public ResponseEntity<String> eliminarAlbaranProveedor(@Parameter(description = "id del albarán de proveedor",
+            required = true) @PathVariable Long id) {
 
         return new ResponseEntity<>(albaranProveedorService.deleteById(id), HttpStatus.OK);
     }
