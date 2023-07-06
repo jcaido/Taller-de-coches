@@ -123,8 +123,24 @@ public class AlbaranProveedorController {
     }
 
     //Modificar un albarán de proveedor
+    @Operation(summary = "Modificar un albarán de proveedor", description = "Modificar un albarán de proveedor")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Albarán de proveedor modificado correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = AlbaranProveedorDTO.class))
+                    }),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Albarán de proveedor no encontrado",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "CONFLICT [El proveedor asociado al albarán no existe]," +
+                    " [El numero de albaran ya existe para ese proveedor]",
+                    content = @Content)
+    })
     @PutMapping("/{idProveedor}")
-    public ResponseEntity<AlbaranProveedorDTO> modificarAlbaranProveedor(@Valid @RequestBody AlbaranProveedorDTO albaranProveedorDTO, @PathVariable Long idProveedor) {
+    public ResponseEntity<AlbaranProveedorDTO> modificarAlbaranProveedor(@Parameter(description = "id del proveedor",
+            required = true) @Valid @RequestBody AlbaranProveedorDTO albaranProveedorDTO, @PathVariable Long idProveedor) {
 
         return new ResponseEntity<>(albaranProveedorService.modificarAlbaranProveedor(albaranProveedorDTO, idProveedor), HttpStatus.OK);
     }
