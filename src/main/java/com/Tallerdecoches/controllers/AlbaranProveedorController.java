@@ -2,6 +2,12 @@ package com.Tallerdecoches.controllers;
 
 import com.Tallerdecoches.DTOs.albaranProveedor.*;
 import com.Tallerdecoches.services.albaranProveedor.AlbaranProveedorService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +26,23 @@ public class AlbaranProveedorController {
         this.albaranProveedorService = albaranProveedorService;
     }
 
-    //crear una nuevo Albarán de Proveedor
+    @Operation(summary = "Crear un nuevo albarán de proveedor", description = "Crear un nuevo albarán de proveedor")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "albarán de proveedor creado correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = AlbaranProveedorDTO.class))
+                    }),
+            @ApiResponse(responseCode = "400",
+                    description = "BAD REQUEST",
+                    content = @Content),
+            @ApiResponse(responseCode = "409",
+                    description = "CONFLICT [El proveedor asociado al albarán no existe], [El numero de albaran ya existe para ese proveedor]",
+                    content = @Content),
+    })
     @PostMapping("/{idProveedor}")
     public ResponseEntity<AlbaranProveedorDTO> crearAlbaranProveedor(@Valid @RequestBody AlbaranProveedorCrearDTO albaranProveedorCrearDTO
-            , @PathVariable Long idProveedor) {
+            , @Parameter(description = "id del proveedor", required = true) @PathVariable Long idProveedor) {
 
         return new ResponseEntity<>(albaranProveedorService.crearAlbaranProveedor(albaranProveedorCrearDTO, idProveedor), HttpStatus.CREATED);
     }
