@@ -52,6 +52,14 @@ public class ManoDeObraController {
         return new ResponseEntity<>(manoDeObraService.crearManoDeObra(manoDeObraCrearDTO), HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Obtener el histórico de precios de mano de obra", description = "Obtener el histórico de precios de mano de obra")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Histórico de precios de mano de obra obtenido correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ManoDeObraDTO.class))
+                    })
+    })
     @GetMapping()
     public List<ManoDeObraDTO> obtenerTodosLosPreciosManoDeObra() {
 
