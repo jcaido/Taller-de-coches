@@ -66,8 +66,19 @@ public class ManoDeObraController {
         return manoDeObraService.findAll();
     }
 
+    @Operation(summary = "Obtener precio actual de la mano de obra", description = "Obtener precio actual de la mano de obra")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Precio de mano obra obtenido correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ManoDeObraDTO.class))
+                    }),
+            @ApiResponse(responseCode = "404", description = "El precio de la mano de obra no es el actual",
+                    content = @Content)
+    })
     @GetMapping("/precio-actual/{precioActual}")
-    public ResponseEntity<ManoDeObraDTO> obtenerPrecioActualManoDeObra(@PathVariable Boolean precioActual) {
+    public ResponseEntity<ManoDeObraDTO> obtenerPrecioActualManoDeObra(@Parameter(description = "true",
+            required = true) @PathVariable Boolean precioActual) {
 
         return new ResponseEntity<>(manoDeObraService.findByPrecioHoraClienteTallerActual(precioActual), HttpStatus.OK);
     }
