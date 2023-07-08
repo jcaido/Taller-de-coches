@@ -64,7 +64,7 @@ public class OrdenReparacionController {
         return new ResponseEntity<>(ordenReparacionService.findById(id), HttpStatus.OK);
     }
 
-    @Operation(summary = "Obtener una orden de reparación parcial por su id", description = "campos id, fecha apertura, descripción, kilómetros, matrícula, marca, modelo")
+    @Operation(summary = "Obtener una orden de reparación parcial por su id", description = " solo se incluyen los campos campos id, fecha apertura, descripción, kilómetros, matrícula, marca, modelo")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Orden de reparación obtenida correctamente",
                     content = {
@@ -82,6 +82,14 @@ public class OrdenReparacionController {
     }
 
     //Obtener una lista con todas las ordenes de reparacion
+    @Operation(summary = "Obtener una lista con todas las órdenes de reparación", description = "Obtener una lista con todas las órdenes de reparación")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Órdenes de reparación obtenidas correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = OrdenReparacionBusquedasDTO.class))
+                    })
+    })
     @GetMapping
     public List<OrdenReparacionBusquedasDTO> obtenerTodasLasOrdenesDeReparacion() {
 
