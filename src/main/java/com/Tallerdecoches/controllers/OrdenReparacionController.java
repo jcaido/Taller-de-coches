@@ -47,10 +47,19 @@ public class OrdenReparacionController {
 
         return new ResponseEntity<>(ordenReparacionService.crearOrdenReparacion(ordenReparacionDTO, idVehiculo), HttpStatus.CREATED);
     }
-
-    //Obtener una orden de reparacion por su id
+    @Operation(summary = "Obtener una orden de reparación por su id", description = "Obtener una orden de reparación por su id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Orden de reparación obtenida correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = OrdenReparacionBusquedasDTO.class))
+                    }),
+            @ApiResponse(responseCode = "404", description = "Orden de reparacion no encontrada",
+                    content = @Content)
+    })
     @GetMapping("/{id}")
-    public ResponseEntity<OrdenReparacionBusquedasDTO> obtenerOrdenReparacionPorId(@PathVariable Long id) {
+    public ResponseEntity<OrdenReparacionBusquedasDTO> obtenerOrdenReparacionPorId(
+            @Parameter(description = "id de la orden de reparación", required = true) @PathVariable Long id) {
 
         return new ResponseEntity<>(ordenReparacionService.findById(id), HttpStatus.OK);
     }
