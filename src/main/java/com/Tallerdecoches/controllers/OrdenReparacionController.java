@@ -2,6 +2,12 @@ package com.Tallerdecoches.controllers;
 
 import com.Tallerdecoches.DTOs.ordenReparacion.*;
 import com.Tallerdecoches.services.ordenReparacion.OrdenReparacionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +27,23 @@ public class OrdenReparacionController {
         this.ordenReparacionService = ordenReparacionService;
     }
 
-    //crear una nueva Orden de reparacion
+    @Operation(summary = "Crear una nueva orden de reparación", description = "Crear una nueva orden de reparación")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "oreden de reparación creada correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = OrdenReparacionDTO.class))
+                    }),
+            @ApiResponse(responseCode = "400",
+                    description = "BAD REQUEST",
+                    content = @Content),
+            @ApiResponse(responseCode = "409",
+                    description = "CONFLICT [El vehiculo asociado a la orden de reparacion no existe]",
+                    content = @Content),
+    })
     @PostMapping("/{idVehiculo}")
-    public ResponseEntity<OrdenReparacionDTO> crearOrdenesReparacion(@Valid @RequestBody OrdenReparacionDTO ordenReparacionDTO
-            , @PathVariable Long idVehiculo) {
+    public ResponseEntity<OrdenReparacionDTO> crearOrdenesReparacion(@Valid @RequestBody OrdenReparacionDTO ordenReparacionDTO,
+            @Parameter(description = "id del vehículo", required = true) @PathVariable Long idVehiculo) {
 
         return new ResponseEntity<>(ordenReparacionService.crearOrdenReparacion(ordenReparacionDTO, idVehiculo), HttpStatus.CREATED);
     }
