@@ -64,9 +64,19 @@ public class OrdenReparacionController {
         return new ResponseEntity<>(ordenReparacionService.findById(id), HttpStatus.OK);
     }
 
-    //Obtener una orden de reparacion por su id parcial
+    @Operation(summary = "Obtener una orden de reparación parcial por su id", description = "campos id, fecha apertura, descripción, kilómetros, matrícula, marca, modelo")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Orden de reparación obtenida correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = OrdenReparacionBusquedasParcialDTO.class))
+                    }),
+            @ApiResponse(responseCode = "404", description = "Orden de reparacion no encontrada",
+                    content = @Content)
+    })
     @GetMapping("/parcial/{id}")
-    public ResponseEntity<OrdenReparacionBusquedasParcialDTO> obtenerOrdenReparacionPorIdParcial(@PathVariable Long id) {
+    public ResponseEntity<OrdenReparacionBusquedasParcialDTO> obtenerOrdenReparacionPorIdParcial(
+            @Parameter(description = "id de la orden de reparación", required = true) @PathVariable Long id) {
 
         return new ResponseEntity<>(ordenReparacionService.findByIdParcial(id), HttpStatus.OK);
     }
