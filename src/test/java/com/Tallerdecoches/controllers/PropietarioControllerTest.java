@@ -152,4 +152,16 @@ public class PropietarioControllerTest {
         response.andDo(print())
                 .andExpect(status().isNotFound());
     }
+
+    @DisplayName("Test para obtener una lista de propietarios por nombre")
+    @Test
+    void obtenerPropietariosPorNombreTest() throws Exception {
+        when(propietarioService.findByNombre(anyString())).thenReturn(Datos.PROPIETARIOS_BUSQUEDAS_DTO_1);
+
+        ResultActions response = mockMvc.perform(get("/api/propietarios/nombre/{nombre}", "Antonio"));
+
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", is(Datos.PROPIETARIOS_BUSQUEDAS_DTO_1.size())));
+    }
 }
