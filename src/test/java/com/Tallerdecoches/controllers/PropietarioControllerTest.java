@@ -176,4 +176,16 @@ public class PropietarioControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()", is(Datos.PROPIETARIOS_BUSQUEDAS_DTO_1.size())));
     }
+
+    @DisplayName("Test para obtener una lista parcial de propietarios por primer apellido")
+    @Test
+    void obtenerPropietariosParcialPorPrimerApellidoTest() throws Exception {
+        when(propietarioService.findByPrimerApellidoPartial(anyString())).thenReturn(Datos.PROPIETARIOS_BUSQUEDAS_PARCIAL_DTO_1);
+
+        ResultActions response = mockMvc.perform(get("/api/propietarios/primer-apellido/parcial/{primerApellido}", "Perez"));
+
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", is(Datos.PROPIETARIOS_BUSQUEDAS_PARCIAL_DTO_1.size())));
+    }
 }
