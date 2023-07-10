@@ -1,6 +1,7 @@
 package com.Tallerdecoches.controllers;
 
 import com.Tallerdecoches.DTOs.propietario.PropietarioCrearDTO;
+import com.Tallerdecoches.DTOs.propietario.PropietarioDTO;
 import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.Datos;
 import com.Tallerdecoches.services.propietario.PropietarioService;
@@ -223,5 +224,18 @@ public class PropietarioControllerTest {
         response.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()", is(Datos.PROPIETARIOS_BUSQUEDAS_PARCIAL_DTO_1.size())));
+    }
+
+    @DisplayName("Test para modificar un propietario (controller)")
+    @Test
+    void modificarPropietarioTest() throws Exception {
+        when(propietarioService.modificarPropietario(Datos.PROPIETARIO_DTO_1, Datos.CODIGO_POSTAL_1.getId())).thenReturn(Datos.PROPIETARIO_DTO_1);
+
+        ResultActions response = mockMvc.perform(put("/api/propietarios/{id_codigoPostal}", 2)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(Datos.PROPIETARIO_DTO_1)));
+
+        response.andDo(print())
+                .andExpect(status().isOk());
     }
 }
