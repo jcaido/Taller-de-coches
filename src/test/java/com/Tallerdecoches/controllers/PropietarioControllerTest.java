@@ -262,4 +262,16 @@ public class PropietarioControllerTest {
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.mensaje", is("Propietario con id " + Datos.PROPIETARIO_1.getId() + " no se encuentra")));
     }
+
+    @DisplayName("Test para eliminar un propietario (controller), existen vehiculos relacionados")
+    @Test
+    void eliminarCodigoPostalExistenPropietariosRelacionadosTest() throws Exception {
+        when(propietarioService.deleteById(anyLong())).thenThrow(new ResponseStatusException(HttpStatus.CONFLICT, "Existen vehiculos relacionado con ese propietario"));
+
+        ResultActions response = mockMvc.perform(delete("/api/propietarios/{id}", Datos.PROPIETARIO_1.getId()));
+
+        response.andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.mensaje", is("409 CONFLICT \"Existen vehiculos relacionado con ese propietario\"")));
+    }
 }
