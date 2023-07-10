@@ -238,4 +238,16 @@ public class PropietarioControllerTest {
         response.andDo(print())
                 .andExpect(status().isOk());
     }
+
+    @DisplayName("Test para eliminar un propietario")
+    @Test
+    void eliminarPropietarioTest() throws Exception {
+        when(propietarioService.deleteById(anyLong())).thenReturn("Propietario eliminado con exito");
+
+        ResultActions response = mockMvc.perform(delete("/api/propietarios/{id}", Datos.PROPIETARIO_1.getId()));
+
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("Propietario eliminado con exito"));
+    }
 }
