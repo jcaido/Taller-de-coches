@@ -250,4 +250,16 @@ public class PropietarioControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("Propietario eliminado con exito"));
     }
+
+    @DisplayName("Test para eliminar un propietario (controller), propietario no encontrado")
+    @Test
+    void eliminarCodigoPostalCodigoPostalNoEncontradoTest() throws Exception {
+        when(propietarioService.deleteById(anyLong())).thenThrow(new ResourceNotFoundException("Propietario", "id", String.valueOf(Datos.PROPIETARIO_1.getId())));
+
+        ResultActions response = mockMvc.perform(delete("/api/propietarios/{id}", Datos.PROPIETARIO_1.getId()));
+
+        response.andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.mensaje", is("Propietario con id " + Datos.PROPIETARIO_1.getId() + " no se encuentra")));
+    }
 }
