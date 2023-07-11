@@ -144,7 +144,6 @@ public class OrdenReparacionController {
 
         return ordenReparacionService.findByFechaApertura(fechaCierre);
     }
-    
     @Operation(summary = "Obtener una lista con todas las órdenes de reparación por estado (abiertas o cerradas)",
             description = "Obtener una lista con todas las órdenes de reparación por estado (abiertas o cerradas)")
     @ApiResponses(value = {
@@ -161,10 +160,19 @@ public class OrdenReparacionController {
 
         return ordenReparacionService.findByCerrada(cerrada);
     }
-
-    //Obtener ordenes de reparacion por estado (abiertas o cerradas), campos(id, fechaApertura, descripcion, kilometros, matricula)
+    @Operation(summary = "Obtener una lista parcial con todas las órdenes de reparación por estado (abiertas o cerradas)",
+            description = "Sólo se mostrarán los campos id, fecha apertura, descripción, kilómetros, matrícula")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Órdenes de reparación obtenidas correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = OrdenReparacionBusquedasDTO.class))
+                    })
+    })
     @GetMapping("/cerrada-parcial/{cerrada}")
-    public List<OrdenReparacionBusquedasParcialDTO> obtenerOrdenesReparacionPorIsCerradaParcial(@PathVariable Boolean cerrada) {
+    public List<OrdenReparacionBusquedasParcialDTO> obtenerOrdenesReparacionPorIsCerradaParcial(
+            @Parameter(description = "true = cerradas, false = abiertas", required = true)
+            @PathVariable Boolean cerrada) {
 
         return ordenReparacionService.findByCerradaParcial(cerrada);
     }
