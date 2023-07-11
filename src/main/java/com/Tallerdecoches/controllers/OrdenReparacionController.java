@@ -192,11 +192,20 @@ public class OrdenReparacionController {
 
         return ordenReparacionService.findByCerradaParcialByFechaAperturaAsc(cerrada);
     }
-
-    //Obtener ordenes de reparacion por estado (abiertas o cerradas) parcial y por fecha de apertura
+    @Operation(summary = "Obtener una lista parcial con todas las órdenes de reparación por estado (abiertas o cerradas) y por fecha de apertura",
+            description = "Sólo se mostrarán los campos id, fecha apertura, descripción, kilómetros, matrícula")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Órdenes de reparación obtenidas correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = OrdenReparacionBusquedasDTO.class))
+                    })
+    })
     @GetMapping("/cerrada-parcial/{cerrada}/{fechaApertura}")
     public List<OrdenReparacionBusquedasParcialDTO> obtenerOrdenesReparacionPorIsCerradaParcialFechaApertura(
+            @Parameter(description = "true = cerradas, false = abiertas", required = true)
             @PathVariable Boolean cerrada,
+            @Parameter(description = "fecha de apertura, formato aaaa-mm-dd", required = true)
             @PathVariable(name="fechaApertura")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaApertura) {
 
         return ordenReparacionService.findByCerradaParcialPorFechaApertura(cerrada, fechaApertura);
