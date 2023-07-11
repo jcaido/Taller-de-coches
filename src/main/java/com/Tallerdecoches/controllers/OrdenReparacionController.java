@@ -210,12 +210,22 @@ public class OrdenReparacionController {
 
         return ordenReparacionService.findByCerradaParcialPorFechaApertura(cerrada, fechaApertura);
     }
-
-    //Obtener ordenes de reparacion por estado (abiertas o cerradas) entre fechas de cierre
+    @Operation(summary = "Obtener una lista con todas las órdenes de reparación por estado (abiertas o cerradas) entre fechas de cierre",
+            description = "Obtener una lista con todas las órdenes de reparación por estado (abiertas o cerradas) entre fechas de cierre")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Órdenes de reparación obtenidas correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = OrdenReparacionBusquedasDTO.class))
+                    })
+    })
     @GetMapping("/cerrada/{cerrada}/{fechaCierreInicial}/{fechaCierreFinal}")
     public List<OrdenReparacionBusquedasDTO> obtenerOrdenesReparacionPorIsCerradaEntreFechasDeCierre(
+            @Parameter(description = "true = cerradas, false = abiertas", required = true)
             @PathVariable Boolean cerrada,
+            @Parameter(description = "fecha de cierre inicial, formato aaaa-mm-dd", required = true)
             @PathVariable(name="fechaCierreInicial")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaCierreInicial,
+            @Parameter(description = "fecha de cierre final, formato aaaa-mm-dd", required = true)
             @PathVariable(name="fechaCierreFinal")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaCierreFinal) {
 
         return ordenReparacionService.findByCerradaEntreFechasDeCierre(cerrada, fechaCierreInicial, fechaCierreFinal);
