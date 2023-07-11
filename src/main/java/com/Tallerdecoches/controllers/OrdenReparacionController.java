@@ -94,7 +94,6 @@ public class OrdenReparacionController {
 
         return ordenReparacionService.findAll();
     }
-    
     @Operation(summary = "Obtener una lista con todas las órdenes de reparación por fecha de apertura",
             description = "Obtener una lista con todas las órdenes de reparación por fecha de apertura")
     @ApiResponses(value = {
@@ -112,9 +111,19 @@ public class OrdenReparacionController {
         return ordenReparacionService.findByFechaApertura(fechaApertura);
     }
 
-    //Obtener ordenes de reparacion por fecha de apertura (@PathVariable)
+    @Operation(summary = "Obtener una lista con todas las órdenes de reparación por fecha de apertura",
+            description = "Obtener una lista con todas las órdenes de reparación por fecha de apertura")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Órdenes de reparación obtenidas correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = OrdenReparacionBusquedasDTO.class))
+                    })
+    })
     @GetMapping("/fechaapertura/{fechaApertura}")
-    public List<OrdenReparacionBusquedasDTO> obtenerOrdenesReparacionPorFechaAperturaPV(@PathVariable(name="fechaApertura")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaApertura) {
+    public List<OrdenReparacionBusquedasDTO> obtenerOrdenesReparacionPorFechaAperturaPV(
+            @Parameter(description = "fecha de apertura, formato aaaa-mm-dd", required = true)
+            @PathVariable(name="fechaApertura")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaApertura) {
 
         return ordenReparacionService.findByFechaApertura(fechaApertura);
     }
