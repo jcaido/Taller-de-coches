@@ -369,10 +369,20 @@ public class OrdenReparacionController {
 
         return new ResponseEntity<>(ordenReparacionService.modificarOrdenReparacionAbrir(ordenReparacionCierreDTO), HttpStatus.OK);
     }
-
-    //Eliminar una orden de reparacion existente (no cerrada)
+    @Operation(summary = "Eliminar una orden de reparación", description = "Eliminar una orden de reparación")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Orden de reparación eliminada correctamente",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Albarán de proveedor no encontrado",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "CONFLIT [la orden de reparacion esta cerrada]," +
+                    " [Existen piezas relacionadas con esa orden de reparacion]",
+                    content = @Content),
+    })
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarPropietario(@PathVariable Long id) {
+    public ResponseEntity<String> eliminarPropietario(
+            @Parameter(description = "id de la orden de reparación", required = true)
+            @PathVariable Long id) {
 
         return new ResponseEntity<>(ordenReparacionService.deleteById(id), HttpStatus.OK);
     }
