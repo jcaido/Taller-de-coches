@@ -282,8 +282,6 @@ public class OrdenReparacionController {
 
         return ordenReparacionService.obtenerOrdenesReparacionPorVehiculo(id_vehiculo);
     }
-
-    //Obtener ordenes de reparacion cerradas pendientes de facturar
     @Operation(summary = "Obtener una lista con todas las órdenes de reparación cerradas pendientes de facturar",
             description = "Obtener una lista con todas las órdenes de reparación cerradas pendientes de facturar")
     @ApiResponses(value = {
@@ -298,10 +296,25 @@ public class OrdenReparacionController {
 
         return ordenReparacionService.obtenerOrdenesReparacionCerradasPtesFacturar();
     }
-
-    //Modificar una orden de reparacion
+    @Operation(summary = "Modificar una orden de reparación", description = "Modificar una orden de reparación")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Orden de reparación modificada correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = OrdenReparacionDTO.class))
+                    }),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Orden de reparación no encontrada",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "CONFLICT El vehiculo asociado a la orden de reparacion no existe",
+                    content = @Content)
+    })
     @PutMapping("/{id_vehiculo}")
-    public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacion(@Valid @RequestBody OrdenReparacionDTO ordenReparacionDTO, @PathVariable Long id_vehiculo) {
+    public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacion(
+            @Valid @RequestBody OrdenReparacionDTO ordenReparacionDTO,
+            @Parameter(description = "id del vehículo", required = true)
+            @PathVariable Long id_vehiculo) {
 
         return new ResponseEntity<>(ordenReparacionService.modificarOrdenReparacion(ordenReparacionDTO, id_vehiculo), HttpStatus.OK);
     }
