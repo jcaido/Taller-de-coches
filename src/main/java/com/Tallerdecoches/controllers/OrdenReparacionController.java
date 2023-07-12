@@ -230,11 +230,20 @@ public class OrdenReparacionController {
 
         return ordenReparacionService.findByCerradaEntreFechasDeCierre(cerrada, fechaCierreInicial, fechaCierreFinal);
     }
-
-    //Obtener ordenes de reparacion por estado (abiertas o cerradas) parcial y por vehiculo
+    @Operation(summary = "Obtener una lista parcial con todas las órdenes de reparación por estado (abiertas o cerradas) y por vehiculo",
+            description = "Sólo se mostrarán los campos id, fecha apertura, descripción, kilómetros, matrícula")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Órdenes de reparación obtenidas correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = OrdenReparacionBusquedasDTO.class))
+                    })
+    })
     @GetMapping("/cerrada-parcial-vehiculo/{cerrada}/{id_vehiculo}")
     public List<OrdenReparacionBusquedasParcialDTO> obtenerOrdenesReparacionPorIsCerradaParcialVehiculo(
+            @Parameter(description = "true = cerradas, false = abiertas", required = true)
             @PathVariable Boolean cerrada,
+            @Parameter(description = "id del vehículo", required = true)
             @PathVariable Long id_vehiculo) {
 
         return ordenReparacionService.findByCerradaParcialPorVehiculo(cerrada, id_vehiculo);
