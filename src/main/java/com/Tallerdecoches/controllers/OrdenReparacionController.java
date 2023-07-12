@@ -266,8 +266,6 @@ public class OrdenReparacionController {
 
         return ordenReparacionService.findByCerradaPorVehiculo(cerrada, id_vehiculo);
     }
-
-    //Obtener ordenes de reparacion por vehiculo
     @Operation(summary = "Obtener una lista con todas las órdenes de reparación por por vehiculo",
             description = "Obtener una lista con todas las órdenes de reparación por por vehiculo")
     @ApiResponses(value = {
@@ -286,6 +284,15 @@ public class OrdenReparacionController {
     }
 
     //Obtener ordenes de reparacion cerradas pendientes de facturar
+    @Operation(summary = "Obtener una lista con todas las órdenes de reparación cerradas pendientes de facturar",
+            description = "Obtener una lista con todas las órdenes de reparación cerradas pendientes de facturar")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Órdenes de reparación obtenidas correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = OrdenReparacionBusquedasDTO.class))
+                    })
+    })
     @GetMapping("/cerradas-ptes-facturar")
     public List<OrdenReparacionReducidaDTO> obtenerOrdenesReparacionCerradasPtesFacturar() {
 
