@@ -268,8 +268,19 @@ public class OrdenReparacionController {
     }
 
     //Obtener ordenes de reparacion por vehiculo
+    @Operation(summary = "Obtener una lista con todas las órdenes de reparación por por vehiculo",
+            description = "Obtener una lista con todas las órdenes de reparación por por vehiculo")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Órdenes de reparación obtenidas correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = OrdenReparacionBusquedasDTO.class))
+                    })
+    })
     @GetMapping("/vehiculo/{id_vehiculo}")
-    public List<OrdenReparacionBusquedasDTO> obtenerOrdenesReparacionPorVehiculo(@PathVariable Long id_vehiculo) {
+    public List<OrdenReparacionBusquedasDTO> obtenerOrdenesReparacionPorVehiculo(
+            @Parameter(description = "id del vehículo", required = true)
+            @PathVariable Long id_vehiculo) {
 
         return ordenReparacionService.obtenerOrdenesReparacionPorVehiculo(id_vehiculo);
     }
