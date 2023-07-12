@@ -335,8 +335,6 @@ public class OrdenReparacionController {
 
         return new ResponseEntity<>(ordenReparacionService.modificarOrdenReparacionHoras(ordenReparacionHorasDTO), HttpStatus.OK);
     }
-
-    //Modificar una orden de reparacion, solo la fecha de cierre
     @Operation(summary = "Modificar una orden de reparación, sólo la fecha de cierre", description = "Modificar una orden de reparación, sólo la fecha de cierre")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Orden de reparación modificada correctamente",
@@ -354,8 +352,18 @@ public class OrdenReparacionController {
 
         return new ResponseEntity<>(ordenReparacionService.modificarOrdenReparacionCierre(ordenReparacionCierreDTO), HttpStatus.OK);
     }
-
-    //Modificar una orden de reparacion, abrir orden
+    @Operation(summary = "Modificar una orden de reparación, abrir orden", description = "Modificar una orden de reparación, abrir orden")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Orden de reparación modificada correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = OrdenReparacionDTO.class))
+                    }),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Orden de reparación no encontrada",
+                    content = @Content),
+    })
     @PutMapping("/abrir")
     public ResponseEntity<OrdenReparacionDTO> modificarOrdenReparacionAbrir(@RequestBody OrdenReparacionCierreDTO ordenReparacionCierreDTO) {
 
