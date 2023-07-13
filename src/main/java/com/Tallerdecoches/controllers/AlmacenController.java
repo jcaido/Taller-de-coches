@@ -3,6 +3,11 @@ package com.Tallerdecoches.controllers;
 import com.Tallerdecoches.DTOs.almacen.MovimientoAlmacenDTO;
 import com.Tallerdecoches.DTOs.almacen.MovimientoPiezaDTO;
 import com.Tallerdecoches.services.almacen.InventarioAlmacenService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +25,14 @@ public class AlmacenController {
         this.inventarioAlmacenService = inventarioAlmacenService;
     }
 
+    @Operation(summary = "Obtener el inventario de almacén actual", description = "Obtener el inventario de almacén actual")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Inventario de almacén obtenido correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = MovimientoAlmacenDTO.class))
+                    }),
+    })
     @GetMapping("/inventario")
     public List<MovimientoAlmacenDTO> obtenerInventarioAlmacen() {
 
