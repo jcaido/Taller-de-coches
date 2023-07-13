@@ -64,8 +64,26 @@ public class AlmacenController {
         return inventarioAlmacenService.obtenerInventarioAlmacenFecha(fecha);
     }
 
+    @Operation(summary = "Obtener los movimientos de almacén de una pieza determinada", description = "Obtener los movimientos de  almacén de una pieza determinada")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Movimientos de almacén obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = MovimientoPiezaDTO.class))
+                    }),
+            @ApiResponse(responseCode = "400",
+                    description = "BAD REQUEST",
+                    content = @Content),
+            @ApiResponse(responseCode = "409",
+                    description = "CONFLICT Existen Ordenes de Reparación abiertas " +
+                            "con la pieza solicitada imputada. Debe cerrar esas órdenes para poder obtener " +
+                            "los movimientos de esa pieza.",
+                    content = @Content),
+    })
     @GetMapping("/movimientos/{pieza}")
-    public List<MovimientoPiezaDTO> obtenerEntradasPorPieza(@PathVariable(name="pieza") String pieza) {
+    public List<MovimientoPiezaDTO> obtenerEntradasPorPieza(
+            @Parameter(description = "referencia de la pieza ", required = true)
+            @PathVariable(name="pieza") String pieza) {
 
         return inventarioAlmacenService.obtenerMovimientosPorPieza(pieza);
     }
