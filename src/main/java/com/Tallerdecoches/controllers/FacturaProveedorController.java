@@ -1,5 +1,6 @@
 package com.Tallerdecoches.controllers;
 
+import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorDTO;
@@ -53,8 +54,14 @@ public class FacturaProveedorController {
 
         return new ResponseEntity<>(facturaProveedorService.crearFacturaProveedor(facturaProveedorCrearDTO, idProveedor), HttpStatus.CREATED);
     }
-
-    //obtener una lista con todas las facturas
+    @Operation(summary = "Obtener una lista con todas las facturas de proveedor", description = "Obtener una lista con todas las facturas de proveedor")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Facturas de proveedor obtenidas correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = FacturaProveedorBusquedasDTO.class))
+                    })
+    })
     @GetMapping()
     public List<FacturaProveedorBusquedasDTO> obtenerTodasLasFacturasProveedor() {
 
