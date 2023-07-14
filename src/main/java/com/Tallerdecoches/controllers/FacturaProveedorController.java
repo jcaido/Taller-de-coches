@@ -119,12 +119,26 @@ public class FacturaProveedorController {
             @PathVariable(name="fechaFacturaFinal")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFacturaFinal) {
 
         return facturaProveedorService.obtenerFacturasPorProveedorEntreFechas(idProveedor, fechaFacturaInicial, fechaFacturaFinal);
-
     }
-
-    //Modificar una factura de proveedor
+    @Operation(summary = "Modificar una factura de proveedor", description = "Modificar una factura de proveedor")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Factura de proveedor modificada correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = FacturaProveedorDTO.class))
+                    }),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Factura de proveedor no encontrada",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "CONFLICT [El proveedor asociado a la factura no existe]," +
+                    " [El numero de factura ya existe para ese proveedor]",
+                    content = @Content)
+    })
     @PutMapping("/{idProveedor}")
-    public ResponseEntity<FacturaProveedorDTO> modificarFacturaProveedor(@Valid @RequestBody FacturaProveedorDTO facturaProveedorDTO, @PathVariable Long idProveedor) {
+    public ResponseEntity<FacturaProveedorDTO> modificarFacturaProveedor(@Valid @RequestBody FacturaProveedorDTO facturaProveedorDTO,
+                                                                         @Parameter(description = "id del proveedor", required = true)
+                                                                         @PathVariable Long idProveedor) {
 
         return new ResponseEntity<>(facturaProveedorService.modificarFacturaProveedor(facturaProveedorDTO, idProveedor), HttpStatus.OK);
     }
