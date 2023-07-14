@@ -142,10 +142,19 @@ public class FacturaProveedorController {
 
         return new ResponseEntity<>(facturaProveedorService.modificarFacturaProveedor(facturaProveedorDTO, idProveedor), HttpStatus.OK);
     }
-
-    //Eliminar una factura existente
+    @Operation(summary = "Eliminar una factura de proveedor", description = "Eliminar una factura de proveedor")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Factura de proveedor eliminada correctamente",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Factura de proveedor no encontrada",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "Existen albaranes asociados con esa factura de proveedor",
+                    content = @Content),
+    })
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarFacturaProveedor(@PathVariable Long id) {
+    public ResponseEntity<String> eliminarFacturaProveedor(
+            @Parameter(description = "id de la factura de proveedor", required = true)
+            @PathVariable Long id) {
 
         return new ResponseEntity<>(facturaProveedorService.deleteById(id), HttpStatus.OK);
     }
