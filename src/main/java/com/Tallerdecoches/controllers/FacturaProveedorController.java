@@ -67,10 +67,20 @@ public class FacturaProveedorController {
 
         return facturaProveedorService.findAll();
     }
-
-    //obtener una factura de proveedor por su id
+    @Operation(summary = "Obtener una factura de proveedor por id", description = "Obtener una factura de proveedor por id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Factura de proveedor obtenida correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = FacturaProveedorBusquedasDTO.class))
+                    }),
+            @ApiResponse(responseCode = "404", description = "Factura de proveedor no encontrada",
+                    content = @Content)
+    })
     @GetMapping("/{id}")
-    public ResponseEntity<FacturaProveedorBusquedasDTO> obtenerFacturaProveedorPorId(@PathVariable Long id) {
+    public ResponseEntity<FacturaProveedorBusquedasDTO> obtenerFacturaProveedorPorId(
+            @Parameter(description = "id de la factura de proveedor", required = true)
+            @PathVariable Long id) {
 
         return new ResponseEntity<>(facturaProveedorService.findById(id), HttpStatus.OK);
     }
