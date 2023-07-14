@@ -4,6 +4,12 @@ import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorCrearDTO;
 import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorDTO;
 import com.Tallerdecoches.services.facturaProveedor.FacturaProveedorService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +29,27 @@ public class FacturaProveedorController {
     public FacturaProveedorController(FacturaProveedorService facturaProveedorService) {
         this.facturaProveedorService = facturaProveedorService;
     }
-
-    //crear una nueva Factura de Proveedor
+    @Operation(summary = "Crear una nueva factura de proveedor", description = "Crear una nueva factura de proveedor")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "factura de proveedor creada correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = FacturaProveedorDTO.class))
+                    }),
+            @ApiResponse(responseCode = "400",
+                    description = "BAD REQUEST",
+                    content = @Content),
+            @ApiResponse(responseCode = "404",
+                    description = "Proveedor no encontrado",
+                    content = @Content),
+            @ApiResponse(responseCode = "409",
+                    description = "CONFLICT El numero de factura ya existe para ese proveedor",
+                    content = @Content),
+    })
     @PostMapping("/{idProveedor}")
-    public ResponseEntity<FacturaProveedorDTO> crearFacturaProveedor(@Valid @RequestBody FacturaProveedorCrearDTO facturaProveedorCrearDTO
-            , @PathVariable Long idProveedor) {
+    public ResponseEntity<FacturaProveedorDTO> crearFacturaProveedor(@Valid @RequestBody FacturaProveedorCrearDTO facturaProveedorCrearDTO,
+                                                                     @Parameter(description = "id del proveedor", required = true)
+                                                                     @PathVariable Long idProveedor) {
 
         return new ResponseEntity<>(facturaProveedorService.crearFacturaProveedor(facturaProveedorCrearDTO, idProveedor), HttpStatus.CREATED);
     }
