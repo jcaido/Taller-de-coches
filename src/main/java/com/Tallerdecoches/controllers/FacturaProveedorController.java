@@ -84,11 +84,19 @@ public class FacturaProveedorController {
 
         return new ResponseEntity<>(facturaProveedorService.findById(id), HttpStatus.OK);
     }
-
-    //Obtener facturas de proveedores entre fechas
+    @Operation(summary = "Obtener una lista con todas las facturas de proveedor entre fechas", description = "Obtener una lista con todas las facturas de proveedor entre fechas")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Facturas de proveedor obtenidas correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = FacturaProveedorBusquedasDTO.class))
+                    })
+    })
     @GetMapping("/{fechaFacturaInicial}/{fechaFacturaFinal}")
     public List<FacturaProveedorBusquedasDTO> obtenerFacturasProveedorEntreFechas(
+            @Parameter(description = "fecha inicial, formato aaaa-mm-dd", required = true)
             @PathVariable(name="fechaFacturaInicial")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFacturaInicial,
+            @Parameter(description = "fecha final, formato aaaa-mm-dd", required = true)
             @PathVariable(name="fechaFacturaFinal")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFacturaFinal) {
 
         return facturaProveedorService.obtenerFacturasProveedoresEntreFechas(fechaFacturaInicial, fechaFacturaFinal);
