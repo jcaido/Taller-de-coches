@@ -1,5 +1,6 @@
 package com.Tallerdecoches.controllers;
 
+import com.Tallerdecoches.DTOs.albaranProveedor.AlbaranProveedorBusquedasDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteCrearDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClientesBusquedasDTO;
@@ -60,6 +61,14 @@ public class FacturaClienteController {
     }
 
     //Obtener todas las facturas cliente
+    @Operation(summary = "Obtener una lista con todas las facturas de clientes", description = "Obtener una lista con todas las facturas de clientes")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Facturas de cliente obtenidas correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = FacturaClientesBusquedasDTO.class))
+                    })
+    })
     @GetMapping()
     public List<FacturaClientesBusquedasDTO> obtenerTodasLasFacturasCliente() {
 
