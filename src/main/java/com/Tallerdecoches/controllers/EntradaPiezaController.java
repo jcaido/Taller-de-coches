@@ -118,8 +118,19 @@ public class EntradaPiezaController {
         return new ResponseEntity<>(entradaPiezaService.modificarEntradaPieza(entradaPiezaDTO, id_pieza), HttpStatus.OK);
     }
 
+    @Operation(summary = "Eliminar una entrada de pieza", description = "Eliminar una entrada de pieza")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Entrada de pieza eliminada correctamente",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Entrada de pieza no encontrada",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "Existen albaranes facturados asociados con ese entrada de piezas",
+                    content = @Content),
+    })
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarEntradaPieza(@Parameter(description = "id de la pieza", required = true) @PathVariable Long id) {
+    public ResponseEntity<String> eliminarEntradaPieza(
+            @Parameter(description = "id de la pieza", required = true)
+            @PathVariable Long id) {
 
         return new ResponseEntity<>(entradaPiezaService.deleteById(id), HttpStatus.OK);
     }
