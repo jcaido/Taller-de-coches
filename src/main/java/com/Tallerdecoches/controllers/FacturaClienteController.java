@@ -123,8 +123,14 @@ public class FacturaClienteController {
 
         return new ResponseEntity<>(facturaClienteService.findById(id), HttpStatus.OK);
     }
-
-    //Obtener la ultima factura de cliente
+    @Operation(summary = "Obtener la última factura de cliente", description = "Obtener la última factura de cliente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Factura de cliente obtenida correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = FacturaClientesBusquedasDTO.class))
+                    })
+    })
     @GetMapping("/ultima-factura")
     public ResponseEntity<FacturaClientesBusquedasDTO> obtenerUltimaFactura() {
 
