@@ -164,8 +164,23 @@ public class FacturaClienteController {
 
         return new ResponseEntity<>(facturaClienteService.modificarFacturaCliente(facturaClienteDTO, idOrdenReparacion), HttpStatus.OK);
     }
-
-    //Modificar una factura de cliente sin cambiar la asignacion de la orden de reparacion
+    @Operation(summary = "Modificar una factura de cliente sin cambiar la asignación de la orden de reparación",
+            description = "Modificar una factura de cliente sin cambiar la asignación de la orden de reparación")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "factura de cliente modificada correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = FacturaClienteDTO.class))
+                    }),
+            @ApiResponse(responseCode = "400",
+                    description = "BAD REQUEST",
+                    content = @Content),
+            @ApiResponse(responseCode = "409",
+                    description = "CONFLICT [La fecha debe ser igual o inferior a la de la factura posterior], " +
+                            "[La fecha debe ser igual o superior a la de la factura anterior], " +
+                            "[La fecha debe ser igual o inferior a la de la factura posterior e igual o superior a la de la fecha anterior]",
+                    content = @Content),
+    })
     @PutMapping("/modificarFactura")
     public ResponseEntity<FacturaClienteDTO> modificarFacturaCliente(@Valid @RequestBody FacturaClienteDTO facturaClienteDTO) {
 
