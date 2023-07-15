@@ -136,11 +136,32 @@ public class FacturaClienteController {
 
         return new ResponseEntity<>(facturaClienteService.obtenerUltimaFacturaCliente(), HttpStatus.OK);
     }
-
-    //Modificar una factura de cliente
+    @Operation(summary = "Modificar una factura de cliente", description = "Modificar una factura de cliente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "factura de cliente modificada correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = FacturaClienteDTO.class))
+                    }),
+            @ApiResponse(responseCode = "400",
+                    description = "BAD REQUEST",
+                    content = @Content),
+            @ApiResponse(responseCode = "404",
+                    description = "Orden de reparación no encontrada",
+                    content = @Content),
+            @ApiResponse(responseCode = "409",
+                    description = "CONFLICT [La orden de reparación no está cerrada], " +
+                            "[La orden de reparación ya está facturada], " +
+                            "[La fecha debe ser igual o inferior a la de la factura posterior], " +
+                            "[La fecha debe ser igual o superior a la de la factura anterior], " +
+                            "[La fecha debe ser igual o inferior a la de la factura posterior e igual o superior a la de la fecha anterior]",
+                    content = @Content),
+    })
     @PutMapping("/modificarFactura/{idOrdenReparacion}")
     public ResponseEntity<FacturaClienteDTO> modificarFacturaCliente(@Valid @RequestBody FacturaClienteDTO facturaClienteDTO,
+                                                                     @Parameter(description = "id de la orden de reparación", required = true)
                                                                      @PathVariable Long idOrdenReparacion) {
+
         return new ResponseEntity<>(facturaClienteService.modificarFacturaCliente(facturaClienteDTO, idOrdenReparacion), HttpStatus.OK);
     }
 
