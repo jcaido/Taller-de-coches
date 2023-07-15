@@ -89,12 +89,21 @@ public class FacturaClienteController {
 
         return facturaClienteService.obtenerFacturasClientesEntreFechas(fechaFacturaInicial, fechaFacturaFinal);
     }
-
-    //Obtener facturas por cliente entre fechas
+    @Operation(summary = "Obtener una lista con todas las facturas de clientes entre fechas por cliente", description = "Obtener una lista con todas las facturas de clientes entre fechas por cliente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Facturas de cliente obtenidas correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = FacturaClientesBusquedasDTO.class))
+                    })
+    })
     @GetMapping("/{idCliente}/{fechaFacturaInicial}/{fechaFacturaFinal}")
     public List<FacturaClientesBusquedasDTO> obtenerFacturasPorClienteEntreFechas(
+            @Parameter(description = "id del propietario", required = true)
             @PathVariable Long idCliente,
+            @Parameter(description = "fecha inicial, formato aaaa-mm-dd", required = true)
             @PathVariable(name="fechaFacturaInicial")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFacturaInicial,
+            @Parameter(description = "fecha final, formato aaaa-mm-dd", required = true)
             @PathVariable(name="fechaFacturaFinal")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFacturaFinal) {
 
             return facturaClienteService.obtenerFacturasPorClienteEntreFechas(idCliente, fechaFacturaInicial, fechaFacturaFinal);
