@@ -3,8 +3,13 @@ package com.Tallerdecoches.controllers;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteCrearDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClienteDTO;
 import com.Tallerdecoches.DTOs.facturaCliente.FacturaClientesBusquedasDTO;
-import com.Tallerdecoches.DTOs.facturaProveedor.FacturaProveedorBusquedasDTO;
 import com.Tallerdecoches.services.facturaCliente.FacturaClienteService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +29,31 @@ public class FacturaClienteController {
     public FacturaClienteController(FacturaClienteService facturaClienteService) {
         this.facturaClienteService = facturaClienteService;
     }
-
-    //Crear una factura cliente
+    @Operation(summary = "Crear una nueva factura de cliente", description = "Crear una nueva factura de cliente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "factura de cliente creada correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = FacturaClienteDTO.class))
+                    }),
+            @ApiResponse(responseCode = "400",
+                    description = "BAD REQUEST",
+                    content = @Content),
+            @ApiResponse(responseCode = "404",
+                    description = "[Propietario no encontrado], [Orden de reparación no encontrada]",
+                    content = @Content),
+            @ApiResponse(responseCode = "409",
+                    description = "CONFLICT [La orden de reparación no pertenece al propietario], " +
+                            "[La orden de reparación no está cerrada], " +
+                            "[La orden de reparación ya está facturada], " +
+                            "[La fecha factura no puede ser inferior a la última factura de la serie]",
+                    content = @Content),
+    })
     @PostMapping("/nuevaFactura/{idPropietario}/{idOrdenReparacion}")
     public ResponseEntity<FacturaClienteDTO> crearFacturaCliente(@Valid @RequestBody FacturaClienteCrearDTO facturaClienteCrearDTO,
+                                                                 @Parameter(description = "id del propietario", required = true)
                                                                  @PathVariable Long idPropietario,
+                                                                 @Parameter(description = "id de la orden de reparación", required = true)
                                                                  @PathVariable Long idOrdenReparacion) {
 
         return new ResponseEntity<>(facturaClienteService.crearFacturaCliente(facturaClienteCrearDTO, idPropietario, idOrdenReparacion), HttpStatus.CREATED);
