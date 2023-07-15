@@ -186,10 +186,19 @@ public class FacturaClienteController {
 
         return new ResponseEntity<>(facturaClienteService.modificarFacturaClienteNoOR(facturaClienteDTO), HttpStatus.OK);
     }
-
-    //Eliminar una factura de cliente
+    @Operation(summary = "Eliminar una factura de cliente", description = "Eliminar una factura de cliente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Factura de cliente eliminada con exito",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Factura de cliente no encontrada",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "Solo se puede eliminar la ultima factura del año",
+                    content = @Content),
+    })
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarFacturaCliente(@PathVariable Long id) {
+    public ResponseEntity<String> eliminarFacturaCliente(
+            @Parameter(description = "id de la factura de cliente", required = true)
+            @PathVariable Long id) {
 
         return new ResponseEntity<>(facturaClienteService.eliminarFacturaCliente(id), HttpStatus.OK);
     }
