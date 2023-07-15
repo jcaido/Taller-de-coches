@@ -108,10 +108,18 @@ public class FacturaClienteController {
 
             return facturaClienteService.obtenerFacturasPorClienteEntreFechas(idCliente, fechaFacturaInicial, fechaFacturaFinal);
     }
-
-    //Obtener una factura de cliente por su id
+    @Operation(summary = "Obtener una factura de cliente por su id", description = "Obtener una factura de cliente por su id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Factura de cliente obtenida correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = FacturaClientesBusquedasDTO.class))
+                    })
+    })
     @GetMapping("/{id}")
-    public ResponseEntity<FacturaClientesBusquedasDTO> obtenerFacturaClientePorId(@PathVariable Long id) {
+    public ResponseEntity<FacturaClientesBusquedasDTO> obtenerFacturaClientePorId(
+            @Parameter(description = "id de la factura", required = true)
+            @PathVariable Long id) {
 
         return new ResponseEntity<>(facturaClienteService.findById(id), HttpStatus.OK);
     }
