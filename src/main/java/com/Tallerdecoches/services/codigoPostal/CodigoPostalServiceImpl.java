@@ -8,6 +8,9 @@ import com.Tallerdecoches.exceptions.ResourceNotFoundException;
 import com.Tallerdecoches.repositories.CodigoPostalRepository;
 import com.Tallerdecoches.services.propietario.PropietarioService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -50,6 +53,16 @@ public class CodigoPostalServiceImpl implements CodigoPostalService {
         List<CodigoPostal> codigosPostales = codigoPostalRepository.findAll();
 
         return  codigosPostales.stream().map(codigoPostal-> modelMapper.map(codigoPostal, CodigoPostalDTO.class)).toList();
+    }
+
+    @Override
+    public Page<CodigoPostalDTO> findAllPageable(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CodigoPostal> codigoPostales = codigoPostalRepository.findAll(pageable);
+
+        Page<CodigoPostalDTO> codigosPostalesPaginados = codigoPostales.map(codigoPostal -> new CodigoPostalDTO(codigoPostal));
+
+        return codigosPostalesPaginados;
     }
 
     @Override

@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,6 +63,16 @@ public class CodigoPostalController {
     public List<CodigoPostalDTO> obtenerTodosLosCodigosPostales() {
 
         return codigoPostalService.findAll();
+    }
+
+    //Obtener todos los codigos postales, pageable
+    @GetMapping("/Pageable")
+    public Page<CodigoPostalDTO> obtenerCodigosPostalesPageable(
+        @RequestParam(value = "page") int page,
+        @RequestParam(value = "size") int size
+    ) {
+
+        return codigoPostalService.findAllPageable(page, size);
     }
 
     @Operation(summary = "Obtener Código Postal por id", description = "Obtener Código Postal por id")
