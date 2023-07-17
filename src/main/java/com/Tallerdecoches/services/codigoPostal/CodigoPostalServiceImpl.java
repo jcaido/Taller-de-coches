@@ -58,11 +58,9 @@ public class CodigoPostalServiceImpl implements CodigoPostalService {
     @Override
     public Page<CodigoPostalDTO> findAllPageable(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<CodigoPostal> codigoPostales = codigoPostalRepository.findAll(pageable);
+        Page<CodigoPostal> codigosPostales = codigoPostalRepository.findAll(pageable);
 
-        Page<CodigoPostalDTO> codigosPostalesPaginados = codigoPostales.map(codigoPostal -> new CodigoPostalDTO(codigoPostal));
-
-        return codigosPostalesPaginados;
+        return codigosPostales.map(codigoPostal -> new CodigoPostalDTO(codigoPostal));
     }
 
     @Override
