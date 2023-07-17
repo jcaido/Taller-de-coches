@@ -64,12 +64,21 @@ public class CodigoPostalController {
 
         return codigoPostalService.findAll();
     }
-
-    //Obtener todos los codigos postales, pageable
+    @Operation(summary = "Obtener todos los Códigos Postales con paginación",
+            description = "Obtener todos los Códigos Postales con paginación")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Codigos Postales obtenidos correctamente",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = CodigoPostalDTO.class))
+                    })
+    })
     @GetMapping("/Pageable")
     public Page<CodigoPostalDTO> obtenerCodigosPostalesPageable(
-        @RequestParam(value = "page") int page,
-        @RequestParam(value = "size") int size
+            @Parameter(description = "página a mostrar", required = true)
+            @RequestParam(value = "page") int page,
+            @Parameter(description = "número de elementos de la página a mostrar", required = true)
+            @RequestParam(value = "size") int size
     ) {
 
         return codigoPostalService.findAllPageable(page, size);
